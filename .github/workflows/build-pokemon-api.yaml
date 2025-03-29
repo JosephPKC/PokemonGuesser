@@ -31,6 +31,6 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v6
         with:
-          context: ./PokemonApi/
+          file: ./PokemonApi/Dockerfile
           push: true
-          tags: user/app:latest
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/pokemon-api:latest
