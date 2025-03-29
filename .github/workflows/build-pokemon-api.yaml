@@ -5,6 +5,9 @@ jobs:
   unit-tests:
     name: Unit Tests
     runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        dotnet-version: ['9.x']
     steps:
       -
         name: Checkout repo
