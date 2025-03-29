@@ -7,11 +7,16 @@ jobs:
     runs-on: ubuntu-latest
     strategy:
       matrix:
-        dotnet-version: ['9.x']
+        dotnet-version: ['9.0.x']
     steps:
       -
         name: Checkout repo
         uses: actions/checkout@v4
+      -
+        name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
       - 
         name: Run unit tests
         run: dotnet test ./PokemonApi/PokemonApi.sln
