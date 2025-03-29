@@ -11,7 +11,7 @@ jobs:
         uses: actions/checkout@v4
       - 
         name: Run unit tests
-        run: dotnet test ./PokemonApi.sln
+        run: dotnet test ./PokemonApi/PokemonApi.sln
   docker:
     name: Docker
     runs-on: ubuntu-latest
