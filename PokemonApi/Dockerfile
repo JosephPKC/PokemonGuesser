@@ -1,6 +1,6 @@
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
-COPY PokemonApi.csproj .
+COPY PokemonApi/PokemonApi.csproj .
 RUN dotnet restore
 COPY . .
 RUN dotnet publish -c release -o /app
