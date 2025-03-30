@@ -1,5 +1,5 @@
-name: PokemonApi
-run-name: Build PokemonApi for PR ( ${{ github.event.number }} ${{ github.event.pull_request.title }}) by ${{ github.actor }}
+name: PkmDataRetrieval Build
+run-name: Build for PR ( ${{ github.event.number }} ${{ github.event.pull_request.title }}) by ${{ github.actor }}
 on:
   push:
     branches: [main]
@@ -7,13 +7,13 @@ jobs:
   build-test:
     uses: ./.github/workflows/build-test.yaml
     with:
-        sln-path: ./PokemonApi/PokemonApi.sln
+        sln-path: ./PkmDataRetrieval/PkmDataRetrieval.sln
   build-push-docker:
     needs: [build-test]
     uses: ./.github/workflows/build-docker.yaml
     with:
-        docker-file-path: ./PokemonApi/Dockerfile
-        docker-tag-name: pokemon-api
+        docker-file-path: ./PkmDataRetrieval/Dockerfile
+        docker-tag-name: pkm-data-retrieval
     secrets: inherit
   deploy-kubernetes:
     needs: [build-test, build-push-docker]
