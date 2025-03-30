@@ -37,10 +37,12 @@ jobs:
           cache-from: type=gha
           cache-to: type=gha,mode=max
   # Currently do not have a Kubernetes cluster online, so won't be able to deploy to it.
-  #kubernetes:
-    #needs: [build-test, docker]
-    #runs-on: ubuntu-latest
-    #steps:
+  kubernetes:
+    needs: [build-test, docker]
+    runs-on: ubuntu-latest
+    steps:
+      - name: Not yet implemented
+        run: echo 'Kubernetes cluster not online, nowhere to deploy.'
       #- name: Checkout repo
       #  uses: actions/checkout@v4
       #- name: Deploy to kubernetes
