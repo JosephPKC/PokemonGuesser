@@ -1,8 +1,5 @@
 name: SonarQube
-env:
-  TITLE: ${{ github.event.pull_request.title }}
-  AUTHOR: $${{ github.actor }}
-run-name: Run SonarQube analysis for $TITLE by $AUTHOR
+run-name: Run SonarQube analysis for ${{ github.event.pull_request.title }} by $${{ github.actor }}
 on:
   pull_request:
     types: [opened, reopened]
