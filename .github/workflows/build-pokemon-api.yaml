@@ -1,5 +1,5 @@
 name: PokemonApi
-run-name: Building PokemonApi 🚀
+run-name: Build PokemonApi for ${{ github.event.pull_request.title }} by $${{ github.actor }}
 on:
   push:
     branches: [main]
