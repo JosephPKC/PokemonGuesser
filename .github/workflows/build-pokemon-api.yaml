@@ -40,6 +40,8 @@ jobs:
     needs: [build-test, docker]
     runs-on: ubuntu-latest
     steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
       - name: Deploy to kubernetes
         run: |
           kubectl apply -f deployment.yaml
