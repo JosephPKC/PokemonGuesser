@@ -15,5 +15,5 @@ spec:
       containers:
         - name: pokemon-api
           image: josephpkc/pokemon-api:latest
-      imagePullSecrets:
-        - name: docker-hub-registry
+          ports: 
+            - containerPort: 8080

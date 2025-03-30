@@ -3,11 +3,11 @@ kind: Service
 metadata:
   name: pokemon-guesser-service
 spec:
-  type: NodePort
+  type: LoadBalancer
   selector:
     app: pokemon-guesser
   ports:
     - name: pokemon-guesser
       protocol: TCP
-      port: 80
-      targetPort: 80
+      port: 5000
+      targetPort: 8080
