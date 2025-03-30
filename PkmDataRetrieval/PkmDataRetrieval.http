@@ -1,4 +1,4 @@
-@PkmDataRetrieval_HostAddress = http://localhost:5118
+@PkmDataRetrieval_HostAddress = http://localhost:5059
 
 GET {{PkmDataRetrieval_HostAddress}}/weatherforecast/
 Accept: application/json
