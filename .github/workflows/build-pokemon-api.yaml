@@ -36,14 +36,15 @@ jobs:
           tags: ${{ vars.DOCKERHUB_USERNAME }}/pokemon-api:latest
           cache-from: type=gha
           cache-to: type=gha,mode=max
-  kubernetes:
-    needs: [build-test, docker]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      - name: Deploy to kubernetes
-        run: |
-          kubectl apply -f deployment.yaml
-          kubectl apply -f service.yaml
+  # Currently do not have a Kubernetes cluster online, so won't be able to deploy to it.
+  #kubernetes:
+    #needs: [build-test, docker]
+    #runs-on: ubuntu-latest
+    #steps:
+      #- name: Checkout repo
+      #  uses: actions/checkout@v4
+      #- name: Deploy to kubernetes
+      #  run: |
+      #    kubectl apply -f deployment.yaml
+      #    kubectl apply -f service.yaml
     
