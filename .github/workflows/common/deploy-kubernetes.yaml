@@ -1,0 +1,16 @@
+name: Deploy to Kubernetes cluster
+
+jobs:
+  # Currently do not have a Kubernetes cluster online, so won't be able to deploy to it.
+  deploy-kubernetes:
+    name: Deploy to Kubernetes Cluster
+    runs-on: ubuntu-latest
+    steps:
+      - name: Not yet implemented
+        run: echo 'Kubernetes cluster not online, nowhere to deploy.'
+      #- name: Checkout repo
+      #  uses: actions/checkout@v4
+      #- name: Deploy to kubernetes
+      #  run: |
+      #    kubectl apply -f deployment.yaml
+      #    kubectl apply -f service.yaml

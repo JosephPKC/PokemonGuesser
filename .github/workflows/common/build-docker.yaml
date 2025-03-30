@@ -1,0 +1,28 @@
+name: Build and Push Docker Image
+on:
+  workflow_call:
+    inputs:
+      docker-file-path:
+        type: string
+      docker-tag-name:
+        type: string
+jobs:
+  build-push-docker:
+    name: Build and push docker image
+    runs-on: ubuntu-latest
+    steps:
+      - name: Login to docker hub
+        uses: docker/login-action@v3
+        with:
+          username: ${{ vars.DOCKERHUB_USERNAME }}
+          password: ${{ secrets.DOCKERHUB_PASS }}
+      - name: Set up docker Buildx
+        uses: docker/setup-buildx-action@v3
+      - name: Build and push
+        uses: docker/build-push-action@v6
+        with:
+          file: ./${{ inputs.docker-file-path }}/Dockerfile
+          push: true
+          tags: ${{ vars.DOCKERHUB_USERNAME }}/${{ inputs.docker-tag-name }}:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max

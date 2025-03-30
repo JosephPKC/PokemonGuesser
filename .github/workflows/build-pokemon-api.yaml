@@ -1,52 +1,20 @@
 name: PokemonApi
-run-name: Build PokemonApi for ${{ github.event.pull_request.title }} by ${{ github.actor }}
+run-name: Build PokemonApi for PR ( ${{ github.event.number }} ${{ github.event.pull_request.title }}) by ${{ github.actor }}
 on:
   push:
     branches: [main]
 jobs:
   build-test:
-    name: Build and test project
-    runs-on: ubuntu-latest
-    steps:
-      - name: Checkout repo
-        uses: actions/checkout@v4
-      - name: Setup .NET
-        uses: actions/setup-dotnet@v4
-        with:
-          dotnet-version: '9.0.x'
-      - name: Run tests
-        run: dotnet test ./PokemonApi/PokemonApi.sln
-  docker:
-    name: Build and Push Docker
-    runs-on: ubuntu-latest
+    uses: ./.github/workflows/common/build-test.yaml
+    with:
+        sln-path: ./PokemonApi/PokemonApi.sln
+  build-push-docker:
     needs: [build-test]
-    steps:
-      - name: Login to docker hub
-        uses: docker/login-action@v3
-        with:
-          username: ${{ vars.DOCKERHUB_USERNAME }}
-          password: ${{ secrets.DOCKERHUB_PASS }}
-      - name: Set up docker Buildx
-        uses: docker/setup-buildx-action@v3
-      - name: Build and push
-        uses: docker/build-push-action@v6
-        with:
-          file: ./PokemonApi/Dockerfile
-          push: true
-          tags: ${{ vars.DOCKERHUB_USERNAME }}/pokemon-api:latest
-          cache-from: type=gha
-          cache-to: type=gha,mode=max
-  # Currently do not have a Kubernetes cluster online, so won't be able to deploy to it.
-  kubernetes:
-    needs: [build-test, docker]
-    runs-on: ubuntu-latest
-    steps:
-      - name: Not yet implemented
-        run: echo 'Kubernetes cluster not online, nowhere to deploy.'
-      #- name: Checkout repo
-      #  uses: actions/checkout@v4
-      #- name: Deploy to kubernetes
-      #  run: |
-      #    kubectl apply -f deployment.yaml
-      #    kubectl apply -f service.yaml
+    uses: ./.github/workflows/common/build-docker.yaml
+    with:
+        docker-file-path: ./PokemonApi/Dockerfile
+        docker-tag-name: pokemon-api
+  deploy-kubernetes:
+    needs: [build-test, build-push-docker]
+    uses: ./.github/workflows/common/deploy-kubernetes.yaml
     
