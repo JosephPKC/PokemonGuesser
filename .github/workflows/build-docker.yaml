@@ -21,7 +21,7 @@ jobs:
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          file: ./${{ inputs.docker-file-path }}/Dockerfile
+          file: ${{ inputs.docker-file-path }}
           push: true
           tags: ${{ vars.DOCKERHUB_USERNAME }}/${{ inputs.docker-tag-name }}:latest
           cache-from: type=gha
