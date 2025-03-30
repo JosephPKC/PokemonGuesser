@@ -16,7 +16,7 @@ jobs:
           dotnet-version: '9.0.x'
       - 
         name: Run unit tests
-        run: dotnet test ./PokemonApi/PokemonApi.sln
+        run: dotnet test PokemonApi.sln
   docker:
     name: Docker
     runs-on: ubuntu-latest
@@ -31,6 +31,5 @@ jobs:
         name: Build and push
         uses: docker/build-push-action@v6
         with:
-          file: ./PokemonApi/Dockerfile
           push: true
           tags: ${{ vars.DOCKERHUB_USERNAME }}/pokemon-api:latest
