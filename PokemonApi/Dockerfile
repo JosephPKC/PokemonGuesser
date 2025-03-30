@@ -1,4 +1,4 @@
-FROM mcr.microsoft.com/dotnet/core/aspnet:9.0 AS base
+FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
 USER app
 WORKDIR /app
 EXPOSE 8080
@@ -6,7 +6,7 @@ EXPOSE 8081
 
 FROM mcr.microsoft.com/dotnet/sdk:9.0 AS build
 WORKDIR /src
-COPY *.csproj ./
+COPY PokemonApi/PokemonApi.csproj ./
 RUN dotnet restore
 COPY . ./
 RUN dotnet build -c Release -o /app/build
