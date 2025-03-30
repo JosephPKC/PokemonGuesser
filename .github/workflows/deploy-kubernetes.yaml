@@ -1,5 +1,6 @@
 name: Deploy to Kubernetes cluster
-
+on:
+  workflow_call:
 jobs:
   # Currently do not have a Kubernetes cluster online, so won't be able to deploy to it.
   deploy-kubernetes:
