@@ -1,6 +1,8 @@
 name: PokemonApi
 run-name: Building PokemonApi 🚀
-on: [push]
+on:
+  push:
+    branches: [main]
 jobs:
   build-test:
     name: Build and test project
