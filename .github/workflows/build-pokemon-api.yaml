@@ -34,3 +34,5 @@ jobs:
           file: ./PokemonApi/Dockerfile
           push: true
           tags: ${{ vars.DOCKERHUB_USERNAME }}/pokemon-api:latest
+          cache-from: type=gha
+          cache-to: type=gha,mode=max
