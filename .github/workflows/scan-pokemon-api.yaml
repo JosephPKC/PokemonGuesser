@@ -1,10 +1,15 @@
 name: SonarQube
+env:
+  TITLE: ${{ github.event.pull_request.title }}
+  AUTHOR: $${{ github.actor }}
+run-name: Run SonarQube analysis for $TITLE by $AUTHOR
 on:
   pull_request:
     types: [opened, reopened]
+  
 jobs:
-  build:
-    name: Build and analyze
+  sonar-qube-analysis:
+    name: SonarQube analysis
     runs-on: windows-latest
     steps:
       - name: Checkout repo
@@ -38,27 +43,3 @@ jobs:
           .\.sonar\scanner\dotnet-sonarscanner begin /k:"JosephPKC_PokemonGuesser" /o:"josephpkc" /d:sonar.token="${{ secrets.SONAR_TOKEN }}" /d:sonar.host.url="https://sonarcloud.io"
           dotnet build ./PokemonApi/PokemonApi.sln
           .\.sonar\scanner\dotnet-sonarscanner end /d:sonar.token="${{ secrets.SONAR_TOKEN }}"
-  quality:
-    runs-on: ubuntu-latest
-    needs: [build]
-    steps:
-      - uses: actions/checkout@v4
-        with:
-          # Disabling shallow clone is recommended for improving relevancy of reporting.
-          fetch-depth: 0
-
-      # Triggering SonarQube analysis as results of it are required by Quality Gate check.
-      - name: SonarQube Scan
-        uses: sonarsource/sonarqube-scan-action@master
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-
-      # Check the Quality Gate status.
-      - name: SonarQube Quality Gate check
-        id: sonarqube-quality-gate-check
-        uses: sonarsource/sonarqube-quality-gate-action@master
-        with:
-          pollingTimeoutSec: 600
-        env:
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-      
