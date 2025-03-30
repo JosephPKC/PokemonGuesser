@@ -2,7 +2,7 @@ name: Build and Test Solution
 on:
   workflow_call:
     inputs:
-      sln-path-name:
+      sln-path:
         type: string
 jobs:
   build-test:
@@ -16,8 +16,8 @@ jobs:
         with:
           dotnet-version: '9.0.x'
       - name: Install dependencies
-        run: dotnet restore ${{ inputs.sln-path-name }}
+        run: dotnet restore ${{ inputs.sln-path }}
       - name: Build solution
-        run: dotnet build ${{ inputs.sln-path-name }} --configuration Release --no-restore
+        run: dotnet build ${{ inputs.sln-path }} --configuration Release --no-restore
       - name: Run tests
-        run: dotnet test ${{ inputs.sln-path-name }} --configuration Release --no-build
+        run: dotnet test ${{ inputs.sln-path }} --configuration Release --no-build
