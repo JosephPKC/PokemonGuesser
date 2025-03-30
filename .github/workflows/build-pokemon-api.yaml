@@ -5,16 +5,16 @@ on:
     branches: [main]
 jobs:
   build-test:
-    uses: ./.github/workflows/common/build-test.yaml
+    uses: ./.github/workflows/build-test.yaml
     with:
         sln-path: ./PokemonApi/PokemonApi.sln
   build-push-docker:
     needs: [build-test]
-    uses: ./.github/workflows/common/build-docker.yaml
+    uses: ./.github/workflows/build-docker.yaml
     with:
         docker-file-path: ./PokemonApi/Dockerfile
         docker-tag-name: pokemon-api
   deploy-kubernetes:
     needs: [build-test, build-push-docker]
-    uses: ./.github/workflows/common/deploy-kubernetes.yaml
+    uses: ./.github/workflows/deploy-kubernetes.yaml
     
