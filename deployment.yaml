@@ -1,19 +1,36 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: pokemon-guesser-deployment
+  name: pkm-guess-depl
 spec:
   replicas: 1
   selector:
     matchLabels:
-      app: pokemon-guesser
+      app: pkm-guess
   template:
     metadata:
       labels:
-        app: pokemon-guesser
+        app: pkm-guess
     spec:
       containers:
-        - name: pokemon-api
-          image: josephpkc/pokemon-api:latest
+        - name: pkm-data-retrieval
+          image: josephpkc/pkm-data-retrieval:latest
           ports: 
             - containerPort: 8080
+          imagePullPolicy: Always
+          
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: pkm-guess-serv
+spec:
+  type: LoadBalancer
+  selector:
+    app: pkm-guess
+  ports:
+    - name: pkm-guess
+      protocol: TCP
+      port: 5000
+      targetPort: 8080

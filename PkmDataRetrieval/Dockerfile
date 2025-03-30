@@ -27,4 +27,4 @@ RUN dotnet publish "./PkmDataRetrieval.csproj" -c $BUILD_CONFIGURATION -o /app/p
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
-ENTRYPOINT ["dotnet", "PkmDataRetrieval.dll"]
+ENTRYPOINT ["dotnet", "PkmDataRetrieval_Service.dll"]
