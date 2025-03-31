@@ -3,8 +3,8 @@ run-name: Run SonarQube analysis for PR ( ${{ github.event.number }} ${{ github.
 on:
   pull_request:
     types: [opened, reopened]
-    paths: ['PkmApi/**', 'PkmDataRetrieval/**']
-  
+    paths-ignore: ['PkmApi/**', 'PkmDataRetrieval/**']
+    
 jobs:
   sonar-qube-analysis:
     uses: ./.github/workflows/sonarqube-scan.yaml
