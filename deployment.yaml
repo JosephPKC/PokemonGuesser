@@ -22,12 +22,12 @@ spec:
           image: josephpkc/pkm-data-retrieval:latest
           imagePullPolicy: Always
           ports: 
-            - containerPort: 8080
+            - containerPort: 8080 # Port for this specific container
           livenessProbe:
             httpGet:
               path: /
-              port: 8080
-            initialDelaySeconds: 10
+              port: 5000
+            initialDelaySeconds: 30
             timeoutSeconds: 5
           
 ---
@@ -44,8 +44,8 @@ spec:
   ports:
     - name: pkm-guess
       protocol: TCP
-      port: 5000
-      targetPort: 8080
+      port: 5000 # The Service listens on this port.
+      targetPort: 8080 # The Service maps data from the above port to this port, which is where the actual app is.
       
 ---
 

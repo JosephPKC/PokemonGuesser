@@ -3,6 +3,9 @@ run-name: Build for PR ( ${{ github.event.number }} ${{ github.event.pull_reques
 on:
   push:
     branches: [main]
+  paths:
+    - PkmApi/** # Api is a separate library, but it should only be used form this service.
+    - PkmDataRetrieval/**
 jobs:
   build-test:
     uses: ./.github/workflows/build-test.yaml
