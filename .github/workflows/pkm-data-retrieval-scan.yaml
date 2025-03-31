@@ -8,5 +8,5 @@ jobs:
   sonar-qube-analysis:
     uses: ./.github/workflows/sonarqube-scan.yaml
     with:
-        sln-file-path: ./PkmDataRetrieval/PkmDataRetrieval.sln
+      sln-file-path: ./PkmDataRetrieval/PkmDataRetrieval.sln
     secrets: inherit

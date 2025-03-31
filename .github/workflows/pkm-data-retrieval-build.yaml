@@ -1,22 +1,22 @@
 name: PkmDataRetrieval Build
 run-name: Build for PR ( ${{ github.event.number }} ${{ github.event.pull_request.title }}) by ${{ github.actor }}
 on:
-    push:
-        branches: [main]
-        # Api is a separate library, but it should only be used form this services
-        paths: ['PkmApi/**', 'PkmDataRetrieval/**']
+  push:
+    branches: [main]
+    # Api is a separate library, but it should only be used form this services
+    paths: ['PkmApi/**', 'PkmDataRetrieval/**']
 jobs:
-    build-test:
-        uses: ./.github/workflows/build-test.yaml
-        with:
-            sln-path: ./PkmDataRetrieval/PkmDataRetrieval.sln
-    build-push-docker:
-        needs: [build-test]
-        uses: ./.github/workflows/build-docker.yaml
-        with:
-            docker-file-path: ./PkmDataRetrieval/Dockerfile
-            docker-tag-name: pkm-data-retrieval
-        secrets: inherit
-    deploy-kubernetes:
-        needs: [build-test, build-push-docker]
-        uses: ./.github/workflows/deploy-kubernetes.yaml
+  build-test:
+    uses: ./.github/workflows/build-test.yaml
+    with:
+      sln-path: ./PkmDataRetrieval/PkmDataRetrieval.sln
+  build-push-docker:
+    needs: [build-test]
+    uses: ./.github/workflows/build-docker.yaml
+    with:
+      docker-file-path: ./PkmDataRetrieval/Dockerfile
+      docker-tag-name: pkm-data-retrieval
+    secrets: inherit
+  deploy-kubernetes:
+    needs: [build-test, build-push-docker]
+    uses: ./.github/workflows/deploy-kubernetes.yaml
