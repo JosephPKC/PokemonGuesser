@@ -3,6 +3,8 @@ kind: Deployment
 metadata:
   name: pkm-guess-depl
   namespace: pkm-guess
+  labels:
+    name: "pkm-guess"
   annotations:
     keel.sh/policy: force
 spec:
@@ -18,6 +20,7 @@ spec:
       containers:
         - name: pkm-data-retrieval
           image: josephpkc/pkm-data-retrieval:latest
+          imagePullPolicy: Always
           ports: 
             - containerPort: 8080
           livenessProbe:
