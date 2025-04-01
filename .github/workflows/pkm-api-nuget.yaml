@@ -1,0 +1,13 @@
+name: PkmApi Library Build and Push
+run-name: Build for PR ( ${{ github.event.number }} ${{ github.event.pull_request.title }}) by ${{ github.actor }}
+on:
+  push:
+    branches: [main]
+    paths: ['PkmApi/**']
+jobs:
+  nuget-push:
+    uses: ./.github/workflows/nuget-push.yaml
+    with:
+      pckg-name: JosephPKC.PkmApi
+      sln-path: ./PkmApi/PkmApi/PkmApi.sln
+    secrets: inherit

@@ -1,0 +1,31 @@
+name: Build, Test and Push NuGet
+on:
+  workflow_call:
+    inputs:
+      pckg-name:
+        type: string
+      sln-path:
+        type: string
+jobs:
+  build-test:
+    name: Build, test, and push nuget package
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup .NET
+        uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '9.0.x'
+      - name: Set version
+        run: echo "VERSION=${GITHUB_REF/refs\/tags\/v/}" >> $GITHUB_ENV
+      - name: Install dependencies
+        run: dotnet restore ${{ inputs.sln-path }}
+      - name: Build solution
+        run: dotnet build ${{ inputs.sln-path }} --configuration Release /p:Version=${VERSION} --no-restore
+      - name: Run tests
+        run: dotnet test ${{ inputs.sln-path }} --configuration Release /p:Version=${VERSION} --no-build
+      - name: Pack NuGet
+        run: dotnet pack ${{ inputs.sln-path }} --configuration Release /p:Version=${VERSION} --no-build --output .
+      - name: Push NuGet
+        run: dotnet nuget push NuGet.${{ inputs.pckg-name }}.${VERSION}.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_KEY }}
