@@ -1,0 +1,13 @@
+name: SonarQube
+run-name: Run SonarQube analysis for PR ( ${{ github.event.number }} ${{ github.event.pull_request.title }}) by ${{ github.actor }}
+on:
+  pull_request:
+    types: [opened, reopened]
+    paths: ['PkmApi/**']
+  
+jobs:
+  sonar-qube-analysis:
+    uses: ./.github/workflows/sonarqube-scan.yaml
+    with:
+      sln-file-path: ./PkmApi/PkmApi/PkmApi.sln
+    secrets: inherit
