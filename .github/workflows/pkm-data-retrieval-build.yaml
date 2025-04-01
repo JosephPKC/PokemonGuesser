@@ -3,18 +3,17 @@ run-name: Build for PR ( ${{ github.event.number }} ${{ github.event.pull_reques
 on:
   push:
     branches: [main]
-    # Api is a separate library, but it should only be used form this services
-    paths: ['PkmApi/**', 'PkmDataRetrieval/**']
+    paths: ['PkmDataRetrieval/**']
 jobs:
   build-test:
     uses: ./.github/workflows/build-test.yaml
     with:
-      sln-path: ./PkmDataRetrieval/PkmDataRetrieval.sln
+      sln-path: ./PkmDataRetrieval/PkmDataRetrieval/PkmDataRetrieval.sln
   build-push-docker:
     needs: [build-test]
     uses: ./.github/workflows/build-docker.yaml
     with:
-      docker-file-path: ./PkmDataRetrieval/Dockerfile
+      docker-file-path: ./PkmDataRetrieval/PkmDataRetrieval/Dockerfile
       docker-tag-name: pkm-data-retrieval
     secrets: inherit
   deploy-kubernetes:

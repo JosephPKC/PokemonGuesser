@@ -4,6 +4,12 @@
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
+
+	<PackageId>JosephPKC.PkmApi</PackageId>
+	<Version>1.0.0</Version>
+	<Authors>JosephPKC</Authors>
+	<Company>JosephPKC</Company>
+	<IsPackable>true</IsPackable>
   </PropertyGroup>
 
 </Project>
