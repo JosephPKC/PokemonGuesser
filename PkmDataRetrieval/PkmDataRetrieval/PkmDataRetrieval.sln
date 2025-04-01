@@ -1,9 +1,9 @@
 ﻿
 Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
-VisualStudioVersion = 17.13.35919.96 d17.13
+VisualStudioVersion = 17.13.35919.96
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PkmDataRetrieval", "PkmDataRetrieval.csproj", "{6799EB49-96DF-41B9-9474-F115D8EED3F5}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PkmDataRetrieval", "PkmDataRetrieval.csproj", "{7406CB8B-EF4D-3663-935C-42456E2BD64C}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -11,10 +11,10 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{6799EB49-96DF-41B9-9474-F115D8EED3F5}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{6799EB49-96DF-41B9-9474-F115D8EED3F5}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{6799EB49-96DF-41B9-9474-F115D8EED3F5}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{6799EB49-96DF-41B9-9474-F115D8EED3F5}.Release|Any CPU.Build.0 = Release|Any CPU
+		{7406CB8B-EF4D-3663-935C-42456E2BD64C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{7406CB8B-EF4D-3663-935C-42456E2BD64C}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{7406CB8B-EF4D-3663-935C-42456E2BD64C}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{7406CB8B-EF4D-3663-935C-42456E2BD64C}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
