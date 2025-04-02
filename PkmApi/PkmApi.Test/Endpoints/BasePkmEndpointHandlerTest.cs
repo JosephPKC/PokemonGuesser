@@ -43,7 +43,6 @@ namespace PkmApi.Test.Endpoints
         {
             // Arrange
             IEndpointHandler<BasicTestDTO> handler = GetEndpointHandler(typeof(ResLiDTO));
-            string id = "1";
 
             ResLiDTO expected = TestValues.Test_ResLiDTO;
 

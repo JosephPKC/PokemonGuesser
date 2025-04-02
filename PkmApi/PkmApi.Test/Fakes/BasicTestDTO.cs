@@ -5,13 +5,11 @@ using PkmApi.DTOs;
 namespace PkmApi.Test.Fakes
 {
     public record BasicTestDTO(
-        [property: JsonPropertyName("name")]
         string                          Name,
-        [property: JsonPropertyName("id")]
         int                             Id,
         [property: JsonPropertyName("sub-data")]
         IImmutableList<BasicTestSDTO>   SubData
-    ) : BasePkmDTO;
+    ) : BasePkmDTO(Id, Name);
 
     public record BasicTestSDTO(
         [property: JsonPropertyName("value")]

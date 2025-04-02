@@ -6,8 +6,6 @@ namespace PkmApi.Utils
     // But, for now, we can just use this.
     internal class JsonParser : IJsonParser
     {
-        private readonly JsonSerializerOptions _options = new();
-
         #region IJsonParser
         public TObj? Deserialize<TObj>(string pJson)
         {
