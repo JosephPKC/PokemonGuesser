@@ -1,19 +1,15 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
   <PropertyGroup>
+    <OutputType>Exe</OutputType>
     <TargetFramework>net9.0</TargetFramework>
     <ImplicitUsings>enable</ImplicitUsings>
     <Nullable>enable</Nullable>
-
-	<PackageId>JosephPKC.PkmApi</PackageId>
-	<Version>1.0.0</Version>
-	<Authors>JosephPKC</Authors>
-	<Company>JosephPKC</Company>
-	<IsPackable>true</IsPackable>
+	<IsPackable>false</IsPackable>
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="System.Text.Json" Version="9.0.3" />
+    <ProjectReference Include="..\PkmApi\PkmApi.csproj" />
   </ItemGroup>
 
 </Project>

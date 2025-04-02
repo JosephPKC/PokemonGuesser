@@ -1,7 +1,4 @@
 ﻿namespace PkmApi.DTOs
 {
-    public abstract record BasePkmDTO(
-        int     Id, 
-        string  Name
-    );
+    public abstract record BasePkmDTO();
 }
