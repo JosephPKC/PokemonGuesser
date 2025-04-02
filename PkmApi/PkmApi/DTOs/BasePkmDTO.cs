@@ -1,7 +1,11 @@
-﻿namespace PkmApi.DTOs
+﻿using System.Text.Json.Serialization;
+
+namespace PkmApi.DTOs
 {
     public abstract record BasePkmDTO(
-        int     Id, 
+        [property: JsonPropertyName("id")]
+        int     Id,
+        [property: JsonPropertyName("name")]
         string  Name
     );
 }
