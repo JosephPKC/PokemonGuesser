@@ -15,7 +15,9 @@ namespace PkmApi.DTOs.Pokemon
     using PkmTypeLi             = IImmutableList<PkmTypeSDTO>;
 
     public record PkmDTO(
+        [property: JsonPropertyName("id")]
         int                     Id,
+        [property: JsonPropertyName("name")]
         string                  Name,
         [property: JsonPropertyName("base_experience")]
         int?                    BaseExperience          = null,
@@ -51,5 +53,5 @@ namespace PkmApi.DTOs.Pokemon
         PkmStatLi?              Stats                   = null,
         [property: JsonPropertyName("types")]
         PkmTypeLi?              Types                   = null
-    ) : BasePkmDTO(Id, Name);
+    ) : IPkmApiDTO;
 }
