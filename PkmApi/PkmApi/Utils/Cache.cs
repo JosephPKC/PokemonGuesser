@@ -11,6 +11,8 @@ namespace PkmApi.Utils
         private readonly long _sizeLimit = 1024;
         private readonly int _defaultLifeInSec = 300;
 
+        protected bool _disposed = false;
+
         public Cache(long? pSizeLimit = null, int? pLifeInSec = null)
         {
             if (pSizeLimit != null)
@@ -52,7 +54,7 @@ namespace PkmApi.Utils
 
         public void Clear()
         {
-            _cache.Dispose();
+            
             _cache = new MemoryCache(new MemoryCacheOptions() { SizeLimit = _sizeLimit });
         }
 
@@ -70,8 +72,23 @@ namespace PkmApi.Utils
         #region IDisposable
         public void Dispose()
         {
-            _cache.Dispose();
+            Dispose(true);
             GC.SuppressFinalize(this);
+        }
+
+        protected virtual void Dispose(bool pDisposing)
+        {
+            if (_disposed)
+            {
+                return;
+            }
+
+            if (pDisposing)
+            {
+                _cache.Dispose();
+            }
+
+            _disposed = true;
         }
         #endregion
     }
