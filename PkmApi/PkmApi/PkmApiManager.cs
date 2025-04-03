@@ -10,12 +10,12 @@ namespace PkmApi
 
         public PkmApiManager()
         {
-            Pokemon = EndpointHandlerFactory.BuildEndpointHandler<PkmDTO>(_baseUri, "v2", "pokemon", new HttpGetter(), new JsonParser(), new ConsoleLogger());
+            Pokemon = EndpointHandlerFactory.BuildEndpointHandler<PkmDTO>(_baseUri, "v2", "pokemon", new HttpGetter(), new JsonParser(), new ConsoleLogger(), new CacheFactory());
         }
 
-        public PkmApiManager(string pVersion, IApiGetter? pApiGetter = null, IJsonParser? pJsonParser = null, ILogger? pLogger = null)
+        public PkmApiManager(string pVersion, IApiGetter? pApiGetter = null, IJsonParser? pJsonParser = null, ILogger? pLogger = null, ICacheFactory? pCacheFactory = null, int? pCacheSizeLimit = null, int? pCacheLifeInSec = null)
         {
-            Pokemon = EndpointHandlerFactory.BuildEndpointHandler<PkmDTO>(_baseUri, pVersion, "pokemon", pApiGetter ?? new HttpGetter(), pJsonParser ?? new JsonParser(), pLogger ?? new ConsoleLogger());
+            Pokemon = EndpointHandlerFactory.BuildEndpointHandler<PkmDTO>(_baseUri, pVersion, "pokemon", pApiGetter ?? new HttpGetter(), pJsonParser ?? new JsonParser(), pLogger ?? new ConsoleLogger(), pCacheFactory, pCacheSizeLimit, pCacheLifeInSec);
         }
 
         #region Endpoints

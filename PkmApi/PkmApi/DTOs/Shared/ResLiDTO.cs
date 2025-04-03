@@ -14,5 +14,5 @@ namespace PkmApi.DTOs.Shared
         string          Previous,
         [property: JsonPropertyName("results")]
         NamedApiResLi   Results
-    );
+    ) : IPkmApiDTO;
 }
