@@ -8,7 +8,7 @@ namespace PkmApi.Endpoints
     internal class BasePkmEndpointHandler<TData>(
         string pBaseUri, string pVersion, string pEndpoint, IApiGetter pApiGetter, IJsonParser pJsonParser, ILogger pLogger, 
         ICacheFactory? pCacheFactory = null, int? pCacheSizeLimit = null, int? pCacheLifeInSec = null) 
-        : IEndpointHandler<TData> where TData : IPkmApiDTO
+        : IEndpointHandler<TData> where TData : class, IPkmApiDTO
     {
         private readonly string _baseUri = pBaseUri;
         private readonly string _version = pVersion;
@@ -50,7 +50,7 @@ namespace PkmApi.Endpoints
         }
         #endregion
 
-        private TActual? GetData<TActual>(string pUri) where TActual : IPkmApiDTO
+        private TActual? GetData<TActual>(string pUri) where TActual : class, IPkmApiDTO
         {
             if (_cache != null)
             {
@@ -76,7 +76,11 @@ namespace PkmApi.Endpoints
             if (_cache != null)
             {
                 log.Debug($"Added to cache with key {pUri}.");
-                _cache.Add(pUri, result);
+                bool resSuccess = _cache.Add(pUri, result);
+                if (!resSuccess)
+                {
+                    log.Warn($"Failed to add to cache with key ${pUri}");
+                }
             }
 
             return result;

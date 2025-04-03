@@ -4,6 +4,7 @@ using Microsoft.Extensions.Caching.Memory;
 namespace PkmApi.Utils
 {
     //  TODO: Just like the other utils, this will be in a separate utils proj later on that this proj references via NuGet
+    //  Look to improving this for TData = value types, esp with the nullability/etc
     internal class Cache<TData> : ICache<TData>, IDisposable
     {
         private MemoryCache _cache;
@@ -34,7 +35,7 @@ namespace PkmApi.Utils
             }
 
             TData? item = Get(pKey);
-            if (item != null && !pOverwrite)
+            if (!EqualityComparer<TData>.Default.Equals(item, default) && !pOverwrite)
             {
                 return false;
             }

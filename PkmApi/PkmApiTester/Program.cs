@@ -9,6 +9,7 @@ namespace PkmApiTester
 {
     public static class Program
     {
+        public static bool ShowJsonLogs = false;
         public static void Main(string[] pArgs)
         {
             //  Create the Api
@@ -21,16 +22,19 @@ namespace PkmApiTester
             string pkmId = "32";
             Console.WriteLine($"*** BEGIN: GET SINGLE POKEMON ({pkmId})\n");
             PkmDTO? singleRes = api.Pokemon.GetById(pkmId);
-            if (singleRes != null)
+            Console.WriteLine(singleRes != null ? "SUCCESS" : "FAILURE");
+            if (singleRes != null && ShowJsonLogs)
             {
                 Console.WriteLine(JsonSerializer.Serialize(singleRes));
+                
             }
             Console.WriteLine($"*** END: GET SINGLE POKEMON ({pkmId})\n");
 
             //  Get the same Pokemon again
             Console.WriteLine($"*** BEGIN: GET SAME POKEMON ({pkmId})\n");
             singleRes = api.Pokemon.GetById(pkmId);
-            if (singleRes != null)
+            Console.WriteLine(singleRes != null ? "SUCCESS" : "FAILURE");
+            if (singleRes != null && ShowJsonLogs)
             {
                 Console.WriteLine(JsonSerializer.Serialize(singleRes));
             }
@@ -40,10 +44,12 @@ namespace PkmApiTester
             int limit = 50;
             Console.WriteLine($"*** BEGIN: GET FIRST {limit} POKEMON\n");
             ResLiDTO? allRes = api.Pokemon.GetAll(limit, 0);
-            if (allRes != null)
+            Console.WriteLine(allRes != null ? "SUCCESS" : "FAILURE");
+            if (allRes != null && ShowJsonLogs)
             {
                 Console.WriteLine(JsonSerializer.Serialize(allRes));
             }
+            
             Console.WriteLine($"*** END: GET FIRST {limit} POKEMON\n");
         }
     }
