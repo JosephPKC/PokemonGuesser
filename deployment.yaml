@@ -23,12 +23,12 @@ spec:
           imagePullPolicy: Always
           ports: 
             - containerPort: 8080 # Port for this specific container
-          livenessProbe:
-            httpGet:
-              path: /
-              port: 5000
-            initialDelaySeconds: 30
-            timeoutSeconds: 5
+          # livenessProbe:
+            # httpGet:
+              # path: /
+              # port: 5000
+            # initialDelaySeconds: 30
+            # timeoutSeconds: 5
           
 ---
 
@@ -53,6 +53,7 @@ apiVersion: forward.webhookrelay.com/v1
 kind: WebhookRelayForward
 metadata:
   name: keel-forward
+  namespace: pkm-guess
 spec:
   buckets:
   - name: dockerhub-to-keel
