@@ -10,7 +10,7 @@ ARG BUILD_CONFIGURATION=Release
 WORKDIR /src
 COPY ["PkmDataRetrieval/PkmDataRetrieval/PkmDataRetrieval.csproj", "."]
 RUN dotnet restore "./PkmDataRetrieval.csproj"
-COPY . .
+COPY ./PkmDataRetrieval/PkmDataRetrieval/ .
 WORKDIR "/src/."
 RUN dotnet build "./PkmDataRetrieval.csproj" -c $BUILD_CONFIGURATION -o /app/build
 
