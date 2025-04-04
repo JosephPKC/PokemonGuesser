@@ -6,12 +6,12 @@
     <Nullable>enable</Nullable>
 
 	<PackageId>JosephPKC.PkmApi</PackageId>
-	<Version>1.0.0</Version>
+	<Version>1.1.0</Version>
 	<Authors>JosephPKC</Authors>
 	<Company>JosephPKC</Company>
 	<IsPackable>true</IsPackable>
 	<Title>PkmApi</Title>
-	<GeneratePackageOnBuild>False</GeneratePackageOnBuild>
+	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<Description>A simple wrapper library for PokeApi used for personal projects. Not meant for business/commercial use.</Description>
   </PropertyGroup>
 
