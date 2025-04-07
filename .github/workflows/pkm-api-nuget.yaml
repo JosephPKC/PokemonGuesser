@@ -1,6 +1,7 @@
 name: PkmApi Library Build and Push
 run-name: Build for PR ( ${{ github.event.number }} ${{ github.event.pull_request.title }}) by ${{ github.actor }}
 on:
+  workflow_dispatch:
   push:
     branches: [main]
     paths: ['PkmApi/**']
