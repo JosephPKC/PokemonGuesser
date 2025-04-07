@@ -9,14 +9,14 @@ namespace PkmApiTester
 {
     public static class Program
     {
-        public static bool ShowJsonLogs = false;
+        private static bool ShowJsonLogs { get; set; } = false;
         public static void Main(string[] pArgs)
         {
             //  Create the Api
             ILogger log = LoggerFactory.BuildConsoleLogger();
             log.SetLogLevel(LogLevel.Debug);
 
-            PkmApiManager api = new("v2", pLogger: log, pCacheFactory: new CacheFactory());
+            IPkmApi api = PkmApiFactory.CreatePkmApi("v2", pLogger: log, pCacheFactory: new CacheFactory());
 
             //  Get a single Pokemon
             string pkmId = "32";
