@@ -26,4 +26,4 @@ jobs:
       - name: Pack NuGet
         run: dotnet pack ${{ inputs.sln-path }} --configuration Release --no-build --output .
       - name: Push NuGet
-        run: dotnet nuget push NuGet.${{ inputs.pckg-name }}.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_KEY }}
+        run: dotnet nuget push ${{ inputs.pckg-name }}.nupkg --source https://api.nuget.org/v3/index.json --api-key ${{ secrets.NUGET_KEY }}
