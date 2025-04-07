@@ -26,8 +26,8 @@ jobs:
       - name: Get project version
         id: get-version
         run: kzrnm/get-net-sdk-project-versions-action@v2
-        with:
-          proj-path: ${{ inputs.sln-path }}
+          with:
+            proj-path: ${{ inputs.sln-path }}
       - name: Pack NuGet
         run: dotnet pack ${{ inputs.sln-path }} --configuration Release --no-build --output .
       - name: Push NuGet
