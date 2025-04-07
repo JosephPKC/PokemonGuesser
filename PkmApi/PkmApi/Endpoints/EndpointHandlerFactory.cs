@@ -8,7 +8,7 @@ namespace PkmApi.Endpoints
         public static IEndpointHandler<TData> BuildEndpointHandler<TData>(string pBaseUri, string pVersion, string pEndpoint) where TData : class, IPkmApiDTO
         {
 
-            return BuildEndpointHandler<TData>(pBaseUri, pVersion, pEndpoint, new HttpGetter(), new JsonParser(), new ConsoleLogger(), new CacheFactory(), 1024, 600);
+            return BuildEndpointHandler<TData>(pBaseUri, pVersion, pEndpoint, new HttpGetter(), new JsonParser(), new ConsoleLogger(), new CacheFactory(), Config.DefaultCacheSizeLimit, Config.DefaultCacheLifeInSec);
         }
 
         public static IEndpointHandler<TData> BuildEndpointHandler<TData>(

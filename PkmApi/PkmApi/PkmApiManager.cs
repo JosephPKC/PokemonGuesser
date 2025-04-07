@@ -4,12 +4,12 @@ using PkmApi.Utils;
 
 namespace PkmApi
 {
-    internal class PkmApiManager(string pVersion, 
+    internal class PkmApiManager(string pVersion = Config.DefaultApiVersion, 
         IApiGetter? pApiGetter = null, IJsonParser? pJsonParser = null, ILogger? pLogger = null, 
         ICacheFactory? pCacheFactory = null, int? pCacheSizeLimit = null, int? pCacheLifeInSec = null) 
         : IPkmApi
     {
-        private static readonly string _baseUri = "pokeapi.co/api";
+        private static readonly string _baseUri = Config.ApiBaseUri;
 
         #region IPkmApi
         public IEndpointHandler<PkmDTO> Pokemon { get; init; } = EndpointHandlerFactory.BuildEndpointHandler<PkmDTO>(

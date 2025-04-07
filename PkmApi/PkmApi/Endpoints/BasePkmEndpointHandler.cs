@@ -1,5 +1,4 @@
-﻿using System;
-using PkmApi.DTOs;
+﻿using PkmApi.DTOs;
 using PkmApi.DTOs.Shared;
 using PkmApi.Utils;
 
@@ -32,7 +31,7 @@ namespace PkmApi.Endpoints
             return result;
         }
 
-        public ResLiDTO? GetAll(int pLimit = 20, int pOffset = 0)
+        public ResLiDTO? GetAll(int pLimit = Config.DefaultApiPaginationLimit, int pOffset = Config.DefaultApiPaginationOffset)
         {
             IDictionary<string, string> queryParams = new Dictionary<string, string>()
             {
