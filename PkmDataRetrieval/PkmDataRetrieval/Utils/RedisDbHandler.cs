@@ -4,7 +4,7 @@ using StackExchange.Redis;
 namespace PkmDataRetrieval.Utils
 {
     //  A basic handler that makes common usage easier.
-    public class RedisDbHandler(IConnectionMultiplexer pRedisMutex, string pPrefixPath)
+    internal class RedisDbHandler(IConnectionMultiplexer pRedisMutex, string pPrefixPath)
     {
         private readonly IDatabase _db = pRedisMutex.GetDatabase();
         private readonly string _prefixPath = pPrefixPath;
