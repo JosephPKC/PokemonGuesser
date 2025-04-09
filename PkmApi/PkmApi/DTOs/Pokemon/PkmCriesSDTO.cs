@@ -1,8 +1,8 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace PkmApi.DTOs.Pokemon
+namespace PkmApi.Dtos.Pokemon
 {
-    public record PkmCriesSDTO(
+    public record PkmCriesSdto(
         [property: JsonPropertyName("latest")]
         string? Latest = null,
         [property: JsonPropertyName("legacy")]

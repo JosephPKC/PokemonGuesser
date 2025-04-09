@@ -1,4 +1,4 @@
-﻿namespace PkmApi.DTOs
+﻿namespace PkmApi.Dtos
 {
-    public interface IPkmApiDTO { };
+    public interface IPkmApiDto { };
 }

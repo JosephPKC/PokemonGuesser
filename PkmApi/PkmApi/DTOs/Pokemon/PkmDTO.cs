@@ -1,57 +1,57 @@
 ﻿using System.Collections.Immutable;
 using System.Text.Json.Serialization;
 
-using PkmApi.DTOs.Shared;
+using PkmApi.Dtos.Shared;
 
-namespace PkmApi.DTOs.Pokemon
+namespace PkmApi.Dtos.Pokemon
 {
-    using PkmAbilityLi          = IImmutableList<PkmAbilitySDTO>;
-    using NamedApiResLi         = IImmutableList<NamedApiResSDTO>;
-    using VersionGameIndexLi    = IImmutableList<VersionGameIndexSDTO>;
-    using PkmHeldItemLi         = IImmutableList<PkmHeldItemSDTO>;
-    using PkmMoveLi             = IImmutableList<PkmMoveSDTO>;
-    using PkmTypePastLi         = IImmutableList<PkmTypePastSDTO>;
-    using PkmStatLi             = IImmutableList<PkmStatSDTO>;
-    using PkmTypeLi             = IImmutableList<PkmTypeSDTO>;
+    using PkmAbilityLi          = IImmutableList<PkmAbilitySdto>;
+    using NamedApiResLi         = IImmutableList<NamedApiResDto>;
+    using VersionGameIndexLi    = IImmutableList<VersionGameIndexDto>;
+    using PkmHeldItemLi         = IImmutableList<PkmHeldItemSdto>;
+    using PkmMoveLi             = IImmutableList<PkmMoveSdto>;
+    using PkmTypePastLi         = IImmutableList<PkmTypePastSdto>;
+    using PkmStatLi             = IImmutableList<PkmStatSdto>;
+    using PkmTypeLi             = IImmutableList<PkmTypeSdto>;
 
-    public record PkmDTO(
+    public record PkmDto(
         [property: JsonPropertyName("id")]
-        int                     Id,
+        int                 Id,
         [property: JsonPropertyName("name")]
-        string                  Name,
+        string              Name,
         [property: JsonPropertyName("base_experience")]
-        int?                    BaseExperience          = null,
+        int?                BaseExperience         = null,
         [property: JsonPropertyName("height")]
-        int?                    Height                  = null,
+        int?                Height                 = null,
         [property: JsonPropertyName("is_default")]
-        bool?                   IsDefault               = null, //  The default Pokemon for its species. There can only be ONE default for each species.
+        bool?               IsDefault              = null, //  The default Pokemon for its species. There can only be ONE default for each species.
         [property: JsonPropertyName("order")]
-        int?                    Order                   = null, //  Order for sorting. Almost national order, except that families are grouped together.
+        int?                Order                  = null, //  Order for sorting. Almost national order, except that families are grouped together.
         [property: JsonPropertyName("weight")]
-        int?                    Weight                  = null,
+        int?                Weight                 = null,
         [property: JsonPropertyName("abilities")]
-        PkmAbilityLi?           Abilities               = null,
+        PkmAbilityLi?       Abilities              = null,
         [property: JsonPropertyName("forms")]
-        NamedApiResLi?          Forms                   = null,
+        NamedApiResLi?      Forms                  = null,
         [property: JsonPropertyName("game_indices")]
-        VersionGameIndexLi?     GameIndices             = null,
+        VersionGameIndexLi? GameIndices            = null,
         [property: JsonPropertyName("held_items")]
-        PkmHeldItemLi?          HeldItems               = null,
+        PkmHeldItemLi?      HeldItems              = null,
         [property: JsonPropertyName("location_area_encounters")]
-        string?                 LocationAreaEncounters  = null, //  A link to the list of location areas.
+        string?             LocationAreaEncounters = null, //  A link to the list of location areas.
         [property: JsonPropertyName("moves")]
-        PkmMoveLi?              Moves                   = null,
+        PkmMoveLi?          Moves                  = null,
         [property: JsonPropertyName("past_types")]
-        PkmTypePastLi?          PastTypes               = null,
+        PkmTypePastLi?      PastTypes              = null,
         [property: JsonPropertyName("sprites")]
-        PkmSpritesSDTO?         Sprites                 = null, //  Urls for sprite images. Located here: https://github.com/PokeAPI/sprites
+        PkmSpritesSdto?     Sprites                = null, //  Urls for sprite images. Located here: https://github.com/PokeAPI/sprites
         [property: JsonPropertyName("cries")]
-        PkmCriesSDTO?           Cries                   = null, //  Urls for cry audio files. Located here: https://github.com/PokeAPI/cries
+        PkmCriesSdto?       Cries                  = null, //  Urls for cry audio files. Located here: https://github.com/PokeAPI/cries
         [property: JsonPropertyName("species")]
-        NamedApiResSDTO?        Species                 = null, //  Res Url for the associated Pokemon species.
+        NamedApiResDto?    Species                = null, //  Res Url for the associated Pokemon species.
         [property: JsonPropertyName("stats")]
-        PkmStatLi?              Stats                   = null,
+        PkmStatLi?          Stats                  = null,
         [property: JsonPropertyName("types")]
-        PkmTypeLi?              Types                   = null
-    ) : IPkmApiDTO;
+        PkmTypeLi?          Types                  = null
+    ) : IPkmApiDto;
 }

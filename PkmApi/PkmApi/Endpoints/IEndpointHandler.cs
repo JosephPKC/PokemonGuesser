@@ -1,11 +1,11 @@
-﻿using PkmApi.DTOs;
-using PkmApi.DTOs.Shared;
+﻿using PkmApi.Dtos;
+using PkmApi.Dtos.Shared;
 
 namespace PkmApi.Endpoints
 {
-    public interface IEndpointHandler<out TData> where TData : IPkmApiDTO
+    public interface IEndpointHandler<out TData> where TData : IPkmApiDto
     {
         TData? GetById(string pId);
-        ResLiDTO? GetAll(int pLimit = 20, int pOffset = 0);
+        ResLiDto? GetAll(int pLimit = 20, int pOffset = 0);
     }
 }

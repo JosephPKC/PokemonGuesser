@@ -1,15 +1,15 @@
 ﻿using System.Collections.Immutable;
 using System.Text.Json.Serialization;
 
-using PkmApi.DTOs.Shared;
+using PkmApi.Dtos.Shared;
 
-namespace PkmApi.DTOs.Pokemon
+namespace PkmApi.Dtos.Pokemon
 {
-    using PkmMoveVersLi = IImmutableList<PkmMoveVersSDTO>;
-    public record PkmMoveSDTO(
+    using PkmMoveVersLi = IImmutableList<PkmMoveVersSdto>;
+    public record PkmMoveSdto(
         [property: JsonPropertyName("move")]
-        NamedApiResSDTO?    Move                = null,
+        NamedApiResDto? Move                = null,
         [property: JsonPropertyName("version_group_details")]
-        PkmMoveVersLi?      VersionGroupDetails = null
+        PkmMoveVersLi?   VersionGroupDetails = null
     );
 }

@@ -1,14 +1,15 @@
 ﻿using System.Text.Json.Serialization;
-using PkmApi.DTOs.Shared;
 
-namespace PkmApi.DTOs.Pokemon
+using PkmApi.Dtos.Shared;
+
+namespace PkmApi.Dtos.Pokemon
 {
-    public record PkmStatSDTO(
+    public record PkmStatSdto(
         [property: JsonPropertyName("stat")]
-        NamedApiResSDTO?    Stat        = null,
+        NamedApiResDto? Stat     = null,
         [property: JsonPropertyName("effort")]
-        int?                Effort      = null,
+        int?             Effort   = null,
         [property: JsonPropertyName("base_stat")]
-        int?                BaseStat    = null
+        int?             BaseStat = null
     );
 }

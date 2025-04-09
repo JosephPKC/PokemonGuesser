@@ -1,5 +1,4 @@
-﻿using System.Reflection.Metadata.Ecma335;
-using PkmApi.DTOs.Shared;
+﻿using PkmApi.Dtos.Shared;
 using PkmApi.Utils;
 
 namespace PkmApi.Test.Fakes
@@ -38,15 +37,15 @@ namespace PkmApi.Test.Fakes
             ]
         }";
 
-        public Type DTOJsonType { get; set; } = typeof(BasicTestDTO);
+        public Type DTOJsonType { get; set; } = typeof(BasicTestDto);
 
         #region IApiGetter
         public string Get(string pUri)
         {
             return DTOJsonType switch
             {
-                Type obj when obj == typeof(BasicTestDTO) => _testBasicDTOJson1,
-                Type obj when obj == typeof(ResLiDTO) => _testResLiDTOJson1,
+                Type obj when obj == typeof(BasicTestDto) => _testBasicDTOJson1,
+                Type obj when obj == typeof(ResLiDto) => _testResLiDTOJson1,
                 _ => ""
             };
         }

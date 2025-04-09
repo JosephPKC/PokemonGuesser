@@ -1,4 +1,4 @@
-﻿using PkmApi.DTOs.Shared;
+﻿using PkmApi.Dtos.Shared;
 using PkmApi.Endpoints;
 
 using PkmApi.Test.Fakes;
@@ -8,13 +8,13 @@ namespace PkmApi.Test.Endpoints
     public class BasePkmEndpointHandlerTest
     {
         #region Setup
-        private static IEndpointHandler<BasicTestDTO> GetEndpointHandler(Type pDTOTypeToTest)
+        private static IEndpointHandler<BasicTestDto> GetEndpointHandler(Type pDTOTypeToTest)
         {
             NullGetter getter = new()
             {
                 DTOJsonType = pDTOTypeToTest
             };
-            return EndpointHandlerFactory.BuildEndpointHandler<BasicTestDTO>("test-uri/api", "v1", "test-endpoint", getter, new BasicParser(), new NullLogger());
+            return EndpointHandlerFactory.BuildEndpointHandler<BasicTestDto>("test-uri/api", "v1", "test-endpoint", getter, new BasicParser(), new NullLogger());
         }
         #endregion
 
@@ -23,13 +23,13 @@ namespace PkmApi.Test.Endpoints
         public void Test_GetById_ReturnDeserializedJsonDTO()
         {
             // Arrange
-            IEndpointHandler<BasicTestDTO> handler = GetEndpointHandler(typeof(BasicTestDTO));
+            IEndpointHandler<BasicTestDto> handler = GetEndpointHandler(typeof(BasicTestDto));
             string id = "1";
 
-            BasicTestDTO expected = TestValues.Test_BasicTestDTO;
+            BasicTestDto expected = TestValues.Test_BasicTestDto;
 
             // Act
-            BasicTestDTO? actual = handler.GetById(id);
+            BasicTestDto? actual = handler.GetById(id);
 
             // Assert
             Assert.NotNull(actual);
@@ -42,12 +42,12 @@ namespace PkmApi.Test.Endpoints
         public void Test_GetAll_ReturnDeserializedJsonResLiDTO()
         {
             // Arrange
-            IEndpointHandler<BasicTestDTO> handler = GetEndpointHandler(typeof(ResLiDTO));
+            IEndpointHandler<BasicTestDto> handler = GetEndpointHandler(typeof(ResLiDto));
 
-            ResLiDTO expected = TestValues.Test_ResLiDTO;
+            ResLiDto expected = TestValues.Test_ResLiDto;
 
             // Act
-            ResLiDTO? actual = handler.GetAll();
+            ResLiDto? actual = handler.GetAll();
 
             // Assert
             Assert.NotNull(actual);

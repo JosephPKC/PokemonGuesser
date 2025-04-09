@@ -1,11 +1,11 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace PkmApi.DTOs.Shared
+namespace PkmApi.Dtos.Shared
 {
-    public record VersionGameIndexSDTO(
+    public record VersionGameIndexDto(
         [property: JsonPropertyName("game_index")]
         int?             GameIndex = null,
         [property: JsonPropertyName("version")]
-        NamedApiResSDTO? Version = null
+        NamedApiResDto? Version   = null
     );
 }
