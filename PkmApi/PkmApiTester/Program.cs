@@ -28,7 +28,7 @@ namespace PkmApiTester
             TestApi(api.VersionGroup, log, "VERSION GROUP", pShowJsonLogs: ShowJsonLogs);
         }
 
-        private static void TestApi<TDto>(IEndpointHandler<TDto> pEndpoint, ILogger pLog, string pTestName, string pTestId = "1", int pTestLimit = 50, bool pShowJsonLogs = false) where TDto : IPkmApiDto
+        private static void TestApi<TDto>(IEndpointHandler<TDto> pEndpoint, ILogger pLog, string pTestName, string pTestId = "1", int pTestLimit = 50, bool pShowJsonLogs = false) where TDto : class, IPkmApiDto
         {
             //  Get single
             string testSingleLine = $"GET SINGLE {pTestName} ({pTestId})";
@@ -58,12 +58,12 @@ namespace PkmApiTester
             TestApi(pLog, testFirstNLine, testFirstN, pShowJsonLogs);
         }
 
-        private static void TestApi<TDto>(ILogger pLog, string pTestLine, Func<TDto?> pGetFromApi, bool pShowJsonLogs = false) where TDto : IPkmApiDto
+        private static void TestApi<TDto>(ILogger pLog, string pTestLine, Func<TDto?> pGetFromApi, bool pShowJsonLogs = false) where TDto : class, IPkmApiDto
         {
             pLog.Info($"*** BEGIN: {pTestLine}\n");
             TDto? res = pGetFromApi();
-            pLog.Info(res != null ? "SUCCESS" : "FAILURE");
-            if (res != null && pShowJsonLogs)
+            pLog.Info(res is not null ? "SUCCESS" : "FAILURE");
+            if (res is not null && pShowJsonLogs)
             {
                 string serStr = JsonSerializer.Serialize(res);
                 pLog.Info("*****\n");
