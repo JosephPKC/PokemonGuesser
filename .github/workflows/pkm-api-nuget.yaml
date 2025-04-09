@@ -10,4 +10,5 @@ jobs:
     with:
       pckg-name: JosephPKC.PkmApi
       sln-path: ./PkmApi/PkmApi/PkmApi.sln
+      proj-path: ./PkmApi/PkmApi/PkmApi.csproj
     secrets: inherit

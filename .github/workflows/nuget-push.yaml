@@ -6,6 +6,8 @@ on:
         type: string
       sln-path:
         type: string
+      proj-path:
+        type: string
 jobs:
   build-test:
     name: Build, test, and push nuget package
@@ -27,7 +29,7 @@ jobs:
         id: get-version
         uses: kzrnm/get-net-sdk-project-versions-action@v2
         with:
-          proj-path: ${{ inputs.sln-path }}
+          proj-path: ${{ inputs.proj-path }}
       - name: Pack NuGet
         run: dotnet pack ${{ inputs.sln-path }} --configuration Release --no-build --output .
       - name: Push NuGet
