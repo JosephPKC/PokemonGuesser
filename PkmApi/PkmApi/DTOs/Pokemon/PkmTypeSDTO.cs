@@ -1,13 +1,13 @@
 ﻿using System.Text.Json.Serialization;
 
-using PkmApi.DTOs.Shared;
+using PkmApi.Dtos.Shared;
 
-namespace PkmApi.DTOs.Pokemon
+namespace PkmApi.Dtos.Pokemon
 {
-    public record PkmTypeSDTO(
+    public record PkmTypeSdto(
         [property: JsonPropertyName("slot")]
-        int?                Slot = null,
+        int?             Slot = null,
         [property: JsonPropertyName("type")]
-        NamedApiResSDTO?    Type = null
+        NamedApiResDto? Type = null
     );
 }

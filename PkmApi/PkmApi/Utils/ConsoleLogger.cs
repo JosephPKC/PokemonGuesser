@@ -1,9 +1,12 @@
-﻿namespace PkmApi.Utils
+﻿using System.Text;
+
+namespace PkmApi.Utils
 {
     // TODO: Just like the parser, eventually use the UtilsLab log wrapper instead.
     internal class ConsoleLogger : ILogger
     {
         private LogLevel _level = LogLevel.Debug;
+
         #region ILogger
         public void Debug(object pMessage)
         {

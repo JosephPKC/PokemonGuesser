@@ -1,15 +1,16 @@
 ﻿using System.Collections.Immutable;
 using System.Text.Json.Serialization;
-using PkmApi.DTOs.Shared;
 
-namespace PkmApi.DTOs.Pokemon
+using PkmApi.Dtos.Shared;
+
+namespace PkmApi.Dtos.Pokemon
 {
-    using PkmTypeLi = IImmutableList<PkmTypeSDTO>;
+    using PkmTypeLi = IImmutableList<PkmTypeSdto>;
 
-    public record PkmTypePastSDTO(
+    public record PkmTypePastSdto(
         [property: JsonPropertyName("generation")]
-        NamedApiResSDTO?    Generation  = null,
+        NamedApiResDto? Generation = null,
         [property: JsonPropertyName("types")]
-        PkmTypeLi?          Types       = null
+        PkmTypeLi?       Types      = null
     );
 }

@@ -1,11 +1,11 @@
 ﻿using System.Text.Json.Serialization;
 
-namespace PkmApi.DTOs.Shared
+namespace PkmApi.Dtos.Shared
 {
-    public record NamedApiResSDTO(
+    public record NamedApiResDto(
         [property: JsonPropertyName("name")]
-        string  Name,
+        string Name,
         [property: JsonPropertyName("url")]
-        string  URL
+        string URL
     );
 }

@@ -1,20 +1,20 @@
 ﻿using System.Collections.Immutable;
 using System.Text.Json.Serialization;
 
-using PkmApi.DTOs;
+using PkmApi.Dtos;
 
 namespace PkmApi.Test.Fakes
 {
-    public record BasicTestDTO(
+    public record BasicTestDto(
         [property: JsonPropertyName("name")]
         string                          Name,
         [property: JsonPropertyName("id")]
         int                             Id,
         [property: JsonPropertyName("sub-data")]
-        IImmutableList<BasicTestSDTO>   SubData
-    ) : IPkmApiDTO;
+        IImmutableList<BasicTestSdto>   SubData
+    ) : IPkmApiDto;
 
-    public record BasicTestSDTO(
+    public record BasicTestSdto(
         [property: JsonPropertyName("value")]
         string Value  
     );

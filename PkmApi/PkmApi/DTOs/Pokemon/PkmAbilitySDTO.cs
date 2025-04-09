@@ -1,14 +1,15 @@
 ﻿using System.Text.Json.Serialization;
-using PkmApi.DTOs.Shared;
 
-namespace PkmApi.DTOs.Pokemon
+using PkmApi.Dtos.Shared;
+
+namespace PkmApi.Dtos.Pokemon
 {
-    public record PkmAbilitySDTO(
+    public record PkmAbilitySdto(
         [property: JsonPropertyName("is_hidden")]
-        bool?            IsHidden   = null,
+        bool?            IsHidden = null,
         [property: JsonPropertyName("slot")]
-        int?             Slot       = null,
+        int?             Slot     = null,
         [property: JsonPropertyName("ability")]
-        NamedApiResSDTO? Ability    = null
+        NamedApiResDto? Ability  = null
     );
 }

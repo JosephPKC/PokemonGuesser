@@ -1,15 +1,15 @@
 ﻿using System.Text.Json.Serialization;
 
-using PkmApi.DTOs.Shared;
+using PkmApi.Dtos.Shared;
 
-namespace PkmApi.DTOs.Pokemon
+namespace PkmApi.Dtos.Pokemon
 {
-    public record PkmMoveVersSDTO(
+    public record PkmMoveVersSdto(
         [property: JsonPropertyName("move_learn_method")]
-        NamedApiResSDTO?    MoveLearnMethod = null,
+        NamedApiResDto? MoveLearnMethod = null,
         [property: JsonPropertyName("version_group")]
-        NamedApiResSDTO?    VersionGroup    = null,
+        NamedApiResDto? VersionGroup    = null,
         [property: JsonPropertyName("level_learned_at")]
-        int?                LevelLearnedAt  = null
+        int?             LevelLearnedAt  = null
     );
 }

@@ -1,5 +1,5 @@
-﻿using PkmApi.DTOs;
-using PkmApi.DTOs.Shared;
+﻿using PkmApi.Dtos;
+using PkmApi.Dtos.Shared;
 using PkmApi.Utils;
 
 namespace PkmApi.Endpoints
@@ -7,7 +7,7 @@ namespace PkmApi.Endpoints
     internal class BasePkmEndpointHandler<TData>(
         string pBaseUri, string pVersion, string pEndpoint, IApiGetter pApiGetter, IJsonParser pJsonParser, ILogger pLogger, 
         ICacheFactory? pCacheFactory = null, int? pCacheSizeLimit = null, int? pCacheLifeInSec = null) 
-        : IEndpointHandler<TData> where TData : class, IPkmApiDTO
+        : IEndpointHandler<TData> where TData : class, IPkmApiDto
     {
         private readonly string _baseUri = pBaseUri;
         private readonly string _version = pVersion;
@@ -16,7 +16,7 @@ namespace PkmApi.Endpoints
         private readonly IApiGetter _apiGetter = pApiGetter;
         private readonly IJsonParser _jsonParser = pJsonParser;
         private readonly ILogger log = pLogger;
-        private readonly ICache<IPkmApiDTO>? _cache = pCacheFactory == null ? null : pCacheFactory.BuildCache<IPkmApiDTO>(pCacheSizeLimit, pCacheLifeInSec);
+        private readonly ICache<IPkmApiDto>? _cache = pCacheFactory == null ? null : pCacheFactory.BuildCache<IPkmApiDto>(pCacheSizeLimit, pCacheLifeInSec);
 
         #region IEndpointHandler<TData>
         public TData? GetById(string pId)
@@ -31,7 +31,7 @@ namespace PkmApi.Endpoints
             return result;
         }
 
-        public ResLiDTO? GetAll(int pLimit = Config.DefaultApiPaginationLimit, int pOffset = Config.DefaultApiPaginationOffset)
+        public ResLiDto? GetAll(int pLimit = Config.DefaultApiPaginationLimit, int pOffset = Config.DefaultApiPaginationOffset)
         {
             IDictionary<string, string> queryParams = new Dictionary<string, string>()
             {
@@ -41,7 +41,7 @@ namespace PkmApi.Endpoints
             string uri = BuildUri(_baseUri, _version, _endpoint, null, queryParams);
             log.Info($"BEGIN: GetAll: {uri}");
 
-            ResLiDTO? result = GetData<ResLiDTO>(uri);
+            ResLiDto? result = GetData<ResLiDto>(uri);
 
             log.Info($"END: GetAll: {uri}");
 
@@ -49,12 +49,12 @@ namespace PkmApi.Endpoints
         }
         #endregion
 
-        private TActual? GetData<TActual>(string pUri) where TActual : class, IPkmApiDTO
+        private TActual? GetData<TActual>(string pUri) where TActual : class, IPkmApiDto
         {
             if (_cache != null)
             {
                 //  Try to get from cache first
-                IPkmApiDTO? fromCache = _cache.Get(pUri);
+                IPkmApiDto? fromCache = _cache.Get(pUri);
                 if (fromCache != null)
                 {
                     log.Debug("Found in cache.");

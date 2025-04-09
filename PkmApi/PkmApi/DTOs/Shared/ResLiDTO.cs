@@ -1,18 +1,18 @@
 ﻿using System.Collections.Immutable;
 using System.Text.Json.Serialization;
 
-namespace PkmApi.DTOs.Shared
+namespace PkmApi.Dtos.Shared
 {
-    using NamedApiResLi = IImmutableList<NamedApiResSDTO>;
+    using NamedApiResLi = IImmutableList<NamedApiResDto>;
 
-    public record ResLiDTO(
+    public record ResLiDto(
         [property: JsonPropertyName("count")]
-        int             Count,
+        int?           Count    = null,
         [property: JsonPropertyName("next")]
-        string          Next,
+        string?        Next     = null,
         [property: JsonPropertyName("previous")]
-        string          Previous,
+        string?        Previous = null,
         [property: JsonPropertyName("results")]
-        NamedApiResLi   Results
-    ) : IPkmApiDTO;
+        NamedApiResLi? Results  = null
+    ) : IPkmApiDto;
 }

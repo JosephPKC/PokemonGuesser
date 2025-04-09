@@ -1,12 +1,13 @@
 ﻿using System.Text.Json.Serialization;
-using PkmApi.DTOs.Shared;
 
-namespace PkmApi.DTOs.Pokemon
+using PkmApi.Dtos.Shared;
+
+namespace PkmApi.Dtos.Pokemon
 {
-    public record PkmHeldItemVersSDTO(
+    public record PkmHeldItemVersSdto(
         [property: JsonPropertyName("version")]
-        NamedApiResSDTO?    Version = null,
+        NamedApiResDto? Version = null,
         [property: JsonPropertyName("rarity")]
-        int?                Rarity = null
+        int?             Rarity = null
     );
 }
