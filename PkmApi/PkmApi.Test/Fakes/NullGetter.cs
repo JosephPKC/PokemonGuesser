@@ -1,4 +1,4 @@
-﻿using PkmApi.Dtos.Shared;
+﻿using PkmApi.Dtos.Utility;
 using PkmApi.Utils;
 
 namespace PkmApi.Test.Fakes

@@ -1,5 +1,5 @@
 ﻿using PkmApi.Dtos;
-using PkmApi.Dtos.Shared;
+using PkmApi.Dtos.Utility;
 
 namespace PkmApi.Endpoints
 {
