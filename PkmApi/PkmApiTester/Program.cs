@@ -2,7 +2,7 @@
 
 using PkmApi;
 using PkmApi.Dtos;
-using PkmApi.Dtos.Shared;
+using PkmApi.Dtos.Utility;
 using PkmApi.Endpoints;
 using PkmApi.Utils;
 
@@ -21,8 +21,14 @@ namespace PkmApiTester
             IPkmApi api = PkmApiFactory.CreatePkmApi("v2", pLogger: log, pCacheFactory: new CacheFactory());
 
             TestApi(api.Ability, log, "ABILITY", pShowJsonLogs: ShowJsonLogs);
+            TestApi(api.Form, log, "FORM", pShowJsonLogs: ShowJsonLogs);
+            TestApi(api.Generation, log, "GENERATION", pShowJsonLogs: ShowJsonLogs);
             TestApi(api.Move, log, "MOVE", pShowJsonLogs: ShowJsonLogs);
+            TestApi(api.MoveDamageClass, log, "MOVE DAMAGE CLASS", pShowJsonLogs: ShowJsonLogs);
+            TestApi(api.MoveLearnMethod, log, "MOVE LEARN METHOD", pShowJsonLogs: ShowJsonLogs);
+            TestApi(api.Pokedex, log, "POKEDEX", pShowJsonLogs: ShowJsonLogs);
             TestApi(api.Pokemon, log, "POKEMON", pShowJsonLogs: ShowJsonLogs);
+            TestApi(api.Species, log, "SPECIES", pShowJsonLogs: ShowJsonLogs);
             TestApi(api.Type, log, "TYPE", pShowJsonLogs: ShowJsonLogs);
             TestApi(api.Version, log, "VERSION", pShowJsonLogs: ShowJsonLogs);
             TestApi(api.VersionGroup, log, "VERSION GROUP", pShowJsonLogs: ShowJsonLogs);
