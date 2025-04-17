@@ -1,5 +1,9 @@
 ﻿using StackExchange.Redis;
 
+using PkmDataRetrieval.Adapter;
+using PkmDataRetrieval.Api;
+using PkmDataRetrieval.Retrieval;
+
 namespace PkmDataRetrieval
 {
     internal static class ServiceBuilder
@@ -27,7 +31,7 @@ namespace PkmDataRetrieval
             pBuilder.Services.AddSwaggerGen();
             pBuilder.Services.AddOpenApi();
             //  DI
-            pBuilder.Services.AddSingleton<IConnectionMultiplexer>(ConnectionMultiplexer.Connect(Config.RedisConnect));
+            pBuilder.Services.AddSingleton<IDataRetrieval>(DataRetrievalFactory.CreateDataRetriever(PkmGatewayFactory.CreateGateway(), ConnectionMultiplexer.Connect(Config.RedisConnect)));
         }
 
         private static void ConfigureForDevEnv(WebApplication pApp)
