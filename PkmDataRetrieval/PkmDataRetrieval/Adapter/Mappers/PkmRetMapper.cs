@@ -48,7 +48,8 @@ namespace PkmDataRetrieval.Adapter.Mappers
                 return new()
                 {
                     IsHidden = pDto.IsHidden ?? false,
-                    ResUrl = RetMapperUtils.GetUrl(pDto.Ability)
+                    ResUrl = RetMapperUtils.GetUrl(pDto.Ability),
+                    Slot = pDto.Slot ?? 0
                 };
             }
 

@@ -1,4 +1,7 @@
-﻿namespace PkmDataRetrieval.Retrieval
+﻿using System.Globalization;
+using System.Linq;
+
+namespace PkmDataRetrieval.Retrieval
 {
     internal static class RetrievalUtils
     {
@@ -13,6 +16,36 @@
         {
             //  Ex: https://pokeapi.co/api/v2/pokemon/1/
             return $"https://pokeapi.co/api/{Config.CurrentApiVers}/{pRes}/{pId}/";
+        }
+
+        public static string FormatNameKey(string pNameKey)
+        {
+            TextInfo textInfo = CultureInfo.CurrentCulture.TextInfo;
+
+            string nameKeyUnDashed = pNameKey.Replace("-", " ");
+            return textInfo.ToTitleCase(nameKeyUnDashed);
+        }
+
+        public static void AddIdFromUrlIfExists(ICollection<int> pIds, string pResUrl)
+        {
+            int? id = GetIdFromUrl(pResUrl);
+            if (id is null)
+            {
+                //  WARN
+                return;
+            }
+
+            pIds.Add(id.Value);
+        }
+
+        public static void AddIfNotExists<TData>(ISet<TData> pSet, TData pData)
+        {
+            if (pSet.Contains(pData))
+            {
+                return;
+            }
+
+            pSet.Add(pData);
         }
     }
 }

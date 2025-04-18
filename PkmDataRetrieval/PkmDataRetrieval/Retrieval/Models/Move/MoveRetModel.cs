@@ -1,4 +1,4 @@
-﻿using PkmDataRetrieval.Retrieval.Shared;
+﻿using PkmDataRetrieval.Retrieval.Models.Shared;
 
 namespace PkmDataRetrieval.Retrieval.Models.Move
 {

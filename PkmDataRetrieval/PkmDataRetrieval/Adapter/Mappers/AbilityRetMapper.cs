@@ -1,7 +1,7 @@
 ﻿using PkmApi.Dtos.Pokemon.Ability;
 
 using PkmDataRetrieval.Retrieval.Models.Ability;
-using PkmDataRetrieval.Retrieval.Shared;
+using PkmDataRetrieval.Retrieval.Models.Shared;
 
 namespace PkmDataRetrieval.Adapter.Mappers
 {

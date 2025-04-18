@@ -1,8 +1,10 @@
-﻿namespace PkmDataRetrieval.Api.Models
+﻿using PkmDataRetrieval.Api.Models.Shared;
+
+namespace PkmDataRetrieval.Api.Models
 {
-    public class BasicModel
+    public class BasicModel : IApiModel
     {
         public int Id { get; set; }
-        public string Name { get; set; } = string.Empty;
+        public NameModel Name { get; set; } = new();
     }
 }

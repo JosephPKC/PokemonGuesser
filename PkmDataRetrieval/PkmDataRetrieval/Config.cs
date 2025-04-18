@@ -17,6 +17,7 @@ namespace PkmDataRetrieval
         public const string CurrentApiVers = "v2";
         public const int CurrentGenId = 9;
         public const int EngLangId = 9;
+        public const string LangResName = "language";
         #endregion
 
 

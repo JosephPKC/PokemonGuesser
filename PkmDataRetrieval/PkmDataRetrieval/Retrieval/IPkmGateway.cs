@@ -4,7 +4,7 @@ namespace PkmDataRetrieval.Retrieval
 {
     public interface IPkmGateway
     {
-        IEnumerable<BasicRetModel>? GetAll<TModel>() where TModel : BaseRetModel;
-        TModel? GetById<TModel>(int pId) where TModel : BaseRetModel;
+        IEnumerable<BasicRetModel>? GetAll<TRet>() where TRet : BaseRetModel;
+        TRet? GetById<TRet>(int pId) where TRet : BaseRetModel;
     }
 }

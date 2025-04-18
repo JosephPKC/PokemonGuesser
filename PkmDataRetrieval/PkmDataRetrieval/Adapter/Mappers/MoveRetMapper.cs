@@ -1,7 +1,7 @@
 ﻿using PkmApi.Dtos.Move.Move;
 
 using PkmDataRetrieval.Retrieval.Models.Move;
-using PkmDataRetrieval.Retrieval.Shared;
+using PkmDataRetrieval.Retrieval.Models.Shared;
 
 namespace PkmDataRetrieval.Adapter.Mappers
 {

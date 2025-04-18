@@ -51,7 +51,5 @@ namespace PkmDataRetrieval.Api
 
             return Ok(result);
         }
-
-
     }
 }

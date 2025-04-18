@@ -1,4 +1,4 @@
-﻿namespace PkmDataRetrieval.Retrieval.Shared
+﻿namespace PkmDataRetrieval.Retrieval.Models.Shared
 {
     public class FlavorTextEntryRetModel
     {
