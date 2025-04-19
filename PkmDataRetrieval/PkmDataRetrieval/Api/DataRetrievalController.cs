@@ -1,6 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
-
-using PkmDataRetrieval.Api.Models.Generation;
+using PkmDataRetrieval.Api.Models;
 using PkmDataRetrieval.Api.Models.Pokemon;
 
 namespace PkmDataRetrieval.Api
@@ -17,9 +16,10 @@ namespace PkmDataRetrieval.Api
         }
 
         [HttpGet("gen/current")]
+        [ProducesResponseType<BasicModel>(StatusCodes.Status200OK)]
         public IActionResult GetCurrentGen()
         {
-            GenModel? result = _dataRetriever.GetCurrentGen();
+            BasicModel? result = _dataRetriever.GetCurrentGen();
             if (result is null)
             {
                 return NotFound(Config.CurrentGenId);
@@ -29,6 +29,7 @@ namespace PkmDataRetrieval.Api
         }
 
         [HttpGet("pkm")]
+        [ProducesResponseType<PkmAllModel>(StatusCodes.Status200OK)]
         public IActionResult GetAllPkm()
         {
             PkmAllModel? result = _dataRetriever.GetAllPkm();
@@ -41,6 +42,7 @@ namespace PkmDataRetrieval.Api
         }
 
         [HttpGet("pkm/{id}")]
+        [ProducesResponseType<PkmModel>(StatusCodes.Status200OK)]
         public IActionResult GetPkmById(int id)
         {
             PkmModel? result = _dataRetriever.GetPkmById(id);

@@ -1,5 +1,6 @@
 ﻿using StackExchange.Redis;
 
+using PkmDataRetrieval.Api.Models;
 using PkmDataRetrieval.Api.Models.Meta;
 using PkmDataRetrieval.Api.Models.Pokemon;
 using PkmDataRetrieval.Api.Models.Shared;
@@ -42,28 +43,26 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
             }
 
             string pkmName = GetPkmName(pkmRet);
-            IEnumerable<PkmAbilityModel> pkmAbilities = GetAbilities(pkmRet);
-            IEnumerable<NameModel> pkmTypes = GetPkmTypeNames(pkmRet);
+            List<PkmAbilityModel> pkmAbilities = GetAbilities(pkmRet);
+            List<NameModel> pkmTypes = GetPkmTypeNames(pkmRet);
 
-            IDictionary<string, ICollection<PkmMoveModel>> pNewMoves = new Dictionary<string, ICollection<PkmMoveModel>>();
-            IDictionary<string, IEnumerable<PkmMoveModel>> pNewMovesFinal = new Dictionary<string, IEnumerable<PkmMoveModel>>();
-            ICollection<PkmOldMoveModel> pOldMoves = [];
+            Dictionary<string, List<PkmMoveModel>> pNewMoves = [];
+            Dictionary<string, IEnumerable<PkmMoveModel>> pNewMovesFinal = [];
+            List<BasicModel> pOldMoves = [];
 
             foreach (PkmMoveRetModel pkmMoveRet in pkmRet.Moves)
             {
-                AddPkmMoves(pNewMoves, pOldMoves, pkmRet, pkmMoveRet);
+                AddPkmMoves(pNewMoves, pOldMoves, pkmMoveRet);
             }
 
             foreach (string moveLearnMethod in pNewMoves.Keys)
             {
                 //  Sort based on Level
-                List<PkmMoveModel> movesList = [.. pNewMoves[moveLearnMethod]];
-                movesList.Sort(new PkmMoveModelComparer());
-                pNewMovesFinal.Add(moveLearnMethod, movesList);
+                pNewMoves[moveLearnMethod].Sort(new PkmMoveModelComparer());
+                pNewMovesFinal.Add(moveLearnMethod, pNewMoves[moveLearnMethod]);
             }
 
-            List<PkmOldMoveModel> oldMovesList = [.. pOldMoves];
-            oldMovesList.Sort(new PkmOldMoveModelComparer());
+            pOldMoves.Sort(new BasicModelComparer());
 
             return new()
             {
@@ -146,7 +145,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
         #endregion
 
         #region Get Abilities
-        private ICollection<PkmAbilityModel> GetAbilities(PkmRetModel pPkmRet)
+        private List<PkmAbilityModel> GetAbilities(PkmRetModel pPkmRet)
         {
             List<PkmAbilityModel> pkmAbilities = [];
             foreach (PkmAbilityRetModel pkmAbilityRet in pPkmRet.Abilities)
@@ -175,7 +174,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
                 return null;
             }
 
-            string flavorText = GetFlavorText(abilityRet.FlavorTextEntries) ?? string.Empty;
+            string flavorText = GetFlavorText([.. abilityRet.FlavorTextEntries]) ?? string.Empty;
             string? abilityName = GetEnLangName(abilityRet.Names) ?? RetrievalUtils.FormatNameKey(abilityRet.NameKey);
 
             return new()
@@ -194,18 +193,12 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
         #endregion
 
         #region Get Flavor Text
-        private string? GetFlavorText(IEnumerable<FlavorTextEntryRetModel> pFlavorTextEntries)
+        private string? GetFlavorText(List<FlavorTextEntryRetModel> pFlavorTextEntries)
         {
-            foreach (FlavorTextEntryRetModel flavorTextRet in pFlavorTextEntries)
-            {
-                //  Needs to be en language and latest version group
-                if (IsEntryValid(flavorTextRet))
-                {
-                    return flavorTextRet.FlavorTextEntry;
-                }
-            }
+            //  Needs to be en language and latest version group
+            IEnumerable<FlavorTextEntryRetModel> pValidTexts = pFlavorTextEntries.Where(IsEntryValid);
 
-            return null;
+            return pValidTexts.Any() ? pValidTexts.First().FlavorTextEntry : null;
         }
 
         private bool IsEntryValid(FlavorTextEntryRetModel pFlavorTextEntry)
@@ -228,9 +221,9 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
         #endregion
 
         #region Get Types
-        private IEnumerable<NameModel> GetPkmTypeNames(PkmRetModel pPkmRet)
+        private List<NameModel> GetPkmTypeNames(PkmRetModel pPkmRet)
         {
-            ICollection<NameModel> typeNames = [];
+            List<NameModel> typeNames = [];
             foreach (string typeUrl in pPkmRet.TypeResUrls)
             {
                 if (!_staticData.Types.TryGetValue(typeUrl, out TypeRetModel? typeRet))
@@ -266,7 +259,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
         #endregion
 
         #region Get Moves
-        private void AddPkmMoves(IDictionary<string, ICollection<PkmMoveModel>> pNewMoves, ICollection<PkmOldMoveModel> pOldMoves, PkmRetModel pPkmRet, PkmMoveRetModel pkmMoveRet)
+        private void AddPkmMoves(Dictionary<string, List<PkmMoveModel>> pNewMoves, List<BasicModel> pOldMoves, PkmMoveRetModel pkmMoveRet)
         {
             MoveRetModel? moveRet = GetRetByResUrl<MoveRetModel>(pkmMoveRet.ResUrl);
             if (moveRet is null)
@@ -289,9 +282,9 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
                 return;
             }
 
-            string? flavorText = GetFlavorText(moveRet.FlavorTextEntries) ?? string.Empty;
+            string? flavorText = GetFlavorText([.. moveRet.FlavorTextEntries]) ?? string.Empty;
 
-            IEnumerable<PkmMoveVersRetModel>? moveVersions = GetMoveVersions(pkmMoveRet);
+            List<PkmMoveVersRetModel>? moveVersions = GetMoveVersions(pkmMoveRet);
             if (moveVersions is null)
             {
                 //  WARN
@@ -310,7 +303,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
                         continue;
                     }
 
-                    if (!pNewMoves.TryGetValue(pkmMove.LearnMethod.NameKey, out ICollection<PkmMoveModel>? value))
+                    if (!pNewMoves.TryGetValue(pkmMove.LearnMethod.NameKey, out List<PkmMoveModel>? value))
                     {
                         pNewMoves.Add(pkmMove.LearnMethod.NameKey, [pkmMove]);
                     }
@@ -358,7 +351,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
             };
         }
 
-        private static PkmOldMoveModel GetOldPkmMove(MoveRetModel pMoveRet)
+        private static BasicModel GetOldPkmMove(MoveRetModel pMoveRet)
         {
             return new()
             {
@@ -371,12 +364,12 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
             };
         }
 
-        private IEnumerable<PkmMoveVersRetModel>? GetMoveVersions(PkmMoveRetModel pPkmMoveRet)
+        private List<PkmMoveVersRetModel>? GetMoveVersions(PkmMoveRetModel pPkmMoveRet)
         {
-            ICollection<PkmMoveVersRetModel> moveVersions = [];
+            List<PkmMoveVersRetModel> moveVersions = [];
             foreach (PkmMoveVersRetModel pkmMoveVersRet in pPkmMoveRet.MoveVersions)
             {
-                if (!_staticData.MoveLearnMethods.TryGetValue(pkmMoveVersRet.MoveLearnMethodResUrl, out MoveLearnMethodRetModel? pMoveLearnMethRet))
+                if (!_staticData.MoveLearnMethods.ContainsKey(pkmMoveVersRet.MoveLearnMethodResUrl))
                 {
                     //  WARN
                     continue;

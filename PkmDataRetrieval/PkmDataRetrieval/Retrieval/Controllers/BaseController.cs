@@ -81,19 +81,19 @@ namespace PkmDataRetrieval.Retrieval.Controllers
 
         protected static string GetRetModelPrefix<TRet>() where TRet : BaseRetModel
         {
-            return typeof(TRet) switch
+            return typeof(TRet).Name switch
             {
-                Type model when model == typeof(Models.Ability.AbilityRetModel) => "ability",
-                Type model when model == typeof(Models.Form.FormRetModel) => "form",
-                Type model when model == typeof(Models.Generation.GenerationRetModel) => "generation",
-                Type model when model == typeof(Models.Move.MoveRetModel) => "move",
-                Type model when model == typeof(Models.MoveDamageClass.MoveDamageClassRetModel) => "move-damage-class",
-                Type model when model == typeof(Models.MoveLearnMethod.MoveLearnMethodRetModel) => "move-learn-method",
-                Type model when model == typeof(Models.Pokedex.PokedexRetModel) => "pokedex",
-                Type model when model == typeof(Models.Pokemon.PkmRetModel) => "pokemon",
-                Type model when model == typeof(Models.Species.SpeciesRetModel) => "species",
-                Type model when model == typeof(Models.Type.TypeRetModel) => "type",
-                Type model when model == typeof(Models.VersionGroup.VersionGroupRetModel) => "version-group",
+                nameof(Models.Ability.AbilityRetModel) => "ability",
+                nameof(Models.Form.FormRetModel) => "form",
+                nameof(Models.Generation.GenerationRetModel) => "generation",
+                nameof(Models.Move.MoveRetModel) => "move",
+                nameof(Models.MoveDamageClass.MoveDamageClassRetModel) => "move-damage-class",
+                nameof(Models.MoveLearnMethod.MoveLearnMethodRetModel) => "move-learn-method",
+                nameof(Models.Pokedex.PokedexRetModel) => "pokedex",
+                nameof(Models.Pokemon.PkmRetModel) => "pokemon",
+                nameof(Models.Species.SpeciesRetModel) => "species",
+                nameof(Models.Type.TypeRetModel) => "type",
+                nameof(Models.VersionGroup.VersionGroupRetModel) => "version-group",
                 _ => string.Empty
             };
         }

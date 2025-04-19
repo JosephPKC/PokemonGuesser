@@ -1,11 +1,11 @@
-﻿using PkmDataRetrieval.Api.Models.Pokemon;
+﻿using PkmDataRetrieval.Api.Models;
 
 namespace PkmDataRetrieval.Retrieval.Comparers
 {
-    public class PkmOldMoveModelComparer : BaseComparer<PkmOldMoveModel>, IComparer<PkmOldMoveModel>
+    public class BasicModelComparer : BaseComparer<BasicModel>, IComparer<BasicModel>
     {
-        #region IComparer<PkmOldMoveModel>
-        public int Compare(PkmOldMoveModel? x, PkmOldMoveModel? y)
+        #region IComparer<BasicModel>
+        public int Compare(BasicModel? x, BasicModel? y)
         {
             int? res = CompareNull(x, y);
             if (res is not null)

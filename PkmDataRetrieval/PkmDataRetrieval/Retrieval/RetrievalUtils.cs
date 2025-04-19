@@ -8,7 +8,7 @@ namespace PkmDataRetrieval.Retrieval
         {
             //  Ex: https://pokeapi.co/api/v2/pokemon/1/
             string[] splits = pUrl.Split("/", StringSplitOptions.RemoveEmptyEntries);
-            return int.TryParse(splits.Last(), out int id) ? id : null;
+            return int.TryParse(splits[^1], out int id) ? id : null;
         }
 
         public static string GetUrlFromId(int pId, string pRes)

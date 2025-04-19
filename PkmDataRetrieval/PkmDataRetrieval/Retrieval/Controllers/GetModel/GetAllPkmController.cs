@@ -1,11 +1,11 @@
-﻿    using StackExchange.Redis;
+﻿using StackExchange.Redis;
 
 using PkmDataRetrieval.Api.Models.Meta;
 using PkmDataRetrieval.Api.Models.Pokemon;
+using PkmDataRetrieval.Retrieval.Models.Meta;
 using PkmDataRetrieval.Retrieval.Models.Pokedex;
 using PkmDataRetrieval.Retrieval.Models.Species;
 using PkmDataRetrieval.Retrieval.Models.VersionGroup;
-using PkmDataRetrieval.Retrieval.Models.Meta;
 
 namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
 {

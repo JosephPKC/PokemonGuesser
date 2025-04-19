@@ -1,7 +1,7 @@
 ﻿using StackExchange.Redis;
 
 using PkmDataRetrieval.Api;
-using PkmDataRetrieval.Api.Models.Generation;
+using PkmDataRetrieval.Api.Models;
 using PkmDataRetrieval.Api.Models.Meta;
 using PkmDataRetrieval.Api.Models.Pokemon;
 using PkmDataRetrieval.Retrieval.Models.Meta;
@@ -17,7 +17,6 @@ namespace PkmDataRetrieval.Retrieval
     /// </summary>
     internal class PkmDataRetriever: IDataRetrieval
     {
-        private readonly GetAllVersGrpIdsController _getAllVersGrpIds;
         private readonly GetAllMoveDamageClassesController _getAllMoveDmgCls;
         private readonly GetAllMoveLearnMethodsController _getAllMoveLearnMeths;
         private readonly GetAllTypesController _getAllTypes;
@@ -27,7 +26,7 @@ namespace PkmDataRetrieval.Retrieval
 
         public PkmDataRetriever(IPkmGateway pApi, IConnectionMultiplexer pConn, int pGenId)
         {
-            _getAllVersGrpIds = new(pApi, pConn, Config.RedisServiceKeyPrefix, pGenId);
+            GetAllVersGrpIdsController getAllVersGrpIds = new(pApi, pConn, Config.RedisServiceKeyPrefix, pGenId);
             _getAllMoveDmgCls = new(pApi, pConn, Config.RedisServiceKeyPrefix, pGenId);
             _getAllMoveLearnMeths = new(pApi, pConn, Config.RedisServiceKeyPrefix, pGenId);
             _getAllTypes = new(pApi, pConn, Config.RedisServiceKeyPrefix, pGenId);
@@ -35,7 +34,7 @@ namespace PkmDataRetrieval.Retrieval
             CurrentIds currIds = new()
             {
                 CurrentGenId = pGenId,
-                CurrentVersGrpIds = _getAllVersGrpIds.GetAllVersGrpIds()
+                CurrentVersGrpIds = getAllVersGrpIds.GetAllVersGrpIds()
             };
 
             StaticDataCont staticData = GetStaticData();
@@ -51,7 +50,7 @@ namespace PkmDataRetrieval.Retrieval
             return _getAllPkm.GetAllPkm();
         }
 
-        public GenModel? GetCurrentGen()
+        public BasicModel? GetCurrentGen()
         {
             return _getCurrGen.GetCurrentGen();
         }

@@ -14,12 +14,9 @@ namespace PkmDataRetrieval.Retrieval.Comparers
             }
 
             res = CompareNull(x!.LevelLearned, y!.LevelLearned); 
-            if  (res is not null)
+            if  (res is not null && res.Value != 0)
             {
-                if (res.Value != 0)
-                {
-                    return res.Value;
-                }
+                return res.Value;
             }
 
             res = x!.LevelLearned!.Value.CompareTo(y!.LevelLearned!.Value);

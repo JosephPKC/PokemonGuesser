@@ -2,7 +2,7 @@
 {
     public abstract class BaseComparer<TModel>
     {
-        protected int? CompareNull(TModel? x, TModel? y)
+        protected static int? CompareNull(TModel? x, TModel? y)
         {
             if (x is null)
             {

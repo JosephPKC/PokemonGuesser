@@ -31,39 +31,38 @@ namespace PkmDataRetrieval.Adapter
         #region IPkmGateway
         public IEnumerable<BasicRetModel>? GetAll<TRet>() where TRet : BaseRetModel
         {
-
-            return typeof(TRet) switch
+            return typeof(TRet).Name switch
             {
-                Type model when model == typeof(AbilityRetModel)         => GetAll(_api.Ability.GetAll),
-                Type model when model == typeof(FormRetModel)            => GetAll(_api.Form.GetAll),
-                Type model when model == typeof(GenerationRetModel)      => GetAll(_api.Generation.GetAll),
-                Type model when model == typeof(MoveRetModel)            => GetAll(_api.Move.GetAll),
-                Type model when model == typeof(MoveDamageClassRetModel) => GetAll(_api.MoveDamageClass.GetAll),
-                Type model when model == typeof(MoveLearnMethodRetModel) => GetAll(_api.MoveLearnMethod.GetAll),
-                Type model when model == typeof(PokedexRetModel)         => GetAll(_api.Pokedex.GetAll),
-                Type model when model == typeof(PkmRetModel)             => GetAll(_api.Pokemon.GetAll),
-                Type model when model == typeof(SpeciesRetModel)         => GetAll(_api.Species.GetAll),
-                Type model when model == typeof(TypeRetModel)            => GetAll(_api.Type.GetAll),
-                Type model when model == typeof(VersionGroupRetModel)    => GetAll(_api.VersionGroup.GetAll),
+                nameof(AbilityRetModel)         => GetAll(_api.Ability.GetAll),
+                nameof(FormRetModel)            => GetAll(_api.Form.GetAll),
+                nameof(GenerationRetModel)      => GetAll(_api.Generation.GetAll),
+                nameof(MoveRetModel)            => GetAll(_api.Move.GetAll),
+                nameof(MoveDamageClassRetModel) => GetAll(_api.MoveDamageClass.GetAll),
+                nameof(MoveLearnMethodRetModel) => GetAll(_api.MoveLearnMethod.GetAll),
+                nameof(PokedexRetModel)         => GetAll(_api.Pokedex.GetAll),
+                nameof(PkmRetModel)             => GetAll(_api.Pokemon.GetAll),
+                nameof(SpeciesRetModel)         => GetAll(_api.Species.GetAll),
+                nameof(TypeRetModel)            => GetAll(_api.Type.GetAll),
+                nameof(VersionGroupRetModel)    => GetAll(_api.VersionGroup.GetAll),
                 _ => null
             };
         }
 
         public TRet? GetById<TRet>(int pId) where TRet : BaseRetModel
         {
-            return typeof(TRet) switch
+            return typeof(TRet).Name switch
             {
-                Type model when model == typeof(AbilityRetModel)         => GetById(pId, _api.Ability.GetById,         AbilityRetMapper.MapTo)         as TRet,
-                Type model when model == typeof(FormRetModel)            => GetById(pId, _api.Form.GetById,            FormRetMapper.MapTo)            as TRet,
-                Type model when model == typeof(GenerationRetModel)      => GetById(pId, _api.Generation.GetById,      GenerationRetMapper.MapTo)      as TRet,
-                Type model when model == typeof(MoveRetModel)            => GetById(pId, _api.Move.GetById,            MoveRetMapper.MapTo)            as TRet,
-                Type model when model == typeof(MoveDamageClassRetModel) => GetById(pId, _api.MoveDamageClass.GetById, MoveDamageClassRetMapper.MapTo) as TRet,
-                Type model when model == typeof(MoveLearnMethodRetModel) => GetById(pId, _api.MoveLearnMethod.GetById, MoveLearnMethodRetMapper.MapTo) as TRet,
-                Type model when model == typeof(PokedexRetModel)         => GetById(pId, _api.Pokedex.GetById,         PokedexRetMapper.MapTo)         as TRet,
-                Type model when model == typeof(PkmRetModel)             => GetById(pId, _api.Pokemon.GetById,         PkmRetMapper.MapTo)             as TRet,
-                Type model when model == typeof(SpeciesRetModel)         => GetById(pId, _api.Species.GetById,         SpeciesRetMapper.MapTo)         as TRet,
-                Type model when model == typeof(TypeRetModel)            => GetById(pId, _api.Type.GetById,            TypeRetMapper.MapTo)            as TRet,
-                Type model when model == typeof(VersionGroupRetModel)    => GetById(pId, _api.VersionGroup.GetById,    VersionGroupRetMapper.MapTo)    as TRet,
+                nameof(AbilityRetModel)         => GetById(pId, _api.Ability.GetById,         AbilityRetMapper.MapTo)         as TRet,
+                nameof(FormRetModel)            => GetById(pId, _api.Form.GetById,            FormRetMapper.MapTo)            as TRet,
+                nameof(GenerationRetModel)      => GetById(pId, _api.Generation.GetById,      GenerationRetMapper.MapTo)      as TRet,
+                nameof(MoveRetModel)            => GetById(pId, _api.Move.GetById,            MoveRetMapper.MapTo)            as TRet,
+                nameof(MoveDamageClassRetModel) => GetById(pId, _api.MoveDamageClass.GetById, MoveDamageClassRetMapper.MapTo) as TRet,
+                nameof(MoveLearnMethodRetModel) => GetById(pId, _api.MoveLearnMethod.GetById, MoveLearnMethodRetMapper.MapTo) as TRet,
+                nameof(PokedexRetModel)         => GetById(pId, _api.Pokedex.GetById,         PokedexRetMapper.MapTo)         as TRet,
+                nameof(PkmRetModel)             => GetById(pId, _api.Pokemon.GetById,         PkmRetMapper.MapTo)             as TRet,
+                nameof(SpeciesRetModel)         => GetById(pId, _api.Species.GetById,         SpeciesRetMapper.MapTo)         as TRet,
+                nameof(TypeRetModel)            => GetById(pId, _api.Type.GetById,            TypeRetMapper.MapTo)            as TRet,
+                nameof(VersionGroupRetModel)    => GetById(pId, _api.VersionGroup.GetById,    VersionGroupRetMapper.MapTo)    as TRet,
                 _ => null
             };
         }

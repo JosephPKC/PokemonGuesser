@@ -1,4 +1,4 @@
-﻿using PkmDataRetrieval.Api.Models.Generation;
+﻿using PkmDataRetrieval.Api.Models;
 using PkmDataRetrieval.Api.Models.Pokemon;
 
 namespace PkmDataRetrieval.Api
@@ -6,7 +6,7 @@ namespace PkmDataRetrieval.Api
     public interface IDataRetrieval
     {
         PkmAllModel? GetAllPkm();
-        GenModel? GetCurrentGen();
+        BasicModel? GetCurrentGen();
         PkmModel? GetPkmById(int pId);
     }
 }
