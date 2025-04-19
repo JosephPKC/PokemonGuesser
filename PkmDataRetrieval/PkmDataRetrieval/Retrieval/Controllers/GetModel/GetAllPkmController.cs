@@ -6,7 +6,6 @@ using PkmDataRetrieval.Retrieval.Models.Pokedex;
 using PkmDataRetrieval.Retrieval.Models.Species;
 using PkmDataRetrieval.Retrieval.Models.VersionGroup;
 using PkmDataRetrieval.Retrieval.Models.Meta;
-using PkmDataRetrieval.Retrieval.Builders;
 
 namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
 {
@@ -33,7 +32,13 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
                 AddAllPkmIdsFromSpecies(allPkms, pkmSpecId);
             }
 
-            return PkmAllModelBuilder.BuildModel(allPkms);
+            List<int> allPkmLi = [.. allPkms];
+            allPkmLi.Sort();
+
+            return new()
+            {
+                Ids = allPkmLi
+            };
         }
 
         #region Get All PkmSpecies Ids

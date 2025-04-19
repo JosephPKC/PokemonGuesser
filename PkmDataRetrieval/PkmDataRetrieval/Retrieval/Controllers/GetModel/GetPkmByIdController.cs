@@ -85,7 +85,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
         private string GetPkmName(PkmRetModel pPkmRet)
         {
             string? pkmName;
-            if (IsAltForm(pPkmRet))
+            if (IsAltForm(pPkmRet.NameKey))
             {
                 pkmName = GetAltFormPkmName(pPkmRet);
             }
@@ -124,7 +124,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
                 return null;
             }
 
-            if (!IsFormCorrect(pPkmRet, formRet))
+            if (pPkmRet.NameKey != formRet.NameKey)
             {
                 return null;
             }
@@ -422,15 +422,5 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
             };
         }
         #endregion
-
-        private static bool IsAltForm(PkmRetModel pPkmRet)
-        {
-            return IsAltForm(pPkmRet.NameKey);
-        }
-
-        private static bool IsFormCorrect(PkmRetModel pPkmRet, FormRetModel pFormRet)
-        {
-            return pPkmRet.NameKey == pFormRet.NameKey;
-        }
     }
 }

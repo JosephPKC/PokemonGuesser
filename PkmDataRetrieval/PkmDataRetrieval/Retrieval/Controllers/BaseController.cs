@@ -29,7 +29,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers
                 return null;
             }
 
-            //_redis.Add(pKey, model);
+            _redis.Add(pKey, model);
             return model;
         }
 
