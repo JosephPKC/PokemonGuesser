@@ -55,17 +55,17 @@ namespace PkmDataRetrieval.Retrieval.Controllers.StaticData
                 return null;
             }
 
-            IDictionary<string, TRet> retDict = new Dictionary<string, TRet>();
-            foreach (BasicRetModel basicRet in allRets)
+            Dictionary<string, TRet> retDict = [];
+            foreach (string resUrl in allRets.Select(x => x.ResUrl))
             {
-                TRet? retModel = GetRetByResUrl<TRet>(basicRet.ResUrl);
+                TRet? retModel = GetRetByResUrl<TRet>(resUrl);
                 if (retModel is null)
                 {
                     //  WARN
                     continue;
                 }
 
-                if (!retDict.TryAdd(basicRet.ResUrl, retModel))
+                if (!retDict.TryAdd(resUrl, retModel))
                 {
                     //  WARN
                 }

@@ -1,15 +1,15 @@
 ﻿namespace PkmDataRetrieval.Retrieval.Comparers
 {
-    public abstract class BaseComparer<TModel>
+    internal static class ComparerUtils
     {
-        protected static int? CompareNull(TModel? x, TModel? y)
+        public static int? CompareNull<TData>(TData? x, TData? y)
         {
-            if (x is null)
+            if (x is null && y is not null)
             {
                 return 1;
             }
 
-            if (y is null)
+            if (x is not null && y is null)
             {
                 return -1;
             }

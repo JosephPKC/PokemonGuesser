@@ -291,7 +291,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
                 return;
             }
 
-            if (moveVersions.Any())
+            if (moveVersions.Count > 0)
             {
                 //  New Move
                 foreach (PkmMoveVersRetModel moveVersRet in moveVersions)

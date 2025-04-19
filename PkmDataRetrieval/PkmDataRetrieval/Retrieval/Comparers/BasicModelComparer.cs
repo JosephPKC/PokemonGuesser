@@ -2,12 +2,12 @@
 
 namespace PkmDataRetrieval.Retrieval.Comparers
 {
-    public class BasicModelComparer : BaseComparer<BasicModel>, IComparer<BasicModel>
+    internal class BasicModelComparer : IComparer<BasicModel>
     {
         #region IComparer<BasicModel>
         public int Compare(BasicModel? x, BasicModel? y)
         {
-            int? res = CompareNull(x, y);
+            int? res = ComparerUtils.CompareNull(x, y);
             if (res is not null)
             {
                 return res.Value;
