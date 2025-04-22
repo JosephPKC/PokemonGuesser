@@ -1,4 +1,4 @@
-name: PkmGuessGame Build
+name: PkmGuessGame Build (Manual)
 run-name: Build for PR ( ${{ github.event.number }} ${{ github.event.pull_request.title }}) by ${{ github.actor }}
 on: workflow_dispatch
 
