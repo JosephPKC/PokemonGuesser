@@ -6,7 +6,7 @@ jobs:
   build-test:
     uses: ./.github/workflows/build-test.yaml
     with:
-      sln-path: ./PkmDataRetrieval/PkmDataRetrieval/PkmDataRetrieval.sln
+      sln-path: ./PkmDataRetrieval/PkmDataRetrieval.sln
   build-push-docker:
     needs: [build-test]
     uses: ./.github/workflows/build-docker.yaml
