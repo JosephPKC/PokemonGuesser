@@ -1,0 +1,19 @@
+name: PkmDataRetrieval Build
+run-name: Build for PR ( ${{ github.event.number }} ${{ github.event.pull_request.title }}) by ${{ github.actor }}
+on: workflow_dispatch
+
+jobs:
+  build-test:
+    uses: ./.github/workflows/build-test.yaml
+    with:
+      sln-path: ./PkmDataRetrieval/PkmDataRetrieval.sln
+  build-push-docker:
+    needs: [build-test]
+    uses: ./.github/workflows/build-docker.yaml
+    with:
+      docker-file-path: ./PkmDataRetrieval/PkmDataRetrieval/Dockerfile
+      docker-tag-name: pkm-data-retrieval
+    secrets: inherit
+  deploy-kubernetes:
+    needs: [build-test, build-push-docker]
+    uses: ./.github/workflows/deploy-kubernetes.yaml
