@@ -8,7 +8,7 @@ jobs:
   build-test:
     uses: ./.github/workflows/build-test.yaml
     with:
-      sln-path: ./PkmGuessGame/PkmGuessGame.sln
+      sln-path: ./PkmGuessGame/PkmGuessGame/PkmGuessGame.sln
   build-push-docker:
     needs: [build-test]
     uses: ./.github/workflows/build-docker.yaml
