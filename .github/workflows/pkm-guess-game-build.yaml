@@ -1,20 +1,20 @@
-name: PkmDataRetrieval Build
+name: PkmGuessGame Build
 run-name: Build for PR ( ${{ github.event.number }} ${{ github.event.pull_request.title }}) by ${{ github.actor }}
 on:
   push:
     branches: [main]
-    paths: ['PkmDataRetrieval/PkmDataRetrieval/**']
+    paths: ['PkmGuessGame/PkmGuessGame/**']
 jobs:
   build-test:
     uses: ./.github/workflows/build-test.yaml
     with:
-      sln-path: ./PkmDataRetrieval/PkmDataRetrieval/PkmDataRetrieval.sln
+      sln-path: ./PkmGuessGame/PkmGuessGame/PkmGuessGame.sln
   build-push-docker:
     needs: [build-test]
     uses: ./.github/workflows/build-docker.yaml
     with:
-      docker-file-path: ./PkmDataRetrieval/PkmDataRetrieval/Dockerfile
-      docker-tag-name: pkm-data-retrieval
+      docker-file-path: ./PkmGuessGame/PkmGuessGame/Dockerfile
+      docker-tag-name: pkm-guess-game
     secrets: inherit
   deploy-kubernetes:
     needs: [build-test, build-push-docker]
