@@ -31,7 +31,7 @@ namespace PkmDataRetrieval
             pBuilder.Services.AddSwaggerGen();
             pBuilder.Services.AddOpenApi();
             //  DI
-            pBuilder.Services.AddSingleton<IDataRetrieval>(DataRetrievalFactory.CreateDataRetriever(PkmGatewayFactory.CreateGateway(), ConnectionMultiplexer.Connect(Config.RedisConnect), Config.CurrentGenId));
+            pBuilder.Services.AddSingleton<IDataRetrieval>(DataRetrievalFactory.CreateDataRetriever(PkmGatewayFactory.CreateGateway(), ConnectionMultiplexer.Connect(Config.RedisKubeConnect, config => config.AbortOnConnectFail = false), Config.CurrentGenId));
         }
 
         private static void ConfigureForDevEnv(WebApplication pApp)

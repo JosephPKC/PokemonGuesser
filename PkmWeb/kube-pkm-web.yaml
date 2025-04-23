@@ -1,0 +1,42 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: pkm-web-depl
+  namespace: pkm-guess
+  labels:
+    name: "pkm-web"
+  annotations:
+    keel.sh/policy: force
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: pkm-web
+  template:
+    metadata:
+      labels:
+        app: pkm-web
+    spec:
+      containers:
+        - name: pkm-web
+          image: josephpkc/pkm-web:latest
+          imagePullPolicy: Always
+          ports: 
+            - containerPort: 8082 # Port for this specific container
+
+---
+
+apiVersion: v1
+kind: Service
+metadata:
+  name: pkm-web-serv
+  namespace: pkm-guess
+spec:
+  type: NodePort
+  selector:
+    app: pkm-web
+  ports:
+    - name: pkm-web
+      protocol: TCP
+      port: 5555 # The Service listens on this port.
+      targetPort: 8082 # The Service maps data from the above port to this port, which is where the actual app is.
