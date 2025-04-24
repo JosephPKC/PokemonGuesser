@@ -2,12 +2,17 @@ name: SonarQube
 run-name: Run SonarQube analysis for PR ( ${{ github.event.number }} ${{ github.event.pull_request.title }}) by ${{ github.actor }}
 on:
   pull_request:
-    types: [opened, reopened, synchronize]
-    paths: ['PkmDataRetrieval/**']
+    types: 
+      - opened
+      - reopened
+      - synchronize
+    paths: 
+      - 'PkmDataRetrieval/**'
   
 jobs:
   sonar-qube-analysis:
     uses: ./.github/workflows/sonarqube-scan.yaml
     with:
       sln-file-path: ./PkmDataRetrieval/PkmDataRetrieval.sln
+      test-dll-file-path: ./PkmDataRetrieval/PkmDataRetrieval.Test/bin/Debug/net9.0/PkmDataRetrieval.Test.dll
     secrets: inherit
