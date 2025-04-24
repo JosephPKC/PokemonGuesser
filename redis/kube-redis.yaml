@@ -40,10 +40,18 @@ spec:
       labels:
         app: redis
     spec:
+      automountServiceAccountToken: false
       containers:
       - name: redis
         image: redis/redis-stack:latest
         imagePullPolicy: IfNotPresent 
+        resources:
+            requests:
+              cpu: 1
+              ephemeral-storage: 1Gi
+              memory: 1Gi
+            limits:
+              memory: 1Gi 
         ports:
         - containerPort: 6379
           name: redis-stack

@@ -17,10 +17,18 @@ spec:
       labels:
         app: pkm-data-retrieval
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: pkm-data-retrieval
           image: josephpkc/pkm-data-retrieval:latest
           imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 0.5
+              ephemeral-storage: 1Gi
+              memory: 512Mi
+            limits:
+              memory: 512Mi 
           ports: 
             - containerPort: 8080 # Port for this specific container
 

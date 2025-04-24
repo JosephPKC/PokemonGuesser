@@ -1,4 +1,4 @@
-FROM node AS build
+FROM node:alpine AS build
 WORKDIR /app
 
 COPY ./PkmWeb/PkmWeb/package.json .

@@ -17,10 +17,18 @@ spec:
       labels:
         app: pkm-web
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: pkm-web
           image: josephpkc/pkm-web:latest
           imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 0.5
+              ephemeral-storage: 1Gi
+              memory: 512Mi
+            limits:
+              memory: 512Mi 
           ports: 
             - containerPort: 8082 # Port for this specific container
 

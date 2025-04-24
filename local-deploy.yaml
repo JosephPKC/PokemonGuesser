@@ -17,10 +17,18 @@ spec:
       labels:
         app: pkm-data-retrieval
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: pkm-data-retrieval
           image: localhost:5000/pkm-data-retrieval:latest
           imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 0.5
+              ephemeral-storage: 1Gi
+              memory: 512Mi
+            limits:
+              memory: 512Mi 
           ports: 
             - containerPort: 8080 # Port for this specific container
 
@@ -62,10 +70,18 @@ spec:
       labels:
         app: pkm-guess-game
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: pkm-guess-game
           image: localhost:5000/pkm-guess-game:latest
           imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 0.5
+              ephemeral-storage: 1Gi
+              memory: 512Mi
+            limits:
+              memory: 512Mi 
           ports: 
             - containerPort: 8081 # Port for this specific container
 
@@ -107,10 +123,18 @@ spec:
       labels:
         app: pkm-web
     spec:
+      automountServiceAccountToken: false
       containers:
         - name: pkm-web
           image: localhost:5000/pkm-web:latest
           imagePullPolicy: Always
+          resources:
+            requests:
+              cpu: 0.5
+              ephemeral-storage: 1Gi
+              memory: 512Mi
+            limits:
+              memory: 512Mi 
           ports: 
             - containerPort: 80 # Port for this specific container
 
