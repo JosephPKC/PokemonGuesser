@@ -2,8 +2,11 @@ name: PkmGuessGame Build
 run-name: Build for PR ( ${{ github.event.number }} ${{ github.event.pull_request.title }}) by ${{ github.actor }}
 on:
   push:
-    branches: [main]
-    paths: ['PkmGuessGame/PkmGuessGame/**']
+    branches: 
+      - main
+    paths: 
+      - 'PkmGuessGame/PkmGuessGame/**'
+  workflow_dispatch:
 jobs:
   build-test:
     uses: ./.github/workflows/build-test.yaml
