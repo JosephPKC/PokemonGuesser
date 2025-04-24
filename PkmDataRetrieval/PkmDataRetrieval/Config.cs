@@ -6,6 +6,8 @@ namespace PkmDataRetrieval
     {
         #region Redis Configs
         public const string RedisConnect = "localhost:6379";
+        public const string RedisKubeConnect = "redis-serv.pkm-guess.svc.cluster.local:6379";
+
         public const string RedisServiceKeyPrefix = "pkm-data-retrieval";
         public const string RedisRetKeyPrefix = "ret-models";
         public const string RedisGenByIdKeyPrefix = "gen-by-id";
