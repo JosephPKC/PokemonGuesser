@@ -1,5 +1,4 @@
 FROM mcr.microsoft.com/dotnet/aspnet:9.0 AS base
-USER $APP_UID
 WORKDIR /app
 EXPOSE 8080
 
@@ -22,4 +21,5 @@ RUN dotnet publish ./PkmDataRetrieval.csproj -c "$BUILD_CONFIGURATION" -o /app/p
 FROM base AS final
 WORKDIR /app
 COPY --from=publish /app/publish .
+USER $APP_UID
 ENTRYPOINT ["dotnet", "PkmDataRetrieval_Service.dll"]
