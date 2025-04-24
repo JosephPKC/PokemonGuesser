@@ -13,7 +13,7 @@ jobs:
     needs: [build-test]
     uses: ./.github/workflows/build-docker.yaml
     with:
-      docker-file-path: ./PkmGuessGame/PkmGuessGame/Dockerfile
+      docker-file-path: ./PkmGuessGame/Dockerfile
       docker-tag-name: pkm-guess-game
     secrets: inherit
   deploy-kubernetes:

@@ -11,7 +11,7 @@ jobs:
     needs: [build-test]
     uses: ./.github/workflows/build-docker.yaml
     with:
-      docker-file-path: ./PkmDataRetrieval/PkmDataRetrieval/Dockerfile
+      docker-file-path: ./PkmDataRetrieval/Dockerfile
       docker-tag-name: pkm-data-retrieval
     secrets: inherit
   deploy-kubernetes:
