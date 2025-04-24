@@ -2,8 +2,11 @@ name: PkmDataRetrieval Build
 run-name: Build for PR ( ${{ github.event.number }} ${{ github.event.pull_request.title }}) by ${{ github.actor }}
 on:
   push:
-    branches: [main]
-    paths: ['PkmDataRetrieval/PkmDataRetrieval/**']
+    branches: 
+      - main
+    paths: 
+      - 'PkmDataRetrieval/PkmDataRetrieval/**'
+  workflow_dispatch:
 jobs:
   build-test:
     uses: ./.github/workflows/build-test.yaml
