@@ -1,4 +1,5 @@
-﻿using PkmDataRetrieval.Retrieval;
+﻿using PkmDataRetrieval.Adapter.PkmApi;
+using PkmDataRetrieval.Retrieval;
 
 namespace PkmDataRetrieval.Adapter
 {
@@ -7,6 +8,11 @@ namespace PkmDataRetrieval.Adapter
         public static IPkmGateway CreateGateway()
         {
             return new PkmApiAdapter();
+        }
+
+        public static IPkmGateway CreateGateway(IPkmApiLibFactory pPkmApiFactory)
+        {
+            return new PkmApiAdapter(pPkmApiFactory);
         }
     }
 }
