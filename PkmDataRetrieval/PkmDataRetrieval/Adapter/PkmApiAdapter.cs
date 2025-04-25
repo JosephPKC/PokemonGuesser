@@ -3,6 +3,7 @@ using PkmApi.Dtos;
 using PkmApi.Dtos.Utility;
 
 using PkmDataRetrieval.Adapter.Mappers;
+using PkmDataRetrieval.Adapter.PkmApi;
 using PkmDataRetrieval.Retrieval;
 using PkmDataRetrieval.Retrieval.Models;
 using PkmDataRetrieval.Retrieval.Models.Ability;
@@ -17,7 +18,6 @@ using PkmDataRetrieval.Retrieval.Models.Species;
 using PkmDataRetrieval.Retrieval.Models.Type;
 using PkmDataRetrieval.Retrieval.Models.VersionGroup;
 
-
 namespace PkmDataRetrieval.Adapter
 {
     /// <summary>
@@ -26,7 +26,17 @@ namespace PkmDataRetrieval.Adapter
     /// </summary>
     internal class PkmApiAdapter : IPkmGateway
     {
-        private readonly IPkmApi _api = PkmApiFactory.CreatePkmApi();
+        private readonly IPkmApi _api;
+
+        public PkmApiAdapter()
+        {
+            _api = PkmApiFactory.CreatePkmApi();
+        }
+
+        public PkmApiAdapter(IPkmApiLibFactory pPkmApiFactory)
+        {
+            _api = pPkmApiFactory.CreatePkmApi();
+        }
 
         #region IPkmGateway
         public IEnumerable<BasicRetModel>? GetAll<TRet>() where TRet : BaseRetModel
