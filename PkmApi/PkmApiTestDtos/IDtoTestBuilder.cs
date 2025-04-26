@@ -2,7 +2,7 @@
 
 namespace PkmApiTestDtos
 {
-    public interface IDtoTestBuilder<TDto> where TDto : IPkmApiDto
+    public interface IDtoTestBuilder<out TDto> where TDto : IPkmApiDto
     {
         /// <summary>
         /// Gets the very basic implementation of the TDto.
