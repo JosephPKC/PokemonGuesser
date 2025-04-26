@@ -6,8 +6,8 @@ namespace PkmApi.Dtos.Pokemon.Form
 {
     public record PkmFormTypeSdto(
         [property: JsonPropertyName("slot")]
-        int? Slot,
+        int?            Slot = null,
         [property: JsonPropertyName("type")]
-        NamedApiResDto? Type
+        NamedApiResDto? Type = null
     );
 }

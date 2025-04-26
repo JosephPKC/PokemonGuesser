@@ -2,6 +2,8 @@
 using PkmApi.Dtos.Game.Pokedex;
 using PkmApi.Dtos.Game.Version;
 using PkmApi.Dtos.Game.VersionGroup;
+using PkmApi.Dtos.Item.Item;
+using PkmApi.Dtos.Machine.Machine;
 using PkmApi.Dtos.Move.Move;
 using PkmApi.Dtos.Move.MoveDamageClass;
 using PkmApi.Dtos.Move.MoveLearnMethod;
@@ -19,6 +21,8 @@ namespace PkmApi
         IEndpointHandler<AbilityDto> Ability { get; }
         IEndpointHandler<FormDto> Form { get; }
         IEndpointHandler<GenerationDto> Generation { get; }
+        IEndpointHandler<ItemDto> Item { get; }
+        IEndpointHandler<MachineDto> Machine { get; }
         IEndpointHandler<MoveDto> Move { get; }
         IEndpointHandler<MoveDamageClassDto> MoveDamageClass { get; }
         IEndpointHandler<MoveLearnMethodDto> MoveLearnMethod { get; }
