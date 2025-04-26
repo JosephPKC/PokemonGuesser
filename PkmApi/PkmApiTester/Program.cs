@@ -23,6 +23,8 @@ namespace PkmApiTester
             TestApi(api.Ability, log, "ABILITY", pShowJsonLogs: ShowJsonLogs);
             TestApi(api.Form, log, "FORM", pShowJsonLogs: ShowJsonLogs);
             TestApi(api.Generation, log, "GENERATION", pShowJsonLogs: ShowJsonLogs);
+            TestApi(api.Item, log, "ITEM", pShowJsonLogs: ShowJsonLogs);
+            TestApi(api.Machine, log, "MACHINE", pShowJsonLogs: ShowJsonLogs);
             TestApi(api.Move, log, "MOVE", pShowJsonLogs: ShowJsonLogs);
             TestApi(api.MoveDamageClass, log, "MOVE DAMAGE CLASS", pShowJsonLogs: ShowJsonLogs);
             TestApi(api.MoveLearnMethod, log, "MOVE LEARN METHOD", pShowJsonLogs: ShowJsonLogs);
