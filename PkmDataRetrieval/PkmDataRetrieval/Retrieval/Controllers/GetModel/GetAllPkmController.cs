@@ -1,16 +1,15 @@
-﻿using StackExchange.Redis;
-
-using PkmDataRetrieval.Api.Models.Meta;
+﻿using PkmDataRetrieval.Api.Models.Meta;
 using PkmDataRetrieval.Api.Models.Pokemon;
 using PkmDataRetrieval.Retrieval.Models.Meta;
 using PkmDataRetrieval.Retrieval.Models.Pokedex;
 using PkmDataRetrieval.Retrieval.Models.Species;
 using PkmDataRetrieval.Retrieval.Models.VersionGroup;
+using PkmDataRetrieval.Utils.Cache;
 
 namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
 {
-    internal class GetAllPkmController(IPkmGateway pApi, IConnectionMultiplexer pConn, KeyPrefixes pKeyPrefixes, CurrentIds pCurrentIds, StaticDataCont pStaticData) 
-        : BaseGetModelController(pApi, pConn, pKeyPrefixes, pCurrentIds, pStaticData)
+    internal class GetAllPkmController(IPkmGateway pApi, ICacheHandler pCache, string pKeyPrefix, CurrentIds pCurrentIds, StaticDataCont pStaticData)
+        : BaseGetModelController(pApi, pCache, pKeyPrefix, pCurrentIds, pStaticData)
     {
         public PkmAllModel? GetAllPkm()
         {

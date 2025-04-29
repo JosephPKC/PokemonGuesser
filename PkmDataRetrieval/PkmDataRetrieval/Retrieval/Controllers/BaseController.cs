@@ -1,22 +1,20 @@
-﻿using StackExchange.Redis;
-
-using PkmDataRetrieval.Api.Models;
+﻿using PkmDataRetrieval.Api.Models;
 using PkmDataRetrieval.Retrieval.Models;
-using PkmDataRetrieval.Utils;
+using PkmDataRetrieval.Utils.Cache;
 
 namespace PkmDataRetrieval.Retrieval.Controllers
 {
-    internal abstract class BaseController(IPkmGateway pApi, IConnectionMultiplexer pConn, string pServiceKeyPrefix, int pCurrentGenId)
+    internal abstract class BaseController(IPkmGateway pApi, ICacheHandler pCache, int pCurrentGenId)
     {
         protected readonly IPkmGateway _api = pApi;
-        protected readonly RedisDbHandler _redis = new(pConn, pServiceKeyPrefix);
+        protected readonly ICacheHandler _cache = pCache;
 
         protected readonly int _currGenId = pCurrentGenId;
 
         #region Get Model
         protected TModel? GetModel<TModel>(string pKey, Func<TModel?> pGetFromApi) where TModel : class, IApiModel
         {
-            TModel? model = _redis.Get<TModel>(pKey);
+            TModel? model = _cache.Get<TModel>(pKey);
             if (model is not null)
             {
                 return model;
@@ -29,14 +27,14 @@ namespace PkmDataRetrieval.Retrieval.Controllers
                 return null;
             }
 
-            _redis.Add(pKey, model);
+            _cache.Add(pKey, model);
             return model;
         }
 
         protected TRet? GetRetById<TRet>(int pId) where TRet : BaseRetModel
         {
             string key = $"{GetRetKeyPrefix<TRet>()}:{pId}";
-            TRet? model = _redis.Get<TRet>(key);
+            TRet? model = _cache.Get<TRet>(key);
             if (model is not null)
             {
                 return model;
@@ -49,7 +47,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers
                 return null;
             }
 
-            _redis.Add(key, model);
+            _cache.Add(key, model);
             return model;
         }
 
@@ -76,7 +74,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers
         #region Get Key Prefix
         protected static string GetRetKeyPrefix<TRet>() where TRet : BaseRetModel
         {
-            return $"{Config.RedisRetKeyPrefix}:{GetRetModelPrefix<TRet>()}";
+            return $"{Config.RetKeyPrefix}:{GetRetModelPrefix<TRet>()}";
         }
 
         protected static string GetRetModelPrefix<TRet>() where TRet : BaseRetModel

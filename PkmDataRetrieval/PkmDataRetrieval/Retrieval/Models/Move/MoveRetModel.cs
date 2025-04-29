@@ -10,5 +10,6 @@ namespace PkmDataRetrieval.Retrieval.Models.Move
         public int Power { get; set; }
         public int Pp { get; set; }
         public string TypeResUrl { get; set; } = string.Empty;
+        public IEnumerable<MachineDetailRetModel> Machines { get; set; } = [];
     }
 }

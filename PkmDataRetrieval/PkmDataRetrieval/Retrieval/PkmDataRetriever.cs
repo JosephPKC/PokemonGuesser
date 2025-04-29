@@ -1,6 +1,4 @@
-﻿using StackExchange.Redis;
-
-using PkmDataRetrieval.Api;
+﻿using PkmDataRetrieval.Api;
 using PkmDataRetrieval.Api.Models;
 using PkmDataRetrieval.Api.Models.Meta;
 using PkmDataRetrieval.Api.Models.Pokemon;
@@ -8,6 +6,7 @@ using PkmDataRetrieval.Retrieval.Models.Meta;
 using PkmDataRetrieval.Retrieval.Controllers;
 using PkmDataRetrieval.Retrieval.Controllers.GetModel;
 using PkmDataRetrieval.Retrieval.Controllers.StaticData;
+using PkmDataRetrieval.Utils.Cache;
 
 namespace PkmDataRetrieval.Retrieval
 {
@@ -24,12 +23,12 @@ namespace PkmDataRetrieval.Retrieval
         private readonly GetCurrentGenController _getCurrGen;
         private readonly GetPkmByIdController _getPkmById;
 
-        public PkmDataRetriever(IPkmGateway pApi, IConnectionMultiplexer pConn, int pGenId)
+        public PkmDataRetriever(IPkmGateway pApi, ICacheHandler pCache, int pGenId)
         {
-            GetAllVersGrpIdsController getAllVersGrpIds = new(pApi, pConn, Config.RedisServiceKeyPrefix, pGenId);
-            _getAllMoveDmgCls = new(pApi, pConn, Config.RedisServiceKeyPrefix, pGenId);
-            _getAllMoveLearnMeths = new(pApi, pConn, Config.RedisServiceKeyPrefix, pGenId);
-            _getAllTypes = new(pApi, pConn, Config.RedisServiceKeyPrefix, pGenId);
+            GetAllVersGrpIdsController getAllVersGrpIds = new(pApi, pCache, pGenId);
+            _getAllMoveDmgCls = new(pApi, pCache, pGenId);
+            _getAllMoveLearnMeths = new(pApi, pCache, pGenId);
+            _getAllTypes = new(pApi, pCache, pGenId);
 
             CurrentIds currIds = new()
             {
@@ -39,9 +38,9 @@ namespace PkmDataRetrieval.Retrieval
 
             StaticDataCont staticData = GetStaticData();
 
-            _getAllPkm = new(pApi, pConn, new() { ServiceKeyPrefix = Config.RedisServiceKeyPrefix, ActionKeyPrefix = Config.RedisPkmAllKeyPrefix }, currIds, staticData);
-            _getCurrGen = new(pApi, pConn, new() { ServiceKeyPrefix = Config.RedisServiceKeyPrefix, ActionKeyPrefix = Config.RedisGenByIdKeyPrefix }, currIds, staticData);
-            _getPkmById = new(pApi, pConn, new() { ServiceKeyPrefix = Config.RedisServiceKeyPrefix, ActionKeyPrefix = Config.RedisPkmByIdKeyPrefix }, currIds, staticData);
+            _getAllPkm = new(pApi, pCache, Config.PkmAllKeyPrefix, currIds, staticData);
+            _getCurrGen = new(pApi, pCache, Config.GenByIdKeyPrefix, currIds, staticData);
+            _getPkmById = new(pApi, pCache, Config.PkmByIdKeyPrefix, currIds, staticData);
         }
 
         #region IDataRetrieval

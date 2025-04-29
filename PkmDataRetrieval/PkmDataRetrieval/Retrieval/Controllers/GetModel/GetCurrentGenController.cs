@@ -1,14 +1,13 @@
-﻿using StackExchange.Redis;
-
+﻿using PkmDataRetrieval.Api.Models;
 using PkmDataRetrieval.Api.Models.Meta;
 using PkmDataRetrieval.Retrieval.Models.Generation;
 using PkmDataRetrieval.Retrieval.Models.Meta;
-using PkmDataRetrieval.Api.Models;
+using PkmDataRetrieval.Utils.Cache;
 
 namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
 {
-    internal class GetCurrentGenController(IPkmGateway pApi, IConnectionMultiplexer pConn, KeyPrefixes pKeyPrefixes, CurrentIds pCurrentIds, StaticDataCont pStaticData)
-        : BaseGetModelController(pApi, pConn, pKeyPrefixes, pCurrentIds, pStaticData)
+    internal class GetCurrentGenController(IPkmGateway pApi, ICacheHandler pCache, string pKeyPrefix, CurrentIds pCurrentIds, StaticDataCont pStaticData)
+        : BaseGetModelController(pApi, pCache, pKeyPrefix, pCurrentIds, pStaticData)
     {
         public BasicModel? GetCurrentGen()
         {
