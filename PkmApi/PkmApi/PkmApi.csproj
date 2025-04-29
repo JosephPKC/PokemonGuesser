@@ -11,7 +11,6 @@
 	<Company>JosephPKC</Company>
 	<IsPackable>true</IsPackable>
 	<Title>PkmApi</Title>
-	<GeneratePackageOnBuild>True</GeneratePackageOnBuild>
 	<Description>A simple wrapper library for PokeApi used for personal projects. Not meant for business/commercial use.</Description>
   </PropertyGroup>
 
