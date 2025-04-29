@@ -27,4 +27,14 @@
     <Folder Include="Tests\Utils\" />
   </ItemGroup>
 
+	<!--This is only for quick testing.-->
+  <ItemGroup>
+    <Reference Include="PkmApi">
+      <HintPath>..\..\PkmApi\PkmApi\bin\Release\net9.0\PkmApi.dll</HintPath>
+    </Reference>
+	<Reference Include="PkmApiTestDtos">
+		<HintPath>..\..\PkmApi\PkmApiTestDtos\bin\Debug\net9.0\PkmApiTestDtos.dll</HintPath>
+	</Reference>
+  </ItemGroup>
+
 </Project>

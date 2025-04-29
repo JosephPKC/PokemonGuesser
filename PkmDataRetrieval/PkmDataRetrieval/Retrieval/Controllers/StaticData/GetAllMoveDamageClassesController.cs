@@ -1,11 +1,10 @@
-﻿using StackExchange.Redis;
-
-using PkmDataRetrieval.Retrieval.Models.MoveDamageClass;
+﻿using PkmDataRetrieval.Retrieval.Models.MoveDamageClass;
+using PkmDataRetrieval.Utils.Cache;
 
 namespace PkmDataRetrieval.Retrieval.Controllers.StaticData
 {
-    internal class GetAllMoveDamageClassesController(IPkmGateway pApi, IConnectionMultiplexer pConn, string pServiceKeyPrefix, int pCurrGenId)
-        : BaseStaticDataController(pApi, pConn, pServiceKeyPrefix, pCurrGenId)
+    internal class GetAllMoveDamageClassesController(IPkmGateway pApi, ICacheHandler pCache, int pCurrGenId)
+        : BaseStaticDataController(pApi, pCache, pCurrGenId)
     {
         public IDictionary<string, MoveDamageClassRetModel>? GetAllMoveDamageClasses()
         {

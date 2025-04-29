@@ -1,9 +1,10 @@
 ﻿using PkmApi;
-using PkmApi.Dtos;
 using PkmApi.Dtos.Game.Generation;
 using PkmApi.Dtos.Game.Pokedex;
 using PkmApi.Dtos.Game.Version;
 using PkmApi.Dtos.Game.VersionGroup;
+using PkmApi.Dtos.Item.Item;
+using PkmApi.Dtos.Machine.Machine;
 using PkmApi.Dtos.Move.Move;
 using PkmApi.Dtos.Move.MoveDamageClass;
 using PkmApi.Dtos.Move.MoveLearnMethod;
@@ -13,6 +14,7 @@ using PkmApi.Dtos.Pokemon.Pokemon;
 using PkmApi.Dtos.Pokemon.Species;
 using PkmApi.Dtos.Pokemon.Type;
 using PkmApi.Endpoints;
+
 using PkmDataRetrieval.Test.Fakes.TestEndpointHandler;
 
 namespace PkmDataRetrieval.Test.Fakes
@@ -47,6 +49,21 @@ namespace PkmDataRetrieval.Test.Fakes
             }
         }
 
+        public IEndpointHandler<ItemDto> Item
+        {
+            get
+            {
+                return new TestEndpointHandler<ItemDto>(_config);
+            }
+        }
+
+        public IEndpointHandler<MachineDto> Machine
+        {
+            get
+            {
+                return new TestEndpointHandler<MachineDto>(_config);
+            }
+        }
 
         public IEndpointHandler<MoveDto> Move
         {
@@ -56,7 +73,6 @@ namespace PkmDataRetrieval.Test.Fakes
             }
         }
 
-
         public IEndpointHandler<MoveDamageClassDto> MoveDamageClass
         {
             get
@@ -65,7 +81,6 @@ namespace PkmDataRetrieval.Test.Fakes
             }
         }
 
-
         public IEndpointHandler<MoveLearnMethodDto> MoveLearnMethod
         {
             get
@@ -73,7 +88,6 @@ namespace PkmDataRetrieval.Test.Fakes
                 return new TestEndpointHandler<MoveLearnMethodDto>(_config);
             }
         }
-
 
         public IEndpointHandler<PokedexDto> Pokedex
         {
@@ -92,7 +106,6 @@ namespace PkmDataRetrieval.Test.Fakes
             }
         }
 
-
         public IEndpointHandler<SpeciesDto> Species
         {
             get
@@ -100,7 +113,6 @@ namespace PkmDataRetrieval.Test.Fakes
                 return new TestEndpointHandler<SpeciesDto>(_config);
             }
         }
-
 
         public IEndpointHandler<TypeDto> Type
         {
@@ -110,7 +122,6 @@ namespace PkmDataRetrieval.Test.Fakes
             }
         }
 
-
         public IEndpointHandler<VersionDto> Version
         {
             get
@@ -119,7 +130,6 @@ namespace PkmDataRetrieval.Test.Fakes
             }
         }
 
-
         public IEndpointHandler<VersionGroupDto> VersionGroup
         {
             get
@@ -127,7 +137,6 @@ namespace PkmDataRetrieval.Test.Fakes
                 return new TestEndpointHandler<VersionGroupDto>(_config);
             }
         }
-
         #endregion
     }
 }

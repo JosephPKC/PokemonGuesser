@@ -1,5 +1,5 @@
 ﻿using PkmApi.Dtos.Move.Move;
-
+using PkmApi.Dtos.Utility;
 using PkmDataRetrieval.Retrieval.Models.Move;
 using PkmDataRetrieval.Retrieval.Models.Shared;
 
@@ -19,7 +19,8 @@ namespace PkmDataRetrieval.Adapter.Mappers
                 DamageClassResUrl = RetMapperUtils.GetUrl(pDto.DamageClass),
                 TypeResUrl = RetMapperUtils.GetUrl(pDto.Type),
                 Names = RetMapperUtils.GetNames(pDto.Names),
-                FlavorTextEntries = GetFlavorTextEntries(pDto)
+                FlavorTextEntries = GetFlavorTextEntries(pDto),
+                Machines = GetMachineDetails(pDto)
             };
         }
 
@@ -41,6 +42,25 @@ namespace PkmDataRetrieval.Adapter.Mappers
             }
 
             return RetMapperUtils.GetLi(pDto.FlavorTextEntries, isValid, mapTo);
+        }
+
+        private static IEnumerable<MachineDetailRetModel> GetMachineDetails(MoveDto pDto)
+        {
+            static bool isValid(MachineVersionDetailDto pDto)
+            {
+                return pDto.Machine is not null;
+            }
+
+            static MachineDetailRetModel mapTo(MachineVersionDetailDto pDto)
+            {
+                return new()
+                {
+                    MachineResUrl = pDto.Machine?.URL ?? string.Empty,
+                    VersionGroupResUrl = RetMapperUtils.GetUrl(pDto.VersionGroup)
+                };
+            }
+
+            return RetMapperUtils.GetLi(pDto.Machines, isValid, mapTo);
         }
     }
 }

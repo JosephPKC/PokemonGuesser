@@ -11,6 +11,8 @@ using PkmApi.Dtos.Pokemon.Pokemon;
 using PkmApi.Dtos.Pokemon.Species;
 using PkmApi.Dtos.Pokemon.Type;
 
+using PkmApiTestDtos;
+
 namespace PkmDataRetrieval.Test.Fakes.TestEndpointHandler
 {
     internal static class TestDtos
@@ -32,6 +34,11 @@ namespace PkmDataRetrieval.Test.Fakes.TestEndpointHandler
                 nameof(VersionGroupDto) => new VersionGroupDto(1, "version group") as TDto,
                 _ => null
             };
+        }
+
+        public static IDtoTestBuilder<TDto>? GetTestBuilder<TDto>() where TDto: class, IPkmApiDto
+        {
+            return DtoTestBuilderFactory.CreateDtoTestBuilder<TDto>();
         }
     }
 }

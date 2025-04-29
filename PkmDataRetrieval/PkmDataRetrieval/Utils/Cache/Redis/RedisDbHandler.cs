@@ -1,14 +1,15 @@
 ﻿using NRedisStack.RedisStackCommands;
 using StackExchange.Redis;
 
-namespace PkmDataRetrieval.Utils
+namespace PkmDataRetrieval.Utils.Cache.Redis
 {
     //  A basic handler that makes common usage easier.
-    internal class RedisDbHandler(IConnectionMultiplexer pRedisMutex, string pPrefixPath)
+    internal class RedisDbHandler(IConnectionMultiplexer pConnMulti, string pPrefixPath) : ICacheHandler
     {
-        private readonly IDatabase _db = pRedisMutex.GetDatabase();
+        private readonly IDatabase _db = pConnMulti.GetDatabase();
         private readonly string _prefixPath = pPrefixPath;
 
+        #region ICache
         public bool Add<TData>(string pKey, TData pData, int? pLifeInSec = null, bool pOverwrite = false) where TData : class
         {
             if (string.IsNullOrWhiteSpace(pKey))
@@ -49,5 +50,6 @@ namespace PkmDataRetrieval.Utils
 
             return _db.JSON().Get<TData>(key);
         }
+        #endregion
     }
 }
