@@ -1,11 +1,10 @@
-﻿using StackExchange.Redis;
-
-using PkmDataRetrieval.Retrieval.Models.Type;
+﻿using PkmDataRetrieval.Retrieval.Models.Type;
+using PkmDataRetrieval.Utils.Cache;
 
 namespace PkmDataRetrieval.Retrieval.Controllers.StaticData
 {
-    internal class GetAllTypesController(IPkmGateway pApi, IConnectionMultiplexer pConn, string pServiceKeyPrefix, int pCurrGenId)
-        : BaseStaticDataController(pApi, pConn, pServiceKeyPrefix, pCurrGenId)
+    internal class GetAllTypesController(IPkmGateway pApi, ICacheHandler pCache, int pCurrGenId)
+        : BaseStaticDataController(pApi, pCache, pCurrGenId)
     {
         public IDictionary<string, TypeRetModel>? GetAllTypes()
         {

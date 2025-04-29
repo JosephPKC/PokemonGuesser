@@ -1,15 +1,14 @@
-﻿using StackExchange.Redis;
-
-using PkmDataRetrieval.Retrieval.Models;
+﻿using PkmDataRetrieval.Retrieval.Models;
+using PkmDataRetrieval.Utils.Cache;
 
 namespace PkmDataRetrieval.Retrieval.Controllers.StaticData
 {
-    internal abstract class BaseStaticDataController(IPkmGateway pApi, IConnectionMultiplexer pConn, string pServiceKeyPrefix, int pCurrGenId)
-        : BaseController(pApi, pConn, pServiceKeyPrefix, pCurrGenId)
+    internal abstract class BaseStaticDataController(IPkmGateway pApi, ICacheHandler pCache, int pCurrGenId)
+        : BaseController(pApi, pCache, pCurrGenId)
     {
         protected IDictionary<string, TRet>? GetRetDict<TRet>(string pKey, Func<IDictionary<string, TRet>?> pGetFromApi) where TRet : BaseRetModel
         {
-            IDictionary<string, TRet>? model = _redis.Get<IDictionary<string, TRet>>(pKey);
+            IDictionary<string, TRet>? model = _cache.Get<IDictionary<string, TRet>>(pKey);
             if (model is not null)
             {
                 return model;
@@ -22,14 +21,14 @@ namespace PkmDataRetrieval.Retrieval.Controllers.StaticData
                 return null;
             }
 
-            _redis.Add(pKey, model);
+            _cache.Add(pKey, model);
             return model;
         }
 
         protected IEnumerable<BasicRetModel>? GetAllRet<TRet>() where TRet : BaseRetModel
         {
             string key = $"{GetRetKeyPrefix<TRet>()}:all";
-            IEnumerable<BasicRetModel>? model = _redis.Get<IEnumerable<BasicRetModel>>(key);
+            IEnumerable<BasicRetModel>? model = _cache.Get<IEnumerable<BasicRetModel>>(key);
             if (model is not null)
             {
                 return model;
@@ -42,7 +41,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers.StaticData
                 return null;
             }
 
-            _redis.Add(key, model);
+            _cache.Add(key, model);
             return model;
         }
 

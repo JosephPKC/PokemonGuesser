@@ -3,11 +3,14 @@ using PkmApi.Dtos;
 using PkmApi.Dtos.Utility;
 
 using PkmDataRetrieval.Adapter.Mappers;
+using PkmDataRetrieval.Adapter.PkmApi;
 using PkmDataRetrieval.Retrieval;
 using PkmDataRetrieval.Retrieval.Models;
 using PkmDataRetrieval.Retrieval.Models.Ability;
 using PkmDataRetrieval.Retrieval.Models.Form;
 using PkmDataRetrieval.Retrieval.Models.Generation;
+using PkmDataRetrieval.Retrieval.Models.Item;
+using PkmDataRetrieval.Retrieval.Models.Machine;
 using PkmDataRetrieval.Retrieval.Models.Move;
 using PkmDataRetrieval.Retrieval.Models.MoveDamageClass;
 using PkmDataRetrieval.Retrieval.Models.MoveLearnMethod;
@@ -17,7 +20,6 @@ using PkmDataRetrieval.Retrieval.Models.Species;
 using PkmDataRetrieval.Retrieval.Models.Type;
 using PkmDataRetrieval.Retrieval.Models.VersionGroup;
 
-
 namespace PkmDataRetrieval.Adapter
 {
     /// <summary>
@@ -26,7 +28,17 @@ namespace PkmDataRetrieval.Adapter
     /// </summary>
     internal class PkmApiAdapter : IPkmGateway
     {
-        private readonly IPkmApi _api = PkmApiFactory.CreatePkmApi();
+        private readonly IPkmApi _api;
+
+        public PkmApiAdapter()
+        {
+            _api = PkmApiFactory.CreatePkmApi();
+        }
+
+        public PkmApiAdapter(IPkmApiLibFactory pPkmApiFactory)
+        {
+            _api = pPkmApiFactory.CreatePkmApi();
+        }
 
         #region IPkmGateway
         public IEnumerable<BasicRetModel>? GetAll<TRet>() where TRet : BaseRetModel
@@ -36,6 +48,8 @@ namespace PkmDataRetrieval.Adapter
                 nameof(AbilityRetModel)         => GetAll(_api.Ability.GetAll),
                 nameof(FormRetModel)            => GetAll(_api.Form.GetAll),
                 nameof(GenerationRetModel)      => GetAll(_api.Generation.GetAll),
+                nameof(ItemRetModel)            => GetAll(_api.Item.GetAll),
+                nameof(MachineRetModel)         => GetAll(_api.Machine.GetAll),
                 nameof(MoveRetModel)            => GetAll(_api.Move.GetAll),
                 nameof(MoveDamageClassRetModel) => GetAll(_api.MoveDamageClass.GetAll),
                 nameof(MoveLearnMethodRetModel) => GetAll(_api.MoveLearnMethod.GetAll),
@@ -55,6 +69,8 @@ namespace PkmDataRetrieval.Adapter
                 nameof(AbilityRetModel)         => GetById(pId, _api.Ability.GetById,         AbilityRetMapper.MapTo)         as TRet,
                 nameof(FormRetModel)            => GetById(pId, _api.Form.GetById,            FormRetMapper.MapTo)            as TRet,
                 nameof(GenerationRetModel)      => GetById(pId, _api.Generation.GetById,      GenerationRetMapper.MapTo)      as TRet,
+                nameof(ItemRetModel)            => GetById(pId, _api.Item.GetById,            ItemRetMapper.MapTo)            as TRet,
+                nameof(MachineRetModel)         => GetById(pId, _api.Machine.GetById,         MachineRetMapper.MapTo)         as TRet,
                 nameof(MoveRetModel)            => GetById(pId, _api.Move.GetById,            MoveRetMapper.MapTo)            as TRet,
                 nameof(MoveDamageClassRetModel) => GetById(pId, _api.MoveDamageClass.GetById, MoveDamageClassRetMapper.MapTo) as TRet,
                 nameof(MoveLearnMethodRetModel) => GetById(pId, _api.MoveLearnMethod.GetById, MoveLearnMethodRetMapper.MapTo) as TRet,

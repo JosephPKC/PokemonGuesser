@@ -5,10 +5,17 @@ on:
     branches: [main]
     paths: ['PkmApi/**']
 jobs:
-  nuget-push:
+  pkm-api-nuget-push:
     uses: ./.github/workflows/nuget-push.yaml
     with:
       pckg-name: JosephPKC.PkmApi
       sln-path: ./PkmApi/PkmApi/PkmApi.sln
       proj-path: ./PkmApi/PkmApi/PkmApi.csproj
+    secrets: inherit
+  test-dtos-nuget-push:
+    uses: ./.github/workflows/nuget-push.yaml
+    with:
+      pckg-name: JosephPKC.PkmApi.TestDtos
+      sln-path: ./PkmApi/PkmApi/PkmApi.sln
+      proj-path: ./PkmApi/PkmApiTestDtos/PkmApiTestDtos.csproj
     secrets: inherit

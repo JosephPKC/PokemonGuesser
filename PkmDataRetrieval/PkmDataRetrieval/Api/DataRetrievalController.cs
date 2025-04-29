@@ -45,7 +45,17 @@ namespace PkmDataRetrieval.Api
         [ProducesResponseType<PkmModel>(StatusCodes.Status200OK)]
         public IActionResult GetPkmById(int id)
         {
-            PkmModel? result = _dataRetriever.GetPkmById(id);
+            PkmModel? result = null;
+
+            try
+            {
+                result = _dataRetriever.GetPkmById(id);
+            }
+            catch (HttpRequestException ex)
+            {
+                //  WARN
+            }
+
             if (result is null)
             {
                 return NotFound(id);

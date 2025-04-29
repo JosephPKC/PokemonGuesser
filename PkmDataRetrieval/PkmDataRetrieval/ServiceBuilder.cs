@@ -3,6 +3,8 @@
 using PkmDataRetrieval.Adapter;
 using PkmDataRetrieval.Api;
 using PkmDataRetrieval.Retrieval;
+using PkmDataRetrieval.Utils.Cache;
+using PkmDataRetrieval.Utils.Cache.Redis;
 
 namespace PkmDataRetrieval
 {
@@ -30,8 +32,19 @@ namespace PkmDataRetrieval
             pBuilder.Services.AddEndpointsApiExplorer();
             pBuilder.Services.AddSwaggerGen();
             pBuilder.Services.AddOpenApi();
+
             //  DI
-            pBuilder.Services.AddSingleton<IDataRetrieval>(DataRetrievalFactory.CreateDataRetriever(PkmGatewayFactory.CreateGateway(), ConnectionMultiplexer.Connect(Config.RedisKubeConnect, config => config.AbortOnConnectFail = false), Config.CurrentGenId));
+            ConfigureRedis(pBuilder);
+        }
+
+        private static void ConfigureRedis(WebApplicationBuilder pBuilder)
+        {
+            IPkmGateway pkmGateway = PkmGatewayFactory.CreateGateway();
+            IConnectionMultiplexer connMulti = ConnectionMultiplexer.Connect(Config.RedisKubeConnect, config => config.AbortOnConnectFail = false);
+            ICacheHandler cacheHandler = RedisHandlerFactory.CreateNewRedisHandler(connMulti, Config.ServiceKeyPrefix);
+            IDataRetrieval dataRetriever = DataRetrievalFactory.CreateDataRetriever(pkmGateway, cacheHandler, Config.CurrentGenId);
+
+            pBuilder.Services.AddSingleton(dataRetriever);
         }
 
         private static void ConfigureForDevEnv(WebApplication pApp)

@@ -12,5 +12,6 @@ namespace PkmDataRetrieval.Api.Models.Pokemon
         public int Power { get; set; }
         public int Pp { get; set; }
         public string FlavorText { get; set; } = string.Empty;
+        public string? MachineName { get; set; } = null;
     }
 }

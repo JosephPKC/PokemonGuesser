@@ -1,11 +1,10 @@
-﻿using StackExchange.Redis;
-
-using PkmDataRetrieval.Retrieval.Models.Generation;
+﻿using PkmDataRetrieval.Retrieval.Models.Generation;
+using PkmDataRetrieval.Utils.Cache;
 
 namespace PkmDataRetrieval.Retrieval.Controllers
 {
-    internal class GetAllVersGrpIdsController(IPkmGateway pApi, IConnectionMultiplexer pConn, string pServiceKeyPrefix, int pCurrGenId)
-        : BaseController(pApi, pConn, pServiceKeyPrefix, pCurrGenId)
+    internal class GetAllVersGrpIdsController(IPkmGateway pApi, ICacheHandler pCache, int pCurrGenId)
+        : BaseController(pApi, pCache, pCurrGenId)
     {
         public ISet<int> GetAllVersGrpIds()
         {

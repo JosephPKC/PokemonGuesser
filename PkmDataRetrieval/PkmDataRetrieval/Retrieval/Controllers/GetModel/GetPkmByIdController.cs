@@ -1,12 +1,12 @@
-﻿using StackExchange.Redis;
-
-using PkmDataRetrieval.Api.Models;
+﻿using PkmDataRetrieval.Api.Models;
 using PkmDataRetrieval.Api.Models.Meta;
 using PkmDataRetrieval.Api.Models.Pokemon;
 using PkmDataRetrieval.Api.Models.Shared;
 using PkmDataRetrieval.Retrieval.Comparers;
 using PkmDataRetrieval.Retrieval.Models.Ability;
 using PkmDataRetrieval.Retrieval.Models.Form;
+using PkmDataRetrieval.Retrieval.Models.Item;
+using PkmDataRetrieval.Retrieval.Models.Machine;
 using PkmDataRetrieval.Retrieval.Models.Meta;
 using PkmDataRetrieval.Retrieval.Models.Move;
 using PkmDataRetrieval.Retrieval.Models.MoveDamageClass;
@@ -15,11 +15,12 @@ using PkmDataRetrieval.Retrieval.Models.Pokemon;
 using PkmDataRetrieval.Retrieval.Models.Shared;
 using PkmDataRetrieval.Retrieval.Models.Species;
 using PkmDataRetrieval.Retrieval.Models.Type;
+using PkmDataRetrieval.Utils.Cache;
 
 namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
 {
-    internal class GetPkmByIdController(IPkmGateway pApi, IConnectionMultiplexer pConn, KeyPrefixes pKeyPrefixes, CurrentIds pCurrentIds, StaticDataCont pStaticData)
-        : BaseGetModelController(pApi, pConn, pKeyPrefixes, pCurrentIds, pStaticData)
+    internal class GetPkmByIdController(IPkmGateway pApi, ICacheHandler pCache, string pKeyPrefix, CurrentIds pCurrentIds, StaticDataCont pStaticData)
+        : BaseGetModelController(pApi, pCache, pKeyPrefix, pCurrentIds, pStaticData)
     {
         public PkmModel? GetPkmById(int pId)
         {
@@ -46,23 +47,16 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
             List<PkmAbilityModel> pkmAbilities = GetAbilities(pkmRet);
             List<NameModel> pkmTypes = GetPkmTypeNames(pkmRet);
 
-            Dictionary<string, List<PkmMoveModel>> pNewMoves = [];
-            Dictionary<string, IEnumerable<PkmMoveModel>> pNewMovesFinal = [];
-            List<BasicModel> pOldMoves = [];
+            Dictionary<string, List<PkmMoveModel>> newMoves = [];
+            List<BasicModel> oldMoves = [];
 
             foreach (PkmMoveRetModel pkmMoveRet in pkmRet.Moves)
             {
-                AddPkmMoves(pNewMoves, pOldMoves, pkmMoveRet);
+                AddPkmMoves(newMoves, oldMoves, pkmMoveRet);
             }
 
-            foreach (string moveLearnMethod in pNewMoves.Keys)
-            {
-                //  Sort based on Level
-                pNewMoves[moveLearnMethod].Sort(new PkmMoveModelComparer());
-                pNewMovesFinal.Add(moveLearnMethod, pNewMoves[moveLearnMethod]);
-            }
-
-            pOldMoves.Sort(new BasicModelComparer());
+            Dictionary<string, IEnumerable<PkmMoveModel>> newMovesFinal = ProcessNewMoves(newMoves);
+            oldMoves.Sort(new BasicModelComparer());
 
             return new()
             {
@@ -75,9 +69,34 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
                 SpriteUrl = pkmRet.SpriteFrontDefaultUrl,
                 Abilities = pkmAbilities,
                 Types = pkmTypes,
-                Moves = pNewMovesFinal,
-                OldMoves = pOldMoves
+                Moves = newMovesFinal,
+                OldMoves = oldMoves
             };
+        }
+
+        private Dictionary<string, IEnumerable<PkmMoveModel>> ProcessNewMoves(Dictionary<string, List<PkmMoveModel>> pNewMoves)
+        {
+            Dictionary<string, IEnumerable<PkmMoveModel>> newMoves = [];
+            PkmMoveModelComparer levelMoveComparer = new(PkmMoveModelComparer.PkmMoveComparerTypes.ByLevel);
+            PkmMoveModelComparer machineMoveComparer = new(PkmMoveModelComparer.PkmMoveComparerTypes.ByMachine);
+            foreach (string moveLearnMethod in pNewMoves.Keys)
+            {
+                switch (moveLearnMethod)
+                {
+                    case Config.LevelLearnMethodNameKey:
+                        pNewMoves[moveLearnMethod].Sort(levelMoveComparer);
+                        break;
+                    case Config.MachineLearnMethodNameKey:
+                        pNewMoves[moveLearnMethod].Sort(machineMoveComparer);
+                        break;
+                    default:
+                        break;
+                }
+
+                newMoves.Add(moveLearnMethod, pNewMoves[moveLearnMethod]);
+            }
+
+            return newMoves;
         }
 
         #region Get Pkm Name
@@ -296,7 +315,9 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
                 //  New Move
                 foreach (PkmMoveVersRetModel moveVersRet in moveVersions)
                 {
-                    PkmMoveModel? pkmMove = GetNewPkmMove(moveVersRet, moveRet, moveDmgCl, moveType, flavorText);
+                    string? machineName = GetLatestMachineName(moveVersRet, moveRet);
+
+                    PkmMoveModel? pkmMove = GetNewPkmMove(moveVersRet, moveRet, moveDmgCl, moveType, flavorText, machineName);
                     if (pkmMove is null)
                     {
                         //  WARN
@@ -320,7 +341,75 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
             }
         }
 
-        private PkmMoveModel? GetNewPkmMove(PkmMoveVersRetModel pMoveVersRet, MoveRetModel pMoveRet, NameModel pMoveDmgCl, NameModel pMoveType, string pFlavorText)
+        private string? GetLatestMachineName(PkmMoveVersRetModel pMoveVersRet, MoveRetModel pMoveRet)
+        {
+            if (!_staticData.MoveLearnMethods.TryGetValue(pMoveVersRet.MoveLearnMethodResUrl, out MoveLearnMethodRetModel? moveLearnMetRet))
+            {
+                //  WARN
+                return null;
+            }
+
+            if (moveLearnMetRet.Id != Config.MachineLearnMethodId)
+            {
+                //  Not Learned via Machine
+                return null;
+            }
+
+            if (!pMoveRet.Machines.Any())
+            {
+                //  WARN
+                return Config.DefaultMachineName;
+            }
+
+            MachineDetailRetModel machineDetRet = pMoveRet.Machines.Last();
+            int? id = RetrievalUtils.GetIdFromUrl(machineDetRet.VersionGroupResUrl);
+            if (id is null)
+            {
+                //  WARN
+                return Config.DefaultMachineName;
+            }
+
+            if (!_currVersGrpIds.Contains(id.Value)) {
+                return Config.DefaultMachineName;
+            }
+
+            ItemRetModel? itemRet = GetItemFromMachineDetail(id.Value);
+            if (itemRet is null)
+            {
+                //  WARN
+                return Config.DefaultMachineName;
+            }
+
+            return GetEnLangName(itemRet.Names) ?? Config.DefaultMachineName;
+        }
+
+        private ItemRetModel? GetItemFromMachineDetail(int pMachineId)
+        {
+            MachineRetModel? machineRet = _api.GetById<MachineRetModel>(pMachineId);
+            if (machineRet is null)
+            {
+                //  WARN
+                return null;
+            }
+
+            int? itemId = RetrievalUtils.GetIdFromUrl(machineRet.ItemResUrl);
+            if (itemId is null)
+            {
+                //  WARN
+                return null;
+            }
+
+            ItemRetModel? itemRet = _api.GetById<ItemRetModel>(itemId.Value);
+            if (itemRet is null)
+            {
+                //  WARN
+                return null;
+            }
+
+            return itemRet;
+        } 
+
+        private PkmMoveModel? GetNewPkmMove(PkmMoveVersRetModel pMoveVersRet, MoveRetModel pMoveRet, NameModel pMoveDmgCl, NameModel pMoveType, string pFlavorText, string? pMachineName)
         {
             if (!_staticData.MoveLearnMethods.TryGetValue(pMoveVersRet.MoveLearnMethodResUrl, out MoveLearnMethodRetModel? moveLearnMetRet))
             {
@@ -347,9 +436,12 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
                 Power = pMoveRet.Power,
                 Pp = pMoveRet.Pp,
                 LevelLearned = pMoveVersRet.LevelLearnedAt,
-                FlavorText = pFlavorText
+                FlavorText = pFlavorText,
+                MachineName = pMachineName
             };
         }
+
+
 
         private static BasicModel GetOldPkmMove(MoveRetModel pMoveRet)
         {

@@ -1,15 +1,14 @@
-﻿using StackExchange.Redis;
-
-using PkmDataRetrieval.Api.Models.Meta;
+﻿using PkmDataRetrieval.Api.Models.Meta;
 using PkmDataRetrieval.Retrieval.Models.Meta;
+using PkmDataRetrieval.Utils.Cache;
 
 namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
 {
-    internal abstract class BaseGetModelController(IPkmGateway pApi, IConnectionMultiplexer pConn, KeyPrefixes pKeyPrefixes, CurrentIds pCurrentIds, StaticDataCont pStaticData)
-        : BaseController(pApi, pConn, pKeyPrefixes.ServiceKeyPrefix, pCurrentIds.CurrentGenId)
+    internal abstract class BaseGetModelController(IPkmGateway pApi, ICacheHandler pCache, string pKeyPrefix, CurrentIds pCurrentIds, StaticDataCont pStaticData)
+        : BaseController(pApi, pCache, pCurrentIds.CurrentGenId)
     {
         protected readonly StaticDataCont _staticData = pStaticData;
-        protected readonly string _actionKeyPrefix = pKeyPrefixes.ActionKeyPrefix;
+        protected readonly string _actionKeyPrefix = pKeyPrefix;
         protected readonly ISet<int> _currVersGrpIds = pCurrentIds.CurrentVersGrpIds;
 
         protected static bool IsAltForm(string pName)
