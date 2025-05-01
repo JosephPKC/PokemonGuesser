@@ -1,4 +1,4 @@
-﻿namespace PkmDataRetrieval.Utils.Cache
+﻿namespace PkmDataRetrieval.Utils.Caching
 {
     public interface ICacheHandler
     {

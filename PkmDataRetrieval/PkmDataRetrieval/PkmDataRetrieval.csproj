@@ -12,18 +12,13 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JosephPKC.PkmApi" Version="1.5.0" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.3" />
-    <PackageReference Include="NRedisStack" Version="0.13.2" />
+    <PackageReference Include="JosephPKC.Api.PkmApi" Version="1.5.1" />
+    <PackageReference Include="JosephPKC.Logs.LogWrapper" Version="1.0.2" />
+    <PackageReference Include="JosephPKC.Store.RedisCache" Version="1.0.0" />
+    <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.4" />
+    <PackageReference Include="NRedisStack" Version="1.0.0" />
     <PackageReference Include="StackExchange.Redis" Version="2.8.31" />
-    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.0" />
+    <PackageReference Include="Swashbuckle.AspNetCore" Version="8.1.1" />
   </ItemGroup>
-
-	<!--This is only for quick testing.-->
-  <!--<ItemGroup>
-    <Reference Include="PkmApi">
-      <HintPath>..\..\PkmApi\PkmApi\bin\Release\net9.0\PkmApi.dll</HintPath>
-    </Reference>
-  </ItemGroup>-->
 
 </Project>

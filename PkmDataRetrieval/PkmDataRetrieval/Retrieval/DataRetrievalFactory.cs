@@ -1,5 +1,5 @@
 ﻿using PkmDataRetrieval.Api;
-using PkmDataRetrieval.Utils.Cache;
+using PkmDataRetrieval.Utils.Caching;
 
 namespace PkmDataRetrieval.Retrieval
 {

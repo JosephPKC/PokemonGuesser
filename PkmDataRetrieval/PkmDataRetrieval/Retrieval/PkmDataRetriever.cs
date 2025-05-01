@@ -6,7 +6,7 @@ using PkmDataRetrieval.Retrieval.Models.Meta;
 using PkmDataRetrieval.Retrieval.Controllers;
 using PkmDataRetrieval.Retrieval.Controllers.GetModel;
 using PkmDataRetrieval.Retrieval.Controllers.StaticData;
-using PkmDataRetrieval.Utils.Cache;
+using PkmDataRetrieval.Utils.Caching;
 
 namespace PkmDataRetrieval.Retrieval
 {

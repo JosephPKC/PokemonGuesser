@@ -1,5 +1,5 @@
 ﻿using PkmDataRetrieval.Retrieval.Models.Type;
-using PkmDataRetrieval.Utils.Cache;
+using PkmDataRetrieval.Utils.Caching;
 
 namespace PkmDataRetrieval.Retrieval.Controllers.StaticData
 {

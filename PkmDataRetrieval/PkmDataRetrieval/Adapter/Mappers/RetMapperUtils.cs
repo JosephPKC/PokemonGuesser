@@ -57,7 +57,6 @@ namespace PkmDataRetrieval.Adapter.Mappers
             {
                 if (!pIsValid(dto))
                 {
-                    //  WARN
                     continue;
                 }
 

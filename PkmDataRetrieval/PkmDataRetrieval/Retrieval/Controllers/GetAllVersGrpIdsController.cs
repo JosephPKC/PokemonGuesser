@@ -1,10 +1,12 @@
-﻿using PkmDataRetrieval.Retrieval.Models.Generation;
-using PkmDataRetrieval.Utils.Cache;
+﻿using LogWrapper;
+
+using PkmDataRetrieval.Retrieval.Models.Generation;
+using PkmDataRetrieval.Utils.Caching;
 
 namespace PkmDataRetrieval.Retrieval.Controllers
 {
-    internal class GetAllVersGrpIdsController(IPkmGateway pApi, ICacheHandler pCache, int pCurrGenId)
-        : BaseController(pApi, pCache, pCurrGenId)
+    internal class GetAllVersGrpIdsController(IPkmGateway pApi, ICacheHandler pCache, LoggerFactoryConf pLoggerConf, int pCurrGenId)
+        : BaseController(pApi, pCache, pLoggerConf, pCurrGenId)
     {
         public ISet<int> GetAllVersGrpIds()
         {
@@ -13,7 +15,6 @@ namespace PkmDataRetrieval.Retrieval.Controllers
             GenerationRetModel? genRet = GetRetById<GenerationRetModel>(_currGenId);
             if (genRet is null)
             {
-                //  WARN
                 return versGrpIds;
             }
 

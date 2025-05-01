@@ -1,9 +1,7 @@
 ﻿using PkmApi;
 using PkmApi.Dtos;
 using PkmApi.Dtos.Utility;
-
 using PkmDataRetrieval.Adapter.Mappers;
-using PkmDataRetrieval.Adapter.PkmApi;
 using PkmDataRetrieval.Retrieval;
 using PkmDataRetrieval.Retrieval.Models;
 using PkmDataRetrieval.Retrieval.Models.Ability;
@@ -35,9 +33,19 @@ namespace PkmDataRetrieval.Adapter
             _api = PkmApiFactory.CreatePkmApi();
         }
 
+        public PkmApiAdapter(LogWrapper.Loggers.ILoggerFactory pLogFactory)
+        {
+            _api = PkmApiFactory.CreatePkmApi(pLogger: pLogFactory.CreateNewLogger(typeof(IPkmApi)));
+        }
+
         public PkmApiAdapter(IPkmApiLibFactory pPkmApiFactory)
         {
             _api = pPkmApiFactory.CreatePkmApi();
+        }
+
+        public PkmApiAdapter(IPkmApiLibFactory pPkmApiFactory, LogWrapper.Loggers.ILoggerFactory pLogFactory)
+        {
+            _api = pPkmApiFactory.CreatePkmApi(pLogFactory);
         }
 
         #region IPkmGateway

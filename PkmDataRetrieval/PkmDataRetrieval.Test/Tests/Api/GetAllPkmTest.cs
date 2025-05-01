@@ -2,12 +2,15 @@
 
 using FluentAssertions;
 
+using LogWrapper.Loggers.Null;
+
 using PkmDataRetrieval.Adapter;
 using PkmDataRetrieval.Api;
-using PkmDataRetrieval.Retrieval;
-using PkmDataRetrieval.Test.Fakes.TestCacheHandler;
-using PkmDataRetrieval.Utils.Cache;
 using PkmDataRetrieval.Api.Models.Pokemon;
+using PkmDataRetrieval.Retrieval;
+using PkmDataRetrieval.Utils.Caching;
+
+using PkmDataRetrieval.Test.Fakes.TestCacheHandler;
 
 namespace PkmDataRetrieval.Test.Tests.Api
 {
@@ -17,7 +20,7 @@ namespace PkmDataRetrieval.Test.Tests.Api
         public void GetAllPkm_ValidGenId_Return200Ok()
         {
             int genId = 9;  //  Scarlet/Violet
-            IPkmGateway gateway = PkmGatewayFactory.CreateGateway();
+            IPkmGateway gateway = PkmGatewayFactory.CreateGateway(new NullLoggerFactory());
             ICacheHandler cache = new TestCacheHandler();
             IDataRetrieval retrieval = DataRetrievalFactory.CreateDataRetriever(gateway, cache, genId);
             DataRetrievalController api = new(retrieval);

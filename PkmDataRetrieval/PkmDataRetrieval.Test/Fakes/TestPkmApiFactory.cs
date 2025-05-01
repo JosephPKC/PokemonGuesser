@@ -1,6 +1,6 @@
-﻿using PkmApi;
-
-using PkmDataRetrieval.Adapter.PkmApi;
+﻿using LogWrapper.Loggers;
+using PkmApi;
+using PkmDataRetrieval.Adapter;
 
 namespace PkmDataRetrieval.Test.Fakes
 {
@@ -20,6 +20,11 @@ namespace PkmDataRetrieval.Test.Fakes
 
         #region IPkmApiLibFactory
         public IPkmApi CreatePkmApi()
+        {
+            return new TestPkmApi(_configs);
+        }
+
+        public IPkmApi CreatePkmApi(ILoggerFactory pLogFactory)
         {
             return new TestPkmApi(_configs);
         }

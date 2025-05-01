@@ -30,7 +30,6 @@ namespace PkmDataRetrieval.Retrieval
             int? id = GetIdFromUrl(pResUrl);
             if (id is null)
             {
-                //  WARN
                 return;
             }
 

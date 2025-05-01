@@ -1,10 +1,12 @@
 ﻿using StackExchange.Redis;
 
+using RedisCache;
+
 using PkmDataRetrieval.Adapter;
 using PkmDataRetrieval.Api;
 using PkmDataRetrieval.Retrieval;
-using PkmDataRetrieval.Utils.Cache;
-using PkmDataRetrieval.Utils.Cache.Redis;
+using PkmDataRetrieval.Utils.Caching;
+using RedisCache.Redis;
 
 namespace PkmDataRetrieval
 {
@@ -41,7 +43,8 @@ namespace PkmDataRetrieval
         {
             IPkmGateway pkmGateway = PkmGatewayFactory.CreateGateway();
             IConnectionMultiplexer connMulti = ConnectionMultiplexer.Connect(Config.RedisKubeConnect, config => config.AbortOnConnectFail = false);
-            ICacheHandler cacheHandler = RedisHandlerFactory.CreateNewRedisHandler(connMulti, Config.ServiceKeyPrefix);
+            IRedisHandler redisHandler = RedisHandlerFactory.CreateNewRedisHandler(connMulti, Config.ServiceKeyPrefix);
+            ICacheHandler cacheHandler = CacheHandlerFactory.CreateNewCacheHandler(redisHandler);
             IDataRetrieval dataRetriever = DataRetrievalFactory.CreateDataRetriever(pkmGateway, cacheHandler, Config.CurrentGenId);
 
             pBuilder.Services.AddSingleton(dataRetriever);

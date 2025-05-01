@@ -1,5 +1,5 @@
 ﻿using PkmDataRetrieval.Retrieval.Models.MoveDamageClass;
-using PkmDataRetrieval.Utils.Cache;
+using PkmDataRetrieval.Utils.Caching;
 
 namespace PkmDataRetrieval.Retrieval.Controllers.StaticData
 {
