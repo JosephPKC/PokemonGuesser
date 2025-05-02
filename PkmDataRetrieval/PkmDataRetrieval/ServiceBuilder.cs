@@ -1,12 +1,13 @@
 ﻿using StackExchange.Redis;
 
+using LogWrapper;
 using RedisCache;
+using RedisCache.Redis;
 
 using PkmDataRetrieval.Adapter;
 using PkmDataRetrieval.Api;
 using PkmDataRetrieval.Retrieval;
 using PkmDataRetrieval.Utils.Caching;
-using RedisCache.Redis;
 
 namespace PkmDataRetrieval
 {
@@ -36,16 +37,18 @@ namespace PkmDataRetrieval
             pBuilder.Services.AddOpenApi();
 
             //  DI
-            ConfigureRedis(pBuilder);
+            pBuilder.Services.AddTransient(x => LoggerFacFactory.CreateColorConsoleLoggerFactory());
+            ConfigureRetrieval(pBuilder);
         }
 
-        private static void ConfigureRedis(WebApplicationBuilder pBuilder)
+        private static void ConfigureRetrieval(WebApplicationBuilder pBuilder)
         {
             IPkmGateway pkmGateway = PkmGatewayFactory.CreateGateway();
             IConnectionMultiplexer connMulti = ConnectionMultiplexer.Connect(Config.RedisKubeConnect, config => config.AbortOnConnectFail = false);
             IRedisHandler redisHandler = RedisHandlerFactory.CreateNewRedisHandler(connMulti, Config.ServiceKeyPrefix);
             ICacheHandler cacheHandler = CacheHandlerFactory.CreateNewCacheHandler(redisHandler);
-            IDataRetrieval dataRetriever = DataRetrievalFactory.CreateDataRetriever(pkmGateway, cacheHandler, Config.CurrentGenId);
+            LogWrapper.Loggers.ILoggerFactory loggerFactory = LoggerFacFactory.CreateColorConsoleLoggerFactory();
+            IDataRetrieval dataRetriever = DataRetrievalFactory.CreateDataRetriever(pkmGateway, cacheHandler, loggerFactory, Config.CurrentGenId);
 
             pBuilder.Services.AddSingleton(dataRetriever);
         }

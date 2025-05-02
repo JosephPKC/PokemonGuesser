@@ -3,6 +3,8 @@ using PkmDataRetrieval.Api.Models;
 using PkmDataRetrieval.Api.Models.Meta;
 using PkmDataRetrieval.Api.Models.Pokemon;
 using PkmDataRetrieval.Retrieval.Models.Meta;
+using LogWrapper;
+
 using PkmDataRetrieval.Retrieval.Controllers;
 using PkmDataRetrieval.Retrieval.Controllers.GetModel;
 using PkmDataRetrieval.Retrieval.Controllers.StaticData;
@@ -23,12 +25,13 @@ namespace PkmDataRetrieval.Retrieval
         private readonly GetCurrentGenController _getCurrGen;
         private readonly GetPkmByIdController _getPkmById;
 
-        public PkmDataRetriever(IPkmGateway pApi, ICacheHandler pCache, int pGenId)
+        public PkmDataRetriever(IPkmGateway pApi, ICacheHandler pCache, LogWrapper.Loggers.ILoggerFactory pLoggerFactory, int pGenId)
         {
-            GetAllVersGrpIdsController getAllVersGrpIds = new(pApi, pCache, pGenId);
-            _getAllMoveDmgCls = new(pApi, pCache, pGenId);
-            _getAllMoveLearnMeths = new(pApi, pCache, pGenId);
-            _getAllTypes = new(pApi, pCache, pGenId);
+
+            GetAllVersGrpIdsController getAllVersGrpIds = new(pApi, pCache, GetLoggerFactoryConf(typeof(GetAllVersGrpIdsController), pLoggerFactory), pGenId);
+            _getAllMoveDmgCls = new(pApi, pCache, GetLoggerFactoryConf(typeof(GetAllMoveDamageClassesController), pLoggerFactory), pGenId);
+            _getAllMoveLearnMeths = new(pApi, pCache, GetLoggerFactoryConf(typeof(GetAllMoveLearnMethodsController), pLoggerFactory), pGenId);
+            _getAllTypes = new(pApi, pCache, GetLoggerFactoryConf(typeof(GetAllTypesController), pLoggerFactory), pGenId);
 
             CurrentIds currIds = new()
             {
@@ -38,9 +41,9 @@ namespace PkmDataRetrieval.Retrieval
 
             StaticDataCont staticData = GetStaticData();
 
-            _getAllPkm = new(pApi, pCache, Config.PkmAllKeyPrefix, currIds, staticData);
-            _getCurrGen = new(pApi, pCache, Config.GenByIdKeyPrefix, currIds, staticData);
-            _getPkmById = new(pApi, pCache, Config.PkmByIdKeyPrefix, currIds, staticData);
+            _getAllPkm = new(pApi, pCache, GetLoggerFactoryConf(typeof(GetAllPkmController), pLoggerFactory), Config.PkmAllKeyPrefix, currIds, staticData);
+            _getCurrGen = new(pApi, pCache, GetLoggerFactoryConf(typeof(GetCurrentGenController), pLoggerFactory), Config.GenByIdKeyPrefix, currIds, staticData);
+            _getPkmById = new(pApi, pCache, GetLoggerFactoryConf(typeof(GetPkmByIdController), pLoggerFactory), Config.PkmByIdKeyPrefix, currIds, staticData);
         }
 
         #region IDataRetrieval
@@ -67,6 +70,15 @@ namespace PkmDataRetrieval.Retrieval
                 MoveDamageClasses = _getAllMoveDmgCls.GetAllMoveDamageClasses() ?? new Dictionary<string, Models.MoveDamageClass.MoveDamageClassRetModel>(),
                 MoveLearnMethods = _getAllMoveLearnMeths.GetAllMoveLearnMethods() ?? new Dictionary<string, Models.MoveLearnMethod.MoveLearnMethodRetModel>(),
                 Types = _getAllTypes.GetAllTypes() ?? new Dictionary<string, Models.Type.TypeRetModel>(),
+            };
+        }
+
+        private static LoggerFactoryConf GetLoggerFactoryConf(Type pDeclaringType, LogWrapper.Loggers.ILoggerFactory pLoggerFactory)
+        {
+            return new()
+            {
+                DeclaringType = pDeclaringType,
+                LoggerFactory = pLoggerFactory
             };
         }
     }

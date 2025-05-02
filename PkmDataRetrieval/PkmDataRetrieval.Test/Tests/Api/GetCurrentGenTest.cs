@@ -2,7 +2,7 @@
 
 using FluentAssertions;
 
-using LogWrapper.Loggers.Null;
+using LogWrapper;
 
 using PkmDataRetrieval.Adapter;
 using PkmDataRetrieval.Api;
@@ -20,10 +20,10 @@ namespace PkmDataRetrieval.Test.Tests.Api
         public void GetCurrentGen_ValidGenId_Return200Ok()
         {
             int genId = 9;  //  Scarlet/Violet
-            IPkmGateway gateway = PkmGatewayFactory.CreateGateway(new NullLoggerFactory());
+            IPkmGateway gateway = PkmGatewayFactory.CreateGateway(LoggerFacFactory.CreateNullLoggerFactory());
             ICacheHandler cache = new TestCacheHandler();
-            IDataRetrieval retrieval = DataRetrievalFactory.CreateDataRetriever(gateway, cache, genId);
-            DataRetrievalController api = new(retrieval);
+            IDataRetrieval retrieval = DataRetrievalFactory.CreateDataRetriever(gateway, cache, LoggerFacFactory.CreateNullLoggerFactory(), genId);
+            DataRetrievalController api = new(retrieval, LoggerFacFactory.CreateNullLoggerFactory());
 
             int expected = 200;
             int expGenId = genId;
@@ -42,15 +42,15 @@ namespace PkmDataRetrieval.Test.Tests.Api
         public void GetCurrentGen_InvalidGenId_Return404NotFound()
         {
             int genId = 0;
-            IPkmGateway gateway = PkmGatewayFactory.CreateGateway(new NullLoggerFactory());
+            IPkmGateway gateway = PkmGatewayFactory.CreateGateway(LoggerFacFactory.CreateNullLoggerFactory());
             ICacheHandler cache = new TestCacheHandler();
             
             int expected = 404;
             int? actual;
             try
             {
-                IDataRetrieval retrieval = DataRetrievalFactory.CreateDataRetriever(gateway, cache, genId);
-                DataRetrievalController api = new(retrieval);
+                IDataRetrieval retrieval = DataRetrievalFactory.CreateDataRetriever(gateway, cache, LoggerFacFactory.CreateNullLoggerFactory(), genId);
+                DataRetrievalController api = new(retrieval, LoggerFacFactory.CreateNullLoggerFactory());
                 NotFoundObjectResult result = (NotFoundObjectResult)api.GetCurrentGen();
                 actual = result.StatusCode;
             }

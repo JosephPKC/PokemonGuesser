@@ -12,8 +12,8 @@
   </PropertyGroup>
 
   <ItemGroup>
-    <PackageReference Include="JosephPKC.Api.PkmApi" Version="1.5.1" />
-    <PackageReference Include="JosephPKC.Logs.LogWrapper" Version="1.0.2" />
+    <PackageReference Include="JosephPKC.Api.PkmApi" Version="1.5.2" />
+    <PackageReference Include="JosephPKC.Logs.LogWrapper" Version="1.3.0" />
     <PackageReference Include="JosephPKC.Store.RedisCache" Version="1.0.0" />
     <PackageReference Include="Microsoft.AspNetCore.OpenApi" Version="9.0.4" />
     <PackageReference Include="NRedisStack" Version="1.0.0" />

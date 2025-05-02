@@ -1,5 +1,4 @@
-﻿using System.Security.Cryptography;
-using LogWrapper;
+﻿using LogWrapper;
 
 using PkmDataRetrieval.Api.Models;
 using PkmDataRetrieval.Retrieval.Models;
@@ -11,7 +10,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers
     {
         protected readonly IPkmGateway _api = pApi;
         protected readonly ICacheHandler _cache = pCache;
-        protected readonly LogWrapper.Loggers.ILogger log = pLoggerConf.LoggerFactory.CreateNewLogger(pLoggerConf.DeclaringType);
+        protected readonly LogWrapper.Loggers.ILogger log = pLoggerConf.LoggerFactory.CreateNewLogger(pLoggerConf.DeclaringType, pLoggerConf.LogLevel);
 
         protected readonly int _currGenId = pCurrentGenId;
 
