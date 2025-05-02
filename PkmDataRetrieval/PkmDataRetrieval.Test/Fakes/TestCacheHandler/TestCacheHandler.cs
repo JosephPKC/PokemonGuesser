@@ -1,6 +1,6 @@
 ﻿using PkmDataRetrieval.Api.Models.Pokemon;
 using PkmDataRetrieval.Retrieval.Models;
-using PkmDataRetrieval.Utils.Cache;
+using PkmDataRetrieval.Utils.Caching;
 
 namespace PkmDataRetrieval.Test.Fakes.TestCacheHandler
 {

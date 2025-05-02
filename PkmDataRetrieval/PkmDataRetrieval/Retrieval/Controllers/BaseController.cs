@@ -1,13 +1,16 @@
-﻿using PkmDataRetrieval.Api.Models;
+﻿using LogWrapper;
+
+using PkmDataRetrieval.Api.Models;
 using PkmDataRetrieval.Retrieval.Models;
-using PkmDataRetrieval.Utils.Cache;
+using PkmDataRetrieval.Utils.Caching;
 
 namespace PkmDataRetrieval.Retrieval.Controllers
 {
-    internal abstract class BaseController(IPkmGateway pApi, ICacheHandler pCache, int pCurrentGenId)
+    internal abstract class BaseController(IPkmGateway pApi, ICacheHandler pCache, LoggerFactoryConf pLoggerConf, int pCurrentGenId)
     {
         protected readonly IPkmGateway _api = pApi;
         protected readonly ICacheHandler _cache = pCache;
+        protected readonly LogWrapper.Loggers.ILogger log = pLoggerConf.LoggerFactory.CreateNewLogger(pLoggerConf.DeclaringType, pLoggerConf.LogLevel);
 
         protected readonly int _currGenId = pCurrentGenId;
 
@@ -23,7 +26,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers
             model = pGetFromApi();
             if (model is null)
             {
-                //  WARN
+                log.Warn($"Could not get {nameof(TModel)} from api.");
                 return null;
             }
 
@@ -43,7 +46,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers
             model = _api.GetById<TRet>(pId);
             if (model is null)
             {
-                //  WARN
+                log.Warn($"Could not get {nameof(TRet)} with id {pId}.");
                 return null;
             }
 
@@ -56,17 +59,17 @@ namespace PkmDataRetrieval.Retrieval.Controllers
             int? id = RetrievalUtils.GetIdFromUrl(pResUrl);
             if (id is null)
             {
-                //  WARN
+                log.Warn($"Could not get an id from url {pResUrl} for {nameof(TRet)}.");
                 return null;
             }
 
             TRet? model = GetRetById<TRet>(id.Value);
             if (model is null)
             {
-                //  WARN
+                log.Warn($"Could not get {nameof(TRet)} with id {id.Value}.");
                 return null;
             }
-
+             
             return model;
         }
         #endregion

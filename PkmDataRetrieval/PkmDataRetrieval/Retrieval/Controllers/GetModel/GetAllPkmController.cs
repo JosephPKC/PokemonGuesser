@@ -1,15 +1,17 @@
-﻿using PkmDataRetrieval.Api.Models.Meta;
+﻿using LogWrapper;
+
+using PkmDataRetrieval.Api.Models.Meta;
 using PkmDataRetrieval.Api.Models.Pokemon;
 using PkmDataRetrieval.Retrieval.Models.Meta;
 using PkmDataRetrieval.Retrieval.Models.Pokedex;
 using PkmDataRetrieval.Retrieval.Models.Species;
 using PkmDataRetrieval.Retrieval.Models.VersionGroup;
-using PkmDataRetrieval.Utils.Cache;
+using PkmDataRetrieval.Utils.Caching;
 
 namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
 {
-    internal class GetAllPkmController(IPkmGateway pApi, ICacheHandler pCache, string pKeyPrefix, CurrentIds pCurrentIds, StaticDataCont pStaticData)
-        : BaseGetModelController(pApi, pCache, pKeyPrefix, pCurrentIds, pStaticData)
+    internal class GetAllPkmController(IPkmGateway pApi, ICacheHandler pCache, LoggerFactoryConf pLoggerConf, string pKeyPrefix, CurrentIds pCurrentIds, StaticDataCont pStaticData)
+        : BaseGetModelController(pApi, pCache, pLoggerConf, pKeyPrefix, pCurrentIds, pStaticData)
     {
         public PkmAllModel? GetAllPkm()
         {
@@ -46,7 +48,6 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
             VersionGroupRetModel? versGrpRet = GetRetById<VersionGroupRetModel>(pVersGrpId);
             if (versGrpRet is null)
             {
-                //  WARN
                 return;
             }
 
@@ -61,7 +62,6 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
             PokedexRetModel? pkDexRet = GetRetByResUrl<PokedexRetModel>(pPkDexUrl);
             if (pkDexRet is null)
             {
-                //  WARN
                 return;
             }
 
@@ -76,7 +76,6 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
             int? pkmSpecId = RetrievalUtils.GetIdFromUrl(pPkmEntry.ResUrl);
             if (pkmSpecId is null)
             {
-                //  WARN
                 return;
             }
 
@@ -90,7 +89,6 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
             SpeciesRetModel? pkmSpecRet = GetRetById<SpeciesRetModel>(pPkmSpecId);
             if (pkmSpecRet is null)
             {
-                //  WARN
                 return;
             }
 
@@ -110,7 +108,6 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
             int? pkmId = RetrievalUtils.GetIdFromUrl(pPkmVariety.ResUrl);
             if (pkmId is null)
             {
-                //  WARN
                 return;
             }
 

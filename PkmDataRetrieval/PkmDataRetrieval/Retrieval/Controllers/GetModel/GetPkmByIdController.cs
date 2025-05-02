@@ -1,4 +1,5 @@
-﻿using PkmDataRetrieval.Api.Models;
+﻿using LogWrapper;
+using PkmDataRetrieval.Api.Models;
 using PkmDataRetrieval.Api.Models.Meta;
 using PkmDataRetrieval.Api.Models.Pokemon;
 using PkmDataRetrieval.Api.Models.Shared;
@@ -15,12 +16,12 @@ using PkmDataRetrieval.Retrieval.Models.Pokemon;
 using PkmDataRetrieval.Retrieval.Models.Shared;
 using PkmDataRetrieval.Retrieval.Models.Species;
 using PkmDataRetrieval.Retrieval.Models.Type;
-using PkmDataRetrieval.Utils.Cache;
+using PkmDataRetrieval.Utils.Caching;
 
 namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
 {
-    internal class GetPkmByIdController(IPkmGateway pApi, ICacheHandler pCache, string pKeyPrefix, CurrentIds pCurrentIds, StaticDataCont pStaticData)
-        : BaseGetModelController(pApi, pCache, pKeyPrefix, pCurrentIds, pStaticData)
+    internal class GetPkmByIdController(IPkmGateway pApi, ICacheHandler pCache, LoggerFactoryConf pLoggerConf, string pKeyPrefix, CurrentIds pCurrentIds, StaticDataCont pStaticData)
+        : BaseGetModelController(pApi, pCache, pLoggerConf, pKeyPrefix, pCurrentIds, pStaticData)
     {
         public PkmModel? GetPkmById(int pId)
         {
@@ -39,7 +40,6 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
             PkmRetModel? pkmRet = GetRetById<PkmRetModel>(pId);
             if (pkmRet is null)
             {
-                //  WARN
                 return null;
             }
 
@@ -126,7 +126,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
                 }
                 else
                 {
-                    //  WARN
+                    log.Warn($"Could not get pkm name from form with url {formUrl}.");
                 }
             }
 
@@ -138,7 +138,6 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
             FormRetModel? formRet = GetRetByResUrl<FormRetModel>(pFormResUrl);
             if (formRet is null)
             {
-                //  WARN
                 return null;
             }
 
@@ -155,7 +154,6 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
             SpeciesRetModel? specRet = GetRetByResUrl<SpeciesRetModel>(pPkmRet.SpeciesResUrl);
             if (specRet is null)
             {
-                //  WARN
                 return null;
             }
 
@@ -172,7 +170,6 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
                 PkmAbilityModel? pkmAbility = GetPkmAbility(pkmAbilityRet);
                 if (pkmAbility is null)
                 {
-                    //  WARN
                     continue;
                 }
 
@@ -189,7 +186,6 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
             AbilityRetModel? abilityRet = GetRetByResUrl<AbilityRetModel>(pPkmAbilityRet.ResUrl);
             if (abilityRet is null)
             {
-                //  WARN
                 return null;
             }
 
@@ -247,7 +243,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
             {
                 if (!_staticData.Types.TryGetValue(typeUrl, out TypeRetModel? typeRet))
                 {
-                    //  WARN
+                    log.Warn($"Could not get Type with url {typeUrl} from static data cache.");
                     continue;
                 }
 
@@ -265,7 +261,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
         {
             if (!_staticData.Types.TryGetValue(pMoveRet.TypeResUrl, out TypeRetModel? typeRet))
             {
-                //  WARN
+                log.Warn($"Could not get Type with url {pMoveRet.TypeResUrl} from static data cache.");
                 return null;
             }
 
@@ -283,21 +279,20 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
             MoveRetModel? moveRet = GetRetByResUrl<MoveRetModel>(pkmMoveRet.ResUrl);
             if (moveRet is null)
             {
-                //  WARN
                 return;
             }
 
             NameModel? moveDmgCl = GetMoveDamageClass(moveRet);
             if (moveDmgCl is null)
             {
-                //  WARN
+                log.Warn($"Could not get move damage class from move with url {pkmMoveRet.ResUrl}.");
                 return;
             }
 
             NameModel? moveType = GetMoveTypeName(moveRet);
             if (moveType is null)
             {
-                //  WARN
+                log.Warn($"Could not get move type from move with url {pkmMoveRet.ResUrl}.");
                 return;
             }
 
@@ -306,7 +301,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
             List<PkmMoveVersRetModel>? moveVersions = GetMoveVersions(pkmMoveRet);
             if (moveVersions is null)
             {
-                //  WARN
+                log.Warn($"Could not get move versions from move with url {pkmMoveRet.ResUrl}.");
                 return;
             }
 
@@ -320,7 +315,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
                     PkmMoveModel? pkmMove = GetNewPkmMove(moveVersRet, moveRet, moveDmgCl, moveType, flavorText, machineName);
                     if (pkmMove is null)
                     {
-                        //  WARN
+                        log.Warn($"Could not get new pkm move from move with url {pkmMoveRet.ResUrl}.");
                         continue;
                     }
 
@@ -345,7 +340,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
         {
             if (!_staticData.MoveLearnMethods.TryGetValue(pMoveVersRet.MoveLearnMethodResUrl, out MoveLearnMethodRetModel? moveLearnMetRet))
             {
-                //  WARN
+                log.Warn($"Could not get Move Learn method with url {pMoveVersRet.MoveLearnMethodResUrl} from static data cache.");
                 return null;
             }
 
@@ -357,7 +352,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
 
             if (!pMoveRet.Machines.Any())
             {
-                //  WARN
+                log.Warn($"No machines found with machine move learn method for move {pMoveRet.Id}.");
                 return Config.DefaultMachineName;
             }
 
@@ -365,7 +360,6 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
             int? id = RetrievalUtils.GetIdFromUrl(machineDetRet.VersionGroupResUrl);
             if (id is null)
             {
-                //  WARN
                 return Config.DefaultMachineName;
             }
 
@@ -376,7 +370,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
             ItemRetModel? itemRet = GetItemFromMachineDetail(id.Value);
             if (itemRet is null)
             {
-                //  WARN
+                log.Warn($"No item found for machine {id.Value}.");
                 return Config.DefaultMachineName;
             }
 
@@ -385,24 +379,15 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
 
         private ItemRetModel? GetItemFromMachineDetail(int pMachineId)
         {
-            MachineRetModel? machineRet = _api.GetById<MachineRetModel>(pMachineId);
+            MachineRetModel? machineRet = GetRetById<MachineRetModel>(pMachineId);
             if (machineRet is null)
             {
-                //  WARN
                 return null;
             }
 
-            int? itemId = RetrievalUtils.GetIdFromUrl(machineRet.ItemResUrl);
-            if (itemId is null)
-            {
-                //  WARN
-                return null;
-            }
-
-            ItemRetModel? itemRet = _api.GetById<ItemRetModel>(itemId.Value);
+            ItemRetModel? itemRet = GetRetByResUrl<ItemRetModel>(machineRet.MoveResUrl);
             if (itemRet is null)
             {
-                //  WARN
                 return null;
             }
 
@@ -413,7 +398,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
         {
             if (!_staticData.MoveLearnMethods.TryGetValue(pMoveVersRet.MoveLearnMethodResUrl, out MoveLearnMethodRetModel? moveLearnMetRet))
             {
-                //  WARN
+                log.Warn($"Could not get Move Learn method with url {pMoveVersRet.MoveLearnMethodResUrl} from static data cache.");
                 return null;
             }
 
@@ -441,8 +426,6 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
             };
         }
 
-
-
         private static BasicModel GetOldPkmMove(MoveRetModel pMoveRet)
         {
             return new()
@@ -463,14 +446,13 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
             {
                 if (!_staticData.MoveLearnMethods.ContainsKey(pkmMoveVersRet.MoveLearnMethodResUrl))
                 {
-                    //  WARN
+                    log.Warn($"Could not get Move Learn method with url {pkmMoveVersRet.MoveLearnMethodResUrl} from static data cache.");
                     continue;
                 }
 
                 int? versGrpId = RetrievalUtils.GetIdFromUrl(pkmMoveVersRet.VersionGroupResUrl);
                 if (versGrpId is null)
                 {
-                    //  WARN
                     return null;
                 }
 
@@ -482,7 +464,6 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
                 MoveLearnMethodRetModel? moveLearnMethRet = GetRetByResUrl<MoveLearnMethodRetModel>(pkmMoveVersRet.MoveLearnMethodResUrl);
                 if (moveLearnMethRet is null)
                 {
-                    //  WARN
                     continue;
                 }
 
@@ -496,7 +477,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
         {
             if (!_staticData.MoveDamageClasses.TryGetValue(pMoveRet.DamageClassResUrl, out MoveDamageClassRetModel? moveDmgClRet))
             {
-                //  WARN
+                log.Warn($"Could not get Move Damage Class with url {pMoveRet.DamageClassResUrl} from static data cache.");
                 return null;
             }
 

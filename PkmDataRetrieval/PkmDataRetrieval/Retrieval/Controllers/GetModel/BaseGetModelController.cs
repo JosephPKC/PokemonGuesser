@@ -1,11 +1,13 @@
-﻿using PkmDataRetrieval.Api.Models.Meta;
+﻿using LogWrapper;
+
+using PkmDataRetrieval.Api.Models.Meta;
 using PkmDataRetrieval.Retrieval.Models.Meta;
-using PkmDataRetrieval.Utils.Cache;
+using PkmDataRetrieval.Utils.Caching;
 
 namespace PkmDataRetrieval.Retrieval.Controllers.GetModel
 {
-    internal abstract class BaseGetModelController(IPkmGateway pApi, ICacheHandler pCache, string pKeyPrefix, CurrentIds pCurrentIds, StaticDataCont pStaticData)
-        : BaseController(pApi, pCache, pCurrentIds.CurrentGenId)
+    internal abstract class BaseGetModelController(IPkmGateway pApi, ICacheHandler pCache, LoggerFactoryConf pLoggerConf, string pKeyPrefix, CurrentIds pCurrentIds, StaticDataCont pStaticData)
+        : BaseController(pApi, pCache, pLoggerConf, pCurrentIds.CurrentGenId)
     {
         protected readonly StaticDataCont _staticData = pStaticData;
         protected readonly string _actionKeyPrefix = pKeyPrefix;

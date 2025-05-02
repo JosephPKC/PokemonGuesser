@@ -1,10 +1,11 @@
-﻿using PkmDataRetrieval.Retrieval.Models;
-using PkmDataRetrieval.Utils.Cache;
+﻿using LogWrapper;
+using PkmDataRetrieval.Retrieval.Models;
+using PkmDataRetrieval.Utils.Caching;
 
 namespace PkmDataRetrieval.Retrieval.Controllers.StaticData
 {
-    internal abstract class BaseStaticDataController(IPkmGateway pApi, ICacheHandler pCache, int pCurrGenId)
-        : BaseController(pApi, pCache, pCurrGenId)
+    internal abstract class BaseStaticDataController(IPkmGateway pApi, ICacheHandler pCache, LoggerFactoryConf pLoggerConf, int pCurrGenId)
+        : BaseController(pApi, pCache, pLoggerConf, pCurrGenId)
     {
         protected IDictionary<string, TRet>? GetRetDict<TRet>(string pKey, Func<IDictionary<string, TRet>?> pGetFromApi) where TRet : BaseRetModel
         {
@@ -17,7 +18,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers.StaticData
             model = pGetFromApi();
             if (model is null)
             {
-                //  WARN
+                log.Warn($"Could not get a dict of {nameof(TRet)} from key {pKey}.");
                 return null;
             }
 
@@ -37,7 +38,7 @@ namespace PkmDataRetrieval.Retrieval.Controllers.StaticData
             model = _api.GetAll<TRet>();
             if (model is null)
             {
-                //  WARN
+                log.Warn($"Could not get a all of {nameof(TRet)}.");
                 return null;
             }
 
@@ -50,7 +51,6 @@ namespace PkmDataRetrieval.Retrieval.Controllers.StaticData
             IEnumerable<BasicRetModel>? allRets = GetAllRet<TRet>();
             if (allRets is null)
             {
-                //  WARN
                 return null;
             }
 
@@ -60,13 +60,12 @@ namespace PkmDataRetrieval.Retrieval.Controllers.StaticData
                 TRet? retModel = GetRetByResUrl<TRet>(resUrl);
                 if (retModel is null)
                 {
-                    //  WARN
                     continue;
                 }
 
                 if (!retDict.TryAdd(resUrl, retModel))
                 {
-                    //  WARN
+                    log.Warn($"Trying to add url {resUrl}. Ignoring...");
                 }
             }
 

@@ -2,11 +2,13 @@
 
 using FluentAssertions;
 
+using LogWrapper;
+
 using PkmDataRetrieval.Adapter;
 using PkmDataRetrieval.Api;
 using PkmDataRetrieval.Api.Models.Pokemon;
 using PkmDataRetrieval.Retrieval;
-using PkmDataRetrieval.Utils.Cache;
+using PkmDataRetrieval.Utils.Caching;
 
 using PkmDataRetrieval.Test.Fakes.TestCacheHandler;
 
@@ -19,10 +21,10 @@ namespace PkmDataRetrieval.Test.Tests.Api
         {
             int genId = 9;  //  Scarlet/Violet
             int pkmId = 1;  //  Bulbasaur
-            IPkmGateway gateway = PkmGatewayFactory.CreateGateway();
+            IPkmGateway gateway = PkmGatewayFactory.CreateGateway(LoggerFacFactory.CreateNullLoggerFactory());
             ICacheHandler cache = new TestCacheHandler();
-            IDataRetrieval retrieval = DataRetrievalFactory.CreateDataRetriever(gateway, cache, genId);
-            DataRetrievalController api = new(retrieval);
+            IDataRetrieval retrieval = DataRetrievalFactory.CreateDataRetriever(gateway, cache, LoggerFacFactory.CreateNullLoggerFactory(), genId);
+            DataRetrievalController api = new(retrieval, LoggerFacFactory.CreateNullLoggerFactory());
 
             int expected = 200;
             OkObjectResult result = (OkObjectResult)api.GetPkmById(pkmId);
@@ -46,10 +48,10 @@ namespace PkmDataRetrieval.Test.Tests.Api
         {
             int genId = 9;  //  Scarlet/Violet
             int pkmId = 0;
-            IPkmGateway gateway = PkmGatewayFactory.CreateGateway();
+            IPkmGateway gateway = PkmGatewayFactory.CreateGateway(LoggerFacFactory.CreateNullLoggerFactory());
             ICacheHandler cache = new TestCacheHandler();
-            IDataRetrieval retrieval = DataRetrievalFactory.CreateDataRetriever(gateway, cache, genId);
-            DataRetrievalController api = new(retrieval);
+            IDataRetrieval retrieval = DataRetrievalFactory.CreateDataRetriever(gateway, cache, LoggerFacFactory.CreateNullLoggerFactory(), genId);
+            DataRetrievalController api = new(retrieval, LoggerFacFactory.CreateNullLoggerFactory());
 
             int expected = 404;
             NotFoundObjectResult result = (NotFoundObjectResult)api.GetPkmById(pkmId);

@@ -1,4 +1,5 @@
 ﻿using Microsoft.AspNetCore.Mvc;
+
 using PkmDataRetrieval.Api.Models;
 using PkmDataRetrieval.Api.Models.Pokemon;
 
@@ -6,14 +7,10 @@ namespace PkmDataRetrieval.Api
 {
     [ApiController]
     [Route("api/data-retrieval")]
-    public class DataRetrievalController : ControllerBase
+    public class DataRetrievalController(IDataRetrieval pDataRetriever, LogWrapper.Loggers.ILoggerFactory pLogFactory) : ControllerBase
     {
-        private readonly IDataRetrieval _dataRetriever;
-
-        public DataRetrievalController(IDataRetrieval pDataRetriever)
-        {
-            _dataRetriever = pDataRetriever;
-        }
+        private readonly IDataRetrieval _dataRetriever = pDataRetriever;
+        private readonly LogWrapper.Loggers.ILogger log = pLogFactory.CreateNewLogger(typeof(DataRetrievalController));
 
         [HttpGet("gen/current")]
         [ProducesResponseType<BasicModel>(StatusCodes.Status200OK)]
@@ -53,7 +50,7 @@ namespace PkmDataRetrieval.Api
             }
             catch (HttpRequestException ex)
             {
-                //  WARN
+                log.Warn(ex.Message);
             }
 
             if (result is null)
