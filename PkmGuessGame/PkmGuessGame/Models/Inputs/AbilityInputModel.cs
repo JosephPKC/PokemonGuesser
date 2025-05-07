@@ -1,4 +1,4 @@
-﻿namespace PkmGuessGame.Inputs
+﻿namespace PkmGuessGame.Models.Inputs
 {
     public class AbilityInputModel
     {

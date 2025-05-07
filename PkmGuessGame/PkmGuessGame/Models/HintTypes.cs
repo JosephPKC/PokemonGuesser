@@ -1,4 +1,4 @@
-﻿namespace PkmGuessGame.Hints
+﻿namespace PkmGuessGame.Models
 {
     public enum HintTypes
     {

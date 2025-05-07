@@ -1,4 +1,4 @@
-﻿namespace PkmGuessGame.Stats
+﻿namespace PkmGuessGame.Models
 {
     public class GameStats
     {

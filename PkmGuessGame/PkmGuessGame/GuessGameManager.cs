@@ -1,6 +1,7 @@
-﻿using PkmGuessGame.Guesses;
-using PkmGuessGame.Hints;
-using PkmGuessGame.Inputs;
+﻿using PkmGuessGame.Hints;
+using PkmGuessGame.Models.Inputs;
+using PkmGuessGame.Models.Results;
+using PkmGuessGame.Models.States;
 using PkmGuessGame.Stats;
 
 namespace PkmGuessGame

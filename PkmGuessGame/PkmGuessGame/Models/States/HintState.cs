@@ -1,4 +1,4 @@
-﻿namespace PkmGuessGame.Hints
+﻿namespace PkmGuessGame.Models.States
 {
     internal class HintState
     {

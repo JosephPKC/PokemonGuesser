@@ -1,4 +1,4 @@
-﻿namespace PkmGuessGame.Guesses
+﻿namespace PkmGuessGame.Models.States
 {
     public class StateDict
     {

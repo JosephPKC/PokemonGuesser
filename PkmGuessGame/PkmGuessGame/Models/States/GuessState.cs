@@ -1,6 +1,4 @@
-﻿using PkmGuessGame.Hints;
-
-namespace PkmGuessGame.Guesses
+﻿namespace PkmGuessGame.Models.States
 {
     internal class GuessState
     {
