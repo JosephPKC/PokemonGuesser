@@ -1,11 +1,4 @@
-﻿using PkmDataRetrieval.Api.Models;
-using PkmDataRetrieval.Api.Models.Meta;
-using PkmDataRetrieval.Api.Models.Pokemon;
-using PkmDataRetrieval.Retrieval.Models.Meta;
-using LogWrapper;
-
-
-using Data.Models.Api;
+﻿using Data.Models.Api;
 using Data.Models.Api.Pokemon;
 using Data.Controllers;
 using Data.Controllers.StaticData;

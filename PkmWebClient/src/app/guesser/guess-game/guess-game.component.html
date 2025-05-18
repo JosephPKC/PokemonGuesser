@@ -1,0 +1,118 @@
+@if (!_isDataReady()) {
+  <p>Loading Game Data. Please Wait...</p>
+}
+@else {
+  <div>
+    <!-- Top section, which will be the pkm info -->
+    <h3>{{ _state()!.name }}</h3>
+    <p>{{ _typeString() }}</p>
+  </div>
+
+  <div>
+    <!-- Stats section -->
+    <p>Guesses Made: {{ _stats()!.nbrGuesses }}</p>
+    <p>Correct Guesses: {{ _stats()!.nbrCorrect }} / Wrong Guesses: {{ _stats()!.nbrGuesses - _stats()!.nbrCorrect }} / Ratio: {{ _guessRatio() }}%</p>
+    <p>Score: {{ _stats()!.currentScore }} / Potential Score: {{ _stats()!.potentialScore }} / Score Loss : {{ _stats()!.maxScore - _stats()!.potentialScore }}</p>
+    <p>Lives Left: {{ _state()!.lives }}!</p>
+  </div>
+
+  <div>
+    <!-- The guessing section -->
+    @if (_gameResult()) {
+      <p>{{ _gameResult() }}</p>
+      <button type="button" (click)="_onClickNewGame()">New Game</button>
+    }
+    @else {
+      <input type="text" placeholder="Guess a Move..." [value]="_guess()" (change)="_onChangeGuess(GuessInput.value)" #GuessInput />
+      <button type="button" (click)="_onClickGuess()">Guess!</button>
+      @if (_guessResultString()) {
+        <p>{{ _guessResultString() }}</p>
+      }
+    }
+  </div>
+
+  <div>
+    <!-- Wrong Guesses & History -->
+    <p>Wrong Guesses:</p>
+    @for (guess of _state()!.wrongGuesses; track $index) {
+      <p>{{ guess }}</p>
+    }
+  </div>
+
+  <div>
+    <!-- move/answers section -->
+    <table>
+      <thead>
+        <tr>
+          <td>Lvl</td>
+          <td>Name</td>
+          <td>Class</td>
+          <td>Type</td>
+          <td>Pow/Acc/PP</td>
+          <td>Flavor</td>
+          <td>Pts</td>
+        </tr>
+      </thead>
+      <tbody>
+        @for (move of _state()!.moves; track $index) {
+          <tr>
+            <td>{{ move.levelLearned }}</td>
+            <td>
+              @if (move.isAnswered) {
+                {{ move.name }}
+              }
+              @else {
+                *** GUESS ***
+              }
+            </td>
+
+            <td>
+              @if (move.damageClass.isRevealed) {
+                {{ move.damageClass.hint }}
+              }
+              @else {
+                <button type="button" (click)="_onClickRevealHint(move.id, move.damageClass.hintType)">
+                  REVEAL [-{{ move.damageClass.scoreCost }}]
+                </button>
+              }
+            </td>
+            <td>
+              @if (move.type.isRevealed) {
+                {{ move.type.hint }}
+              }
+              @else {
+                <button type="button" (click)="_onClickRevealHint(move.id, move.type.hintType)">
+                  REVEAL [-{{ move.type.scoreCost }}]
+                </button>
+              }
+            </td>
+            <td>
+              @if (move.stats.isRevealed) {
+                {{ move.stats.hint }}
+              }
+              @else {
+                <button type="button" (click)="_onClickRevealHint(move.id, move.stats.hintType)">
+                  REVEAL [-{{ move.stats.scoreCost }}]
+                </button>
+              }
+            </td>
+            <td>
+              @if (move.flavorText.isRevealed) {
+                {{ move.flavorText.hint }}
+              }
+              @else {
+                <button type="button" (click)="_onClickRevealHint(move.id, move.flavorText.hintType)">
+                  REVEAL [-{{ move.flavorText.scoreCost }}]
+                </button>
+              }
+            </td>
+
+            <td>
+              {{ move.points > 0 ? '+' : move.points < 0 ? '-' : '' }}{{ move.points }}
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+}

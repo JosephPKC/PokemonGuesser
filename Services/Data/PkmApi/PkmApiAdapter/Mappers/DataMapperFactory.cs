@@ -21,7 +21,7 @@ using Data.Models.Pokemon;
 using Data.Models.Species;
 using Data.Models.Type;
 using Data.Models.VersionGroup;
-using Data.PkmApi.Mappers.DataMappers;
+using Data.PkmApi.PkmApiAdapter.Mappers.DataMappers;
 
 namespace Data.PkmApi.PkmApiAdapter.Mappers;
 public static class DataMapperFactory

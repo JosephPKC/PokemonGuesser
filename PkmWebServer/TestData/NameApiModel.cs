@@ -1,4 +1,4 @@
-﻿namespace Data.Models.Api;
+﻿namespace PkmWebServer.TestData;
 public class NameApiModel
 {
     public string Name { get; set; } = string.Empty;
