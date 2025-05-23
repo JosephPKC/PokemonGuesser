@@ -1,0 +1,8 @@
+<div>
+  @if (!_isUserIdReady()) {
+    <p>Loading User Data. Please Wait...</p>
+  }
+  @else {
+    <guess-game [userId]="_userId()"></guess-game>
+  }
+</div>
