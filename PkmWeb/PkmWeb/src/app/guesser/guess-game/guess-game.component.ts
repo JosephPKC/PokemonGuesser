@@ -3,7 +3,7 @@ import {
   Signal, signal, WritableSignal
 } from "@angular/core";
 
-import { LogService } from "@core/logs";
+import { LogService } from "@core/logger";
 
 import { GameResultTypes, GameState } from "@guesser/game/models";
 import { GameProcService } from "@guesser/game/services";

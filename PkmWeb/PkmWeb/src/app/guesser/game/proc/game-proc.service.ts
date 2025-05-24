@@ -2,7 +2,7 @@ import { HttpResponse } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { ReplaySubject, Observable } from "rxjs";
 
-import { LogService } from "@core/logs";
+import { LogService } from "@core/logger";
 import { CreateNewGameResult, GameState, GetActiveGameResult } from "@guesser/game/models";
 import { GameApiService, GameStateService } from "@guesser/game/services";
 

@@ -1,7 +1,7 @@
 import { HttpClient, HttpParams, HttpResponse } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { LogService } from "@core/logs";
+import { LogService } from "@core/logger";
 
 export type HttpHeader = Record<string, string | string[]> | undefined;
 
