@@ -1,0 +1,16 @@
+name: SonarQube
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+    paths: 
+      - 'PkmWebClient/**'
+  
+jobs:
+  sonarqube:
+    uses: ./.github/workflows/sonarqube.yaml
+    with:
+      sln-file-path: ./PkmWebClient/PkmWebClient.sln
+    secrets: inherit

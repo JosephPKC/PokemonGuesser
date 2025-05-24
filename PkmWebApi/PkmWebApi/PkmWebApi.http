@@ -1,0 +1,9 @@
+@PkmWebApi_HostAddress = http://localhost:5093
+
+POST {{PkmWebApi_HostAddress}}/api/user
+Accept: application/json
+###
+
+GET {{PkmWebApi_HostAddress}}/api/user/084d8fd3-ab15-4168-9394-f0312d5138d6
+Accept: application/json
+###
