@@ -25,7 +25,6 @@ import { StatsProcService } from "@guesser/stats/services";
 })
 export class GuessGameComponent implements OnInit {
   // #region Services
-  private _logger: LogService = inject(LogService);
 
   private _gameProc: GameProcService = inject(GameProcService);
   private _guessProc: GuessProcService = inject(GuessProcService);
@@ -120,12 +119,14 @@ export class GuessGameComponent implements OnInit {
       next: (res: ProcessGuessResult) => {
         this._state.set(res.newState);
         this._guessResult.set(res.result);
+        this._statsProc.getStats(this.userId());
       }
     });
 
     this._hintProc.revealHintReady$.subscribe({
       next: (val: GameState) => {
         this._state.set(val);
+        this._statsProc.getStats(this.userId());
       }
     });
 
