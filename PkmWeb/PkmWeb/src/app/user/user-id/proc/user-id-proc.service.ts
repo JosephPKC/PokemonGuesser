@@ -2,7 +2,7 @@ import { inject, Injectable } from "@angular/core";
 import { HttpResponse } from "@angular/common/http";
 import { Observable, ReplaySubject } from "rxjs";
 
-import { LogService } from "@core/logs";
+import { LogService } from "@core/logger";
 import { CreateUserResult, ValidateUserResult } from "@user/user-id/models";
 import { UserIdApiService, UserIdStateService } from "@user/user-id/services";
 

@@ -8,7 +8,7 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 
 import { GuessGameComponent } from "@guesser/guess-game/guess-game.component";
-import { LogService } from "./core/logs";
+import { LogService } from "./core/logger";
 
 @NgModule({
   declarations: [
