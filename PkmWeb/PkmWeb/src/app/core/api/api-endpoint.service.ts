@@ -16,10 +16,10 @@ enum EndpointTypes {
 export class ApiEndpointService {
   private _endpoints: Record<EndpointTypes, string> = {
     [EndpointTypes.GAME]: "/api/game",
-    [EndpointTypes.GUESS]: "/api/guess/",
-    [EndpointTypes.HINT]: "/api/hint/",
-    [EndpointTypes.STATS]: "/api/stats/",
-    [EndpointTypes.USER]: "/api/user/"
+    [EndpointTypes.GUESS]: "/api/guess",
+    [EndpointTypes.HINT]: "/api/hint",
+    [EndpointTypes.STATS]: "/api/stats",
+    [EndpointTypes.USER]: "/api/user"
   };
 
   public getGameEndpoint(): string {

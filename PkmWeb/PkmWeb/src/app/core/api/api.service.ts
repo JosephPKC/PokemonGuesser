@@ -67,10 +67,10 @@ export class ApiService {
   }
 
   private _getUrl(pContext: string, pId?: string): string {
-    let url: string = `${pContext}/`;
+    let url: string = `${pContext}`;
 
     if (pId) {
-      url += `${pId}/`;
+      url += `/${pId}`;
     }
 
     return url;

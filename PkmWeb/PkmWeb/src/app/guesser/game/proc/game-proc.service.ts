@@ -39,7 +39,6 @@ export class GameProcService {
       return;
     }
 
-    console.log(`Created game for ${pUserId}: ${JSON.stringify(pResp.body?.game)}.`);
     if (pResp.body) {
       this._gameState.gameState = pResp.body.game;
       this._gameReadySrc.next(pResp.body.game);
@@ -51,7 +50,6 @@ export class GameProcService {
       return;
     }
 
-    this._logger.log(`Found game state for ${pUserId}: ${JSON.stringify(pResp.body?.game)}.`);
     if (pResp.body) {
       this._gameState.gameState = pResp.body.game;
       this._gameReadySrc.next(pResp.body.game);
