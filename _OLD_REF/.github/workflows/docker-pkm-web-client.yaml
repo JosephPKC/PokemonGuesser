@@ -1,0 +1,15 @@
+name: PkmWebClient Docker
+on:
+  push:
+    branches: 
+      - main
+    paths: 
+      - 'PkmWebClient/PkmWebClient/**'
+  workflow_dispatch:
+jobs:
+  docker:
+    uses: ./.github/workflows/docker.yaml
+    with:
+      docker-file-path: ./PkmWebClient/Dockerfile
+      docker-tag-name: pkm-web
+    secrets: inherit

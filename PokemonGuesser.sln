@@ -3,15 +3,9 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.13.35931.197
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Data", "Services\Data\Data.csproj", "{44530AF6-E54A-4035-90F3-6E18BC3EB33A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PkmWebApi", "PkmWebApi\PkmWebApi\PkmWebApi.csproj", "{6FE92921-5889-4C56-BEE5-9B1F6232CC2D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "PkmWebServer", "PkmWebServer\PkmWebServer.csproj", "{3461765F-60A1-21BC-764E-FC799869FE2F}"
-EndProject
-Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "PkmWebClient", "PkmWebClient\PkmWebClient.esproj", "{5DC3FCCF-9129-207D-CAD8-1B96C9FA47E2}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Services", "Services", "{02EA681E-C7D8-13C7-8484-4AC65E1B71E8}"
-EndProject
-Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Utils", "Utils", "{A71ACF22-BF4D-41A8-B4BE-CC000F4B75B8}"
+Project("{54A90642-561A-4BB1-A94E-469ADEE60C69}") = "PkmWeb", "PkmWeb\PkmWeb\PkmWeb.esproj", "{0D3A70A4-C191-9BB4-E510-BE8FFEDC7038}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -19,26 +13,19 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{44530AF6-E54A-4035-90F3-6E18BC3EB33A}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{44530AF6-E54A-4035-90F3-6E18BC3EB33A}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{44530AF6-E54A-4035-90F3-6E18BC3EB33A}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{44530AF6-E54A-4035-90F3-6E18BC3EB33A}.Release|Any CPU.Build.0 = Release|Any CPU
-		{3461765F-60A1-21BC-764E-FC799869FE2F}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{3461765F-60A1-21BC-764E-FC799869FE2F}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{3461765F-60A1-21BC-764E-FC799869FE2F}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{3461765F-60A1-21BC-764E-FC799869FE2F}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5DC3FCCF-9129-207D-CAD8-1B96C9FA47E2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{5DC3FCCF-9129-207D-CAD8-1B96C9FA47E2}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{5DC3FCCF-9129-207D-CAD8-1B96C9FA47E2}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
-		{5DC3FCCF-9129-207D-CAD8-1B96C9FA47E2}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{5DC3FCCF-9129-207D-CAD8-1B96C9FA47E2}.Release|Any CPU.Build.0 = Release|Any CPU
-		{5DC3FCCF-9129-207D-CAD8-1B96C9FA47E2}.Release|Any CPU.Deploy.0 = Release|Any CPU
+		{6FE92921-5889-4C56-BEE5-9B1F6232CC2D}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6FE92921-5889-4C56-BEE5-9B1F6232CC2D}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6FE92921-5889-4C56-BEE5-9B1F6232CC2D}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6FE92921-5889-4C56-BEE5-9B1F6232CC2D}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D3A70A4-C191-9BB4-E510-BE8FFEDC7038}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{0D3A70A4-C191-9BB4-E510-BE8FFEDC7038}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{0D3A70A4-C191-9BB4-E510-BE8FFEDC7038}.Debug|Any CPU.Deploy.0 = Debug|Any CPU
+		{0D3A70A4-C191-9BB4-E510-BE8FFEDC7038}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{0D3A70A4-C191-9BB4-E510-BE8FFEDC7038}.Release|Any CPU.Build.0 = Release|Any CPU
+		{0D3A70A4-C191-9BB4-E510-BE8FFEDC7038}.Release|Any CPU.Deploy.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
-	EndGlobalSection
-	GlobalSection(NestedProjects) = preSolution
-		{44530AF6-E54A-4035-90F3-6E18BC3EB33A} = {02EA681E-C7D8-13C7-8484-4AC65E1B71E8}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {69A81035-B3AC-4C29-A8F2-006159367D2A}

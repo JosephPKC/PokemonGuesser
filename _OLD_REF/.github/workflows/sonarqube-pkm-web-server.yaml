@@ -1,0 +1,16 @@
+name: SonarQube
+on:
+  pull_request:
+    types:
+      - opened
+      - reopened
+      - synchronize
+    paths: 
+      - 'PkmWebServer/**'
+  
+jobs:
+  sonarqube:
+    uses: ./.github/workflows/sonarqube.yaml
+    with:
+      sln-file-path: ./PkmWebServer/PkmWebServer.sln
+    secrets: inherit
