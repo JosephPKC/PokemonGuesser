@@ -14,7 +14,8 @@ public static class GameDtoMapper
             Lives = pState.Lives,
             WrongGuesses = pState.WrongGuesses,
             Result = pState.Result,
-            Moves = MapMoves(pState)
+            Moves = MapMoves(pState),
+            Stats = StatsDtoMapper.MapToDto(pState.Stats)
         };
     }
 

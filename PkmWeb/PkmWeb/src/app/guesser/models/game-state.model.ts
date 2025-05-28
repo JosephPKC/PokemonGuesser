@@ -1,11 +1,10 @@
-import { MoveState } from "@guesser/guess/models";
+import { MoveState } from "@guesser/models";
 
 export enum GameResultTypes {
   ONGOING,
   WIN,
   LOSE
 }
-
 
 export interface GameState {
   name: string,
@@ -19,9 +18,21 @@ export interface GameState {
 }
 
 export interface Stats {
+  nbrGuesses: number,
+  nbrCorrect: number,
+  nbrIncorrect: number,
+
+  correctRatio: number,
+  incorrectRatio: number,
+  guessRatio: number,
+
   currentScore: number,
   potentialScore: number,
+  lostScore: number,
   maxScore: number,
-  nbrGuesses: number,
-  nbrCorrect: number
+
+  scoreProgressRatio: number,
+  potentialScoreRatio: number,
+  lostScoreRatio: number,
+  totalScoreRatio: number
 }

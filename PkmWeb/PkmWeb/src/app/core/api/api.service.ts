@@ -74,13 +74,13 @@ export class ApiService {
 
   private _getParams(pParams?: Record<string, string>): HttpParams {
     let params: HttpParams = new HttpParams();
-
+    
     if (pParams === undefined) {
       return params;
     }
 
     for (let key in pParams) {
-      params.set(key, pParams[key]);
+      params = params.set(key, pParams[key]);
     }
 
     return params;

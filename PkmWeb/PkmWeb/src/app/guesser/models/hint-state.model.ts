@@ -1,4 +1,9 @@
-import { HintTypes } from "@guesser/hint/models";
+export enum HintTypes {
+  DAMAGE_CLASS,
+  FLAVOR_TEXT,
+  STATS,
+  TYPE
+}
 
 export interface HintState {
   hintType: HintTypes,

@@ -1,16 +1,15 @@
 import { HttpResponse } from "@angular/common/http";
-import { inject, Injectable } from "@angular/core";
+import { inject, Injectable, OnDestroy } from "@angular/core";
 import { ReplaySubject, Observable } from "rxjs";
 
 import { ApiService } from "@core/api";
 import { LogLevel, LogService } from "@core/logger";
-import { GuessInput, ProcessGuessResult } from "@guesser/guess/models";
-import { GuessApiService } from "@guesser/guess/services";
+import { GuessInput, ProcessGuessResult } from "@guesser/guess";
 
 @Injectable({
   providedIn: "root"
 })
-export class GuessService {
+export class GuessService implements OnDestroy {
   // #region Services
   private _api : ApiService = inject(ApiService);
   private _logger: LogService = inject(LogService);
@@ -20,6 +19,10 @@ export class GuessService {
 
   private _processGuessReadySrc: ReplaySubject<ProcessGuessResult> = new ReplaySubject<ProcessGuessResult>(1);
   public processGuessReady$: Observable<ProcessGuessResult> = this._processGuessReadySrc.asObservable();
+
+  public ngOnDestroy(): void {
+    this._processGuessReadySrc.complete();
+  }
 
   public processGuess(pUserId: string, pGuess: GuessInput): void {
     this._logger.log(`Processing guess ${pGuess.guess} for ${pUserId}.`, LogLevel.DEBUG);

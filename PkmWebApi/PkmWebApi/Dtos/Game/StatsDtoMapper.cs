@@ -1,6 +1,7 @@
-﻿using PkmWebApi.Models.States;
+﻿using PkmWebApi.Dtos.Stats;
+using PkmWebApi.Models.States;
 
-namespace PkmWebApi.Dtos.Stats;
+namespace PkmWebApi.Dtos.Game;
 public static class StatsDtoMapper
 {
     public static StatsDto MapToDto(StatsModel pModel)

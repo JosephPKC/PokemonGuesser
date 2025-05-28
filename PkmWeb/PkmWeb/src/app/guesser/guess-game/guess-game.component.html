@@ -10,9 +10,10 @@
 
   <div>
     <!-- Stats section -->
-    <p>Guesses Made: {{ _stats()!.nbrGuesses }}</p>
-    <p>Correct Guesses: {{ _stats()!.nbrCorrect }} / Wrong Guesses: {{ _stats()!.nbrGuesses - _stats()!.nbrCorrect }} / Ratio: {{ _guessRatio() }}%</p>
-    <p>Score: {{ _stats()!.currentScore }} / Potential Score: {{ _stats()!.potentialScore }} / Score Loss : {{ _stats()!.maxScore - _stats()!.potentialScore }}</p>
+    <p>Guesses Made: {{ _state()!.stats.nbrGuesses }}</p>
+    <p>Correct Guesses: {{ _state()!.stats.nbrCorrect }} / Wrong Guesses: {{ _state()!.stats.nbrIncorrect }} / Ratio: {{ _state()!.stats.correctRatio }}%</p>
+    <p>Score: {{ _state()!.stats.currentScore }} / Potential Score: {{ _state()!.stats.potentialScore }} / Score Loss : {{ _state()!.stats.lostScore }}</p>
+    <p>Progress: {{  _state()!.stats.scoreProgressRatio }}% / Loss Ratio: {{ _state()!.stats.lostScoreRatio }}% / Total Score Ratio: {{ _state()!.stats.totalScoreRatio }}%</p>
     <p>Lives Left: {{ _state()!.lives }}!</p>
   </div>
 

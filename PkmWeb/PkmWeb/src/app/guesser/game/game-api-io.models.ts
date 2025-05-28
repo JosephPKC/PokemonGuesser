@@ -1,4 +1,4 @@
-import { GameState } from "@guesser/game";
+import { GameState } from "@guesser/models";
 
 export interface CreateNewGameResult {
   game: GameState

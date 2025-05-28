@@ -1,4 +1,4 @@
-﻿using PkmWebApi.Dtos.Stats;
+﻿using PkmWebApi.Dtos.Game;
 using PkmWebApi.Models.States;
 
 namespace PkmWebApi.Dtos.Results.Stats;
