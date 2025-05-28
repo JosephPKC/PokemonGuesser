@@ -1,22 +1,25 @@
 import { HttpClient, HttpParams, HttpResponse } from "@angular/common/http";
 import { inject, Injectable } from "@angular/core";
 import { Observable } from "rxjs";
-import { LogService } from "@core/logger";
 
-export type HttpHeader = Record<string, string | string[]> | undefined;
+import { LogService } from "@core/logger";
+import { environment } from "@env/environment";
 
 @Injectable({
   providedIn: "root"
 })
 export class ApiService {
-  private _logger: LogService = inject(LogService);
+  // #region Services
   private _http: HttpClient = inject(HttpClient);
+  private _logger: LogService = inject(LogService);
+  // #endregion
 
-  public get<TOutput>(pContext: string, pId?: string, pUserId?: string): Observable<HttpResponse<TOutput>> {
+  // #region GET
+  public get<TOutput>(pContext: string, pId?: string, pParams?: Record<string, string>): Observable<HttpResponse<TOutput>> {
     const url: string = this._getUrl(pContext, pId);
-    const params: HttpParams = this._getParams(pUserId);
+    const params: HttpParams = this._getParams(pParams);
 
-    this._logger.log(`GET ${url}, user-id: ${pUserId}.`);
+    this._logger.log(`GET ${url}.`);
 
     return this._http.get<TOutput>(url,
       {
@@ -25,24 +28,14 @@ export class ApiService {
       }
     );
   }
+  // #endregion
 
-  public getUser<TOutput>(pContext: string, pUserId?: string): Observable<HttpResponse<TOutput>> {
-    const url: string = this._getUrl(pContext, pUserId);
-
-    this._logger.log(`GET ${url}, user-id: ${pUserId}.`);
-
-    return this._http.get<TOutput>(url,
-      {
-        observe: "response"
-      }
-    );
-  }
-
-  public post<TOutput>(pContext: string, pId?: string, pUserId?: string): Observable<HttpResponse<TOutput>> {
+  // #region POST
+  public post<TOutput>(pContext: string, pId?: string, pParams?: Record<string, string>): Observable<HttpResponse<TOutput>> {
     const url: string = this._getUrl(pContext, pId);
-    const params: HttpParams = this._getParams(pUserId);
+    const params: HttpParams = this._getParams(pParams);
 
-    this._logger.log(`POST ${url}, user-id: ${pUserId}.`);
+    this._logger.log(`POST ${url}.`);
 
     return this._http.post<TOutput>(url, null,
       {
@@ -51,12 +44,14 @@ export class ApiService {
       }
     );
   }
+  // #endregion
 
-  public put<TInput, TOutput>(pContext: string, pItem: TInput, pId?: string, pUserId?: string): Observable<HttpResponse<TOutput>> {
+  // #region PUT
+  public put<TInput, TOutput>(pContext: string, pItem: TInput, pId?: string, pParams?: Record<string, string>): Observable<HttpResponse<TOutput>> {
     const url: string = this._getUrl(pContext, pId);
-    const params: HttpParams = this._getParams(pUserId);
+    const params: HttpParams = this._getParams(pParams);
 
-    this._logger.log(`PUT ${url}, user-id: ${pUserId}.`);
+    this._logger.log(`PUT ${url}.`);
 
     return this._http.put<TOutput>(url, pItem,
       {
@@ -65,9 +60,10 @@ export class ApiService {
       }
     );
   }
+  // #endregion
 
   private _getUrl(pContext: string, pId?: string): string {
-    let url: string = `${pContext}`;
+    let url: string = `${environment.baseApiUrl}/${pContext}`;
 
     if (pId) {
       url += `/${pId}`;
@@ -76,11 +72,15 @@ export class ApiService {
     return url;
   }
 
-  private _getParams(pUserId?: string): HttpParams {
+  private _getParams(pParams?: Record<string, string>): HttpParams {
     let params: HttpParams = new HttpParams();
 
-    if (pUserId) {
-      params = params.set("userId", pUserId);
+    if (pParams === undefined) {
+      return params;
+    }
+
+    for (let key in pParams) {
+      params.set(key, pParams[key]);
     }
 
     return params;
