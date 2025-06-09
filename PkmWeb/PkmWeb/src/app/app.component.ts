@@ -3,7 +3,7 @@ import {
   Signal, signal, WritableSignal
 } from "@angular/core";
 
-import { UserIdProcService } from "@user/user-id/services";
+import { UserIdService } from "@user/user-id";
 
 @Component({
   selector: "app-root",
@@ -13,7 +13,7 @@ import { UserIdProcService } from "@user/user-id/services";
 })
 export class AppComponent implements OnInit {
   // #region Services
-  private _userIdProc: UserIdProcService = inject(UserIdProcService);
+  private _userIdProc: UserIdService = inject(UserIdService);
   // #endregion
 
   // #region State

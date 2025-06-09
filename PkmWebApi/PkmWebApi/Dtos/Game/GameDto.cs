@@ -1,4 +1,5 @@
 ﻿using PkmWebApi.Dtos.Guess;
+using PkmWebApi.Dtos.Stats;
 
 namespace PkmWebApi.Dtos.Game;
 public class GameDto
@@ -10,4 +11,5 @@ public class GameDto
     public IEnumerable<string> WrongGuesses { get; set; } = [];
     public int Lives { get; set; } = 0;
     public GameResultTypes Result { get; set; }
+    public StatsDto Stats { get; set; } = new();
 }

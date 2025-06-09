@@ -1,4 +1,4 @@
 export const environment = {
   production: false,
-  baseApiUrl: "" // Uses proxy.conf.js
+  baseApiUrl: "http://localhost:5093" // Uses proxy.conf.js
 };

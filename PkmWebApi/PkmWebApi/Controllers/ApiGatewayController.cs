@@ -160,37 +160,6 @@ namespace PkmWebApi.Controllers
             }
         }
 
-        [HttpGet("stats")]
-        [ProducesResponseType<GetStatsResultDto>(StatusCodes.Status200OK)]
-        [ProducesResponseType(StatusCodes.Status400BadRequest)]
-        [ProducesResponseType(StatusCodes.Status404NotFound)]
-        [ProducesResponseType(StatusCodes.Status500InternalServerError)]
-        public IActionResult GetStats([FromQuery] string userId)
-        {
-            _log.Info($"GET /stats (GetStats): {userId}");
-
-            if (string.IsNullOrWhiteSpace(userId))
-            {
-                return BadRequest($"UserId {userId} is blank.");
-            }
-
-            try
-            {
-                StatsModel stats = _game.GetStats(userId);
-                GetStatsResultDto result = GetStatsResultMapper.GetResult(stats);
-                return Ok(result);
-            }
-            catch (ServiceOperationException ex)
-            {
-                return GetStatusCodeResult(ex);
-            }
-            catch (Exception ex)
-            {
-                _log.Error(ex);
-                return StatusCode(StatusCodes.Status500InternalServerError);
-            }
-        }
-
         [HttpGet("user/{userId}")]
         [ProducesResponseType<ValidateUserResultDto>(StatusCodes.Status200OK)]
         [ProducesResponseType(StatusCodes.Status400BadRequest)]
