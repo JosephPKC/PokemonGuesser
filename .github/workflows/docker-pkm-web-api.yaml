@@ -1,15 +1,15 @@
-name: PkmWebClient Docker
+name: PkmGuesser Api Docker
 on:
   push:
     branches: 
       - main
     paths: 
-      - 'PkmWebClient/PkmWebClient/**'
+      - 'PkmWebApi/PkmWebApi/**'
   workflow_dispatch:
 jobs:
   docker:
     uses: ./.github/workflows/docker.yaml
     with:
-      docker-file-path: ./PkmWebClient/Dockerfile
-      docker-tag-name: pkm-web
+      docker-file-path: ./PkmWebApi/Dockerfile
+      docker-tag-name: pkm-guesser-api
     secrets: inherit
