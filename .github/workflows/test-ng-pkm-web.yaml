@@ -1,0 +1,12 @@
+name: PkmGuesser Web Docker
+on:
+  push:
+    branches: 
+      - main
+    paths: 
+      - 'PkmWeb/PkmWeb/**'
+  workflow_dispatch:
+jobs:
+  docker:
+    uses: ./.github/workflows/test-ng.yaml
+    secrets: inherit

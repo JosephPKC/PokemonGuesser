@@ -1,0 +1,28 @@
+name: Build and Test Solution
+on:
+  workflow_call:
+    inputs:
+      sln-path:
+        type: string
+jobs:
+  angular-test:
+    name: Build and test angular
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [20]
+    steps:
+      - name: Checkout repo
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: $
+          cache: 'npm'
+          cache-dependency-path: package-lock.json
+      - name: Install dependencies
+        run: npm ci
+      - name: Run tests
+        run: npm run test:ci
+      - name: Build
+        run: npm run build
