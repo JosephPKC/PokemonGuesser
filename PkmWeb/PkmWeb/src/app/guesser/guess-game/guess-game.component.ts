@@ -4,7 +4,9 @@ import {
 } from "@angular/core";
 
 import { GameService } from "@guesser/game";
-import { GuessInput, GuessResultTypes, GuessService, ProcessGuessResult } from "@guesser/guess";
+import { 
+GuessInput, GuessResultTypes, GuessService, ProcessGuessResult 
+} from "@guesser/guess";
 import { HintInput, HintService } from "@guesser/hint";
 import { GameResultTypes, GameState, HintTypes } from "@guesser/models";
 import { Subject, takeUntil } from "rxjs";
