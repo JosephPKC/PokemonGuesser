@@ -6,11 +6,11 @@ on:
       - reopened
       - synchronize
     paths: 
-      - 'PkmWebServer/**'
+      - 'PkmWeb/**'
   
 jobs:
   sonarqube:
     uses: ./.github/workflows/sonarqube.yaml
     with:
-      sln-file-path: ./PkmWebServer/PkmWebServer.sln
+      sln-file-path: ./PkmWeb/PkmWeb/PkmWeb.sln
     secrets: inherit
