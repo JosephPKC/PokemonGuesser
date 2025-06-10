@@ -8,16 +8,19 @@ jobs:
   angular-test:
     name: Build and test angular
     runs-on: ubuntu-latest
-    strategy:
-      matrix:
-        node-version: [20]
     steps:
       - name: Checkout repo
         uses: actions/checkout@v4
+      - name: Cache node
+        uses: actions/cache@v2
+        env:
+          cache-Name: cache-node-modules
+        with:
+          
       - name: Setup Node.js
         uses: actions/setup-node@v3
         with:
-          node-version: $
+          node-version: 22.x
           cache: 'npm'
           cache-dependency-path: package-lock.json
       - name: Install dependencies
