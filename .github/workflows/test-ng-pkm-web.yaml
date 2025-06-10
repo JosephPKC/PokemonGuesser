@@ -1,4 +1,4 @@
-name: PkmGuesser Web Docker
+name: PkmGuesser Web Test
 on:
   push:
     branches: 
